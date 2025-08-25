@@ -16,9 +16,9 @@ export default defineConfig({
         type: 'module',
       },
       manifest: {
-        name: 'MOA',
-        short_name: 'MOA',
-        description: '여행과 기록을 모아',
+        name: '착착마켓',
+        short_name: '착착마켓',
+        description: '소상공인 지원 서비스',
         theme_color: '#ffffff',
         start_url: '/',
         display: 'standalone',
