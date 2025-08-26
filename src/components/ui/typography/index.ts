@@ -1,0 +1,8 @@
+export { default as TypographyCaption } from './TypographyCaption.vue'
+export { default as TypographyHead1 } from './TypographyHead1.vue'
+export { default as TypographyHead2 } from './TypographyHead2.vue'
+export { default as TypographyHead3 } from './TypographyHead3.vue'
+export { default as TypographyP1 } from './TypographyP1.vue'
+export { default as TypographyP2 } from './TypographyP2.vue'
+export { default as TypographySubTitle1 } from './TypographySubTitle1.vue'
+export { default as TypographySubTitle2 } from './TypographySubTitle2.vue'
