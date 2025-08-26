@@ -7,7 +7,7 @@
     <!-- 메인 콘텐츠 -->
     <main
       ref="mainRef"
-      class="h-[100dvh] py-[70px] overflow-y-auto m-auto flex flex-col gap-3 justify-start items-center pb-[70px] px-5"
+      class="h-[100dvh] pt-[55px] pb-[100px] overflow-y-auto m-auto flex flex-col gap-3 justify-start items-center px-5"
     >
       <slot />
     </main>
