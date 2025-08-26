@@ -1,4 +1,4 @@
-import Test from '@/pages/Test.vue'
+import { Archive, Home, My, Test } from '@/pages'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -6,8 +6,23 @@ const router = createRouter({
   routes: [
     {
       name: 'test',
-      component: Test,
       path: '/test',
+      component: Test,
+    },
+    {
+      name: 'home',
+      path: '/main',
+      component: Home,
+    },
+    {
+      name: 'archive',
+      path: '/archive',
+      component: Archive,
+    },
+    {
+      name: 'my',
+      path: '/my',
+      component: My,
     },
   ],
 })
