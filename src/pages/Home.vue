@@ -147,6 +147,74 @@
               </Badge>
             </CardFooter>
           </Card>
+
+          <TypographyHead3>🔥 실시간 트렌드</TypographyHead3>
+          <div class="w-full grid grid-cols-2 gap-2">
+            <div class="mb-1">
+              <div class="bg-slate-300 w-full h-[90px] rounded-t-md" />
+
+              <div class="pt-3 px-1">
+                <TypographyHead3>35% 달성</TypographyHead3>
+                <TypographyP1>맛있는 찰옥수수 냉동 ...</TypographyP1>
+              </div>
+              <div class="flex gap-2 mt-2 px-1">
+                <Badge class="bg-red-100 text-red-600">
+                  마감임박
+                </Badge>
+                <Badge variant="secondary">
+                  배송
+                </Badge>
+              </div>
+            </div>
+            <div class="mb-1">
+              <div class="bg-slate-300 w-full h-[90px] rounded-t-md" />
+
+              <div class="pt-3 px-1">
+                <TypographyHead3>35% 달성</TypographyHead3>
+                <TypographyP1>맛있는 찰옥수수 냉동 ...</TypographyP1>
+              </div>
+              <div class="flex gap-2 mt-2 px-1">
+                <Badge class="bg-red-100 text-red-600">
+                  마감임박
+                </Badge>
+                <Badge variant="secondary">
+                  배송
+                </Badge>
+              </div>
+            </div>
+            <div class="mb-1">
+              <div class="bg-slate-300 w-full h-[90px] rounded-t-md" />
+
+              <div class="pt-3 px-1">
+                <TypographyHead3>35% 달성</TypographyHead3>
+                <TypographyP1>맛있는 찰옥수수 냉동 ...</TypographyP1>
+              </div>
+              <div class="flex gap-2 mt-2 px-1">
+                <Badge class="bg-red-100 text-red-600">
+                  마감임박
+                </Badge>
+                <Badge variant="secondary">
+                  배송
+                </Badge>
+              </div>
+            </div>
+            <div class="mb-1">
+              <div class="bg-slate-300 w-full h-[90px] rounded-t-md" />
+
+              <div class="pt-3 px-1">
+                <TypographyHead3>35% 달성</TypographyHead3>
+                <TypographyP1>맛있는 찰옥수수 냉동 ...</TypographyP1>
+              </div>
+              <div class="flex gap-2 mt-2 px-1">
+                <Badge class="bg-red-100 text-red-600">
+                  마감임박
+                </Badge>
+                <Badge variant="secondary">
+                  배송
+                </Badge>
+              </div>
+            </div>
+          </div>
         </div>
       </TabsContent>
       <TabsContent value="sell">
