@@ -1,5 +1,8 @@
 <template>
-  <p :class="[typoClass, className]">
+  <p
+    :class="[typoClass, $attrs.class]"
+    v-bind="$attrs"
+  >
     <slot />
   </p>
 </template>
@@ -11,7 +14,6 @@ type TypoType = 'Head1' | 'Head2' | 'Head3' | 'SubTitle1' | 'SubTitle2' | 'P1' |
 
 const props = defineProps<{
   type: TypoType
-  className?: string
 }>()
 
 const typoTypeMap: Record<TypoType, string> = {
@@ -20,9 +22,9 @@ const typoTypeMap: Record<TypoType, string> = {
   Head3: 'text-[18px] font-bold',
   SubTitle1: 'text-[16px] font-semibold',
   SubTitle2: 'text-[15px] font-semibold',
-  P1: 'text-[16px] text-medium',
-  P2: 'text-[14px] text-medium',
-  Caption: 'text-[12px] text-medium',
+  P1: 'text-[16px] font-medium',
+  P2: 'text-[14px] font-medium',
+  Caption: 'text-[12px] font-medium',
 }
 
 const typoClass = computed(() => typoTypeMap[props.type])

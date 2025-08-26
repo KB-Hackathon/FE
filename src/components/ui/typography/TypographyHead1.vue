@@ -1,16 +1,9 @@
 <template>
-  <BaseTypography
-    type="Head1"
-    :class="className"
-  >
+  <BaseTypography type="Head1">
     <slot />
   </BaseTypography>
 </template>
 
 <script setup lang="ts">
 import BaseTypography from './BaseTypography.vue'
-
-defineProps<{
-  className?: string
-}>()
 </script>
