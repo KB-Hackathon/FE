@@ -33,14 +33,12 @@
           >
             <div class="rounded-full h-14 w-14 bg-slate-200" />
             <TypographyP2 class="w-[70px] text-center text-gray-500 font-semibold">
-              {{
-                category
-              }}
+              {{ category }}
             </TypographyP2>
           </div>
         </div>
         <Separator class="my-4" />
-        <div class="flex gap-2">
+        <div class="flex gap-2 sticky top-0 py-3 bg-white">
           <Select v-model="filter1">
             <SelectTrigger class="h-[45px]">
               <SelectValue placeholder="모집 상태" />
@@ -91,6 +89,25 @@
           </Button>
         </div>
         <div class="flex flex-col gap-4 mt-3">
+          <Card>
+            <div class="bg-slate-300 w-full h-[150px] rounded-t-md" />
+
+            <CardContent class="pt-3">
+              <TypographyHead3>35% 달성 중이에요</TypographyHead3>
+              <TypographySubTitle1>맛있는 찰옥수수 냉동 옥수수 10개, 옥수수중</TypographySubTitle1>
+              <TypographyP1 class="text-gray-400">
+                주식회사 착착
+              </TypographyP1>
+            </CardContent>
+            <CardFooter class="flex gap-2">
+              <Badge variant="secondary">
+                25일 남음
+              </Badge>
+              <Badge variant="secondary">
+                쿠폰
+              </Badge>
+            </CardFooter>
+          </Card>
           <Card>
             <div class="bg-slate-300 w-full h-[150px] rounded-t-md" />
 
