@@ -1,17 +1,22 @@
 <template>
-  <div class="bg-white w-full flex items-center justify-around px-4 py-3">
+  <div
+    class="m-auto max-w-[390px] bg-white w-full flex items-center justify-around px-4 py-3 shadow-top"
+  >
     <button
       v-for="(tab, index) in tabs"
       :key="index"
+      class="flex flex-col gap-1"
       @click="selectTab(tab.value)"
     >
       <i :class="cn('bi text-xl', isActive(tab.value) ? tab.active_icon : tab.icon)" />
+      <TypographyCaption>{{ tab.label }}</TypographyCaption>
     </button>
   </div>
 </template>
 <script setup lang="ts">
 import { cn } from '@/lib/utils'
 import { useRoute, useRouter } from 'vue-router'
+import { TypographyCaption } from './ui/typography'
 
 const route = useRoute()
 const router = useRouter()
@@ -55,3 +60,8 @@ const selectTab = (tab: string) => {
   router.push(selected.location)
 }
 </script>
+<style>
+.shadow-top {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+</style>
