@@ -41,6 +41,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Badge } from '@/components/ui/badge'
+import { Badge } from '@/shared/components/ui/badge'
 import { BadgeCheckIcon } from 'lucide-vue-next'
 </script>

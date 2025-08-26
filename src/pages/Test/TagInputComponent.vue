@@ -19,7 +19,7 @@ import {
   TagsInputItem,
   TagsInputItemDelete,
   TagsInputItemText,
-} from '@/components/ui/tags-input'
+} from '@/shared/components/ui/tags-input'
 import { ref } from 'vue'
 
 const modelValue = ref(['Apple', 'Banana'])

@@ -24,6 +24,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Alert, AlertDescription, AlertTitle } from '@/shared/components/ui/alert'
 import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon } from 'lucide-vue-next'
 </script>

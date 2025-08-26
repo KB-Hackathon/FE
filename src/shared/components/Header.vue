@@ -6,5 +6,5 @@
   </div>
 </template>
 <script setup lang="ts">
-import { TypographyHead1 } from '@/components/ui/typography'
+import { TypographyHead1 } from '@/shared/components/ui/typography'
 </script>

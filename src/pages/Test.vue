@@ -21,8 +21,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Button } from '@/shared/components/ui/button'
+import { Input } from '@/shared/components/ui/input'
 import AccordionComponent from './Test/AccordionComponent.vue'
 import AlertComponent from './Test/AlertComponent.vue'
 import AlertDialogComponent from './Test/AlertDialogComponent.vue'

@@ -29,7 +29,7 @@ import {
   PaginationLast,
   PaginationNext,
   PaginationPrevious,
-} from '@/components/ui/pagination'
+} from '@/shared/components/ui/pagination'
 import { ref } from 'vue'
 
 const page = ref(2)

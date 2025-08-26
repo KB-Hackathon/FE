@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Toaster } from '@/components/ui/sonner'
+import { Toaster } from '@/shared/components/ui/sonner'
 import { RouterView } from 'vue-router'
 import 'vue-sonner/style.css'
 

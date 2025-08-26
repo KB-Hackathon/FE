@@ -55,8 +55,9 @@ import { useForm } from 'vee-validate'
 import { computed, ref } from 'vue'
 import { z } from 'zod'
 
-import { Button } from '@/components/ui/button'
-import { Calendar } from '@/components/ui/calendar'
+import { cn } from '@/lib/utils'
+import { Button } from '@/shared/components/ui/button'
+import { Calendar } from '@/shared/components/ui/calendar'
 import {
   FormControl,
   FormDescription,
@@ -64,9 +65,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { cn } from '@/lib/utils'
+} from '@/shared/components/ui/form'
+import { Popover, PopoverContent, PopoverTrigger } from '@/shared/components/ui/popover'
 
 const df = new DateFormatter('en-US', { dateStyle: 'long' })
 

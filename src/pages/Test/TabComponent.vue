@@ -20,5 +20,5 @@
   </Tabs>
 </template>
 <script setup lang="ts">
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs'
 </script>

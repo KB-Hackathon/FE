@@ -52,5 +52,5 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion'
+} from '@/shared/components/ui/accordion'
 </script>
