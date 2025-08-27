@@ -23,8 +23,8 @@
 </template>
 
 <script setup lang="ts">
-import Header from '@/shared/components/Header.vue'
-import Navbar from '@/shared/components/Navbar.vue'
+import Header from '@/shared/components/organisms/Header.vue'
+import Navbar from '@/shared/components/organisms/Navbar.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
