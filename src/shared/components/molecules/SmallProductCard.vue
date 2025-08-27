@@ -1,5 +1,8 @@
 <template>
-  <div class="mb-1">
+  <div
+    class="mb-1"
+    @click="() => router.push({ name: 'product', params: { productId: '1' } })"
+  >
     <div class="bg-slate-300 w-full h-[90px] rounded-t-md" />
 
     <div class="pt-3 px-1">
@@ -19,4 +22,7 @@
 <script setup lang="ts">
 import { Badge } from '@/shared/components/ui/badge'
 import { TypographyHead3, TypographyP1 } from '@/shared/components/ui/typography'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 </script>

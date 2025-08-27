@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card @click="() => router.push({ name: 'product', params: { productId: '1' } })">
     <div class="bg-slate-300 w-full h-[150px] rounded-t-md" />
 
     <CardContent class="pt-3">
@@ -27,4 +27,7 @@ import {
   TypographyP1,
   TypographySubTitle1,
 } from '@/shared/components/ui/typography'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 </script>
