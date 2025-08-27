@@ -8,21 +8,26 @@ const router = createRouter({
       name: 'test',
       path: '/test',
       component: Test,
+      meta: { footer: true },
     },
     {
       name: 'home',
       path: '/main',
       component: Home,
+      meta: { footer: true },
     },
     {
       name: 'archive',
       path: '/archive',
       component: Archive,
+      meta: { footer: true },
     },
+
     {
       name: 'my',
       path: '/my',
       component: My,
+      meta: { footer: true },
     },
     {
       name: 'product',

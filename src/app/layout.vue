@@ -13,7 +13,10 @@
     </main>
 
     <!-- 푸터 -->
-    <footer class="fixed bottom-0 left-0 w-full z-50 flex justify-center">
+    <footer
+      v-if="isShowFooter"
+      class="fixed bottom-0 left-0 w-full z-50 flex justify-center"
+    >
       <Navbar />
     </footer>
   </div>
@@ -22,4 +25,9 @@
 <script setup lang="ts">
 import Header from '@/shared/components/Header.vue'
 import Navbar from '@/shared/components/Navbar.vue'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const isShowFooter = computed(() => route.meta.footer === true)
 </script>
