@@ -13,207 +13,30 @@
         value="buy"
         class="w-full flex flex-col mt-3"
       >
-        <div class="relative w-full items-center">
-          <Input
-            id="search"
-            v-model="search"
-            type="text"
-            placeholder="상품을 검색해보세요"
-            class="pl-[50px] py-5 rounded-full"
-          />
-          <span class="absolute start-0 inset-y-0 flex items-center justify-center px-4">
-            <Search class="size-5 text-muted-foreground" />
-          </span>
-        </div>
-        <div class="flex overflow-scroll gap-3 mt-4">
-          <div
-            v-for="(category, index) in categories"
-            :key="index"
-            class="flex flex-col justify-center items-center gap-2"
-          >
-            <div class="rounded-full h-14 w-14 bg-slate-200" />
-            <TypographyP2 class="w-[70px] text-center text-gray-500 font-semibold">
-              {{ category }}
-            </TypographyP2>
-          </div>
-        </div>
+        <SearchInput v-model="search" />
+        <CategoryList
+          v-model:selected="selected"
+          :categories="categories"
+        />
+
         <Separator class="my-4" />
         <div class="flex gap-2 sticky top-0 py-3 bg-white">
-          <Select v-model="filter1">
-            <SelectTrigger class="h-[45px]">
-              <SelectValue placeholder="모집 상태" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="전체">
-                  전체
-                </SelectItem>
-                <SelectItem value="모집 중">
-                  모집 중
-                </SelectItem>
-                <SelectItem value="모집 예정">
-                  모집 예정
-                </SelectItem>
-                <SelectItem value="모집 완료">
-                  모집 완료
-                </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-
-          <Select v-model="filter2">
-            <SelectTrigger class="h-[45px]">
-              <SelectValue placeholder="거래 방식" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="전체">
-                  전체
-                </SelectItem>
-                <SelectItem value="쿠폰">
-                  쿠폰
-                </SelectItem>
-                <SelectItem value="택배">
-                  택배
-                </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-
-          <Button
-            class="h-[45px]"
-            variant="outline"
-            @click="removeFilter"
-          >
-            <FunnelX />
-          </Button>
+          <FilteringTab
+            v-model:filter1="filter1"
+            v-model:filter2="filter2"
+          />
         </div>
         <div class="flex flex-col gap-4 mt-3">
-          <Card>
-            <div class="bg-slate-300 w-full h-[150px] rounded-t-md" />
-
-            <CardContent class="pt-3">
-              <TypographyHead3>35% 달성 중이에요</TypographyHead3>
-              <TypographySubTitle1>맛있는 찰옥수수 냉동 옥수수 10개, 옥수수중</TypographySubTitle1>
-              <TypographyP1 class="text-gray-400">
-                주식회사 착착
-              </TypographyP1>
-            </CardContent>
-            <CardFooter class="flex gap-2">
-              <Badge variant="secondary">
-                25일 남음
-              </Badge>
-              <Badge variant="secondary">
-                쿠폰
-              </Badge>
-            </CardFooter>
-          </Card>
-          <Card>
-            <div class="bg-slate-300 w-full h-[150px] rounded-t-md" />
-
-            <CardContent class="pt-3">
-              <TypographyHead3>35% 달성 중이에요</TypographyHead3>
-              <TypographySubTitle1>맛있는 찰옥수수 냉동 옥수수 10개, 옥수수중</TypographySubTitle1>
-              <TypographyP1 class="text-gray-400">
-                주식회사 착착
-              </TypographyP1>
-            </CardContent>
-            <CardFooter class="flex gap-2">
-              <Badge variant="secondary">
-                25일 남음
-              </Badge>
-              <Badge variant="secondary">
-                쿠폰
-              </Badge>
-            </CardFooter>
-          </Card>
-          <Card>
-            <div class="bg-slate-300 w-full h-[150px] rounded-t-md" />
-
-            <CardContent class="pt-3">
-              <TypographyHead3>35% 달성 중이에요</TypographyHead3>
-
-              <TypographySubTitle1>맛있는 찰옥수수 냉동 옥수수 10개, 옥수수중</TypographySubTitle1>
-              <TypographyP1 class="text-gray-400">
-                주식회사 착착
-              </TypographyP1>
-            </CardContent>
-            <CardFooter class="flex gap-2">
-              <Badge class="bg-red-100 text-red-600">
-                마감임박
-              </Badge>
-              <Badge variant="secondary">
-                배송
-              </Badge>
-            </CardFooter>
-          </Card>
+          <LargeProductCard />
+          <LargeProductCard />
+          <LargeProductCard />
 
           <TypographyHead3>🔥 실시간 트렌드</TypographyHead3>
           <div class="w-full grid grid-cols-2 gap-2">
-            <div class="mb-1">
-              <div class="bg-slate-300 w-full h-[90px] rounded-t-md" />
-
-              <div class="pt-3 px-1">
-                <TypographyHead3>35% 달성</TypographyHead3>
-                <TypographyP1>맛있는 찰옥수수 냉동 ...</TypographyP1>
-              </div>
-              <div class="flex gap-2 mt-2 px-1">
-                <Badge class="bg-red-100 text-red-600">
-                  마감임박
-                </Badge>
-                <Badge variant="secondary">
-                  배송
-                </Badge>
-              </div>
-            </div>
-            <div class="mb-1">
-              <div class="bg-slate-300 w-full h-[90px] rounded-t-md" />
-
-              <div class="pt-3 px-1">
-                <TypographyHead3>35% 달성</TypographyHead3>
-                <TypographyP1>맛있는 찰옥수수 냉동 ...</TypographyP1>
-              </div>
-              <div class="flex gap-2 mt-2 px-1">
-                <Badge class="bg-red-100 text-red-600">
-                  마감임박
-                </Badge>
-                <Badge variant="secondary">
-                  배송
-                </Badge>
-              </div>
-            </div>
-            <div class="mb-1">
-              <div class="bg-slate-300 w-full h-[90px] rounded-t-md" />
-
-              <div class="pt-3 px-1">
-                <TypographyHead3>35% 달성</TypographyHead3>
-                <TypographyP1>맛있는 찰옥수수 냉동 ...</TypographyP1>
-              </div>
-              <div class="flex gap-2 mt-2 px-1">
-                <Badge class="bg-red-100 text-red-600">
-                  마감임박
-                </Badge>
-                <Badge variant="secondary">
-                  배송
-                </Badge>
-              </div>
-            </div>
-            <div class="mb-1">
-              <div class="bg-slate-300 w-full h-[90px] rounded-t-md" />
-
-              <div class="pt-3 px-1">
-                <TypographyHead3>35% 달성</TypographyHead3>
-                <TypographyP1>맛있는 찰옥수수 냉동 ...</TypographyP1>
-              </div>
-              <div class="flex gap-2 mt-2 px-1">
-                <Badge class="bg-red-100 text-red-600">
-                  마감임박
-                </Badge>
-                <Badge variant="secondary">
-                  배송
-                </Badge>
-              </div>
-            </div>
+            <SmallProductCard />
+            <SmallProductCard />
+            <SmallProductCard />
+            <SmallProductCard />
           </div>
         </div>
       </TabsContent>
@@ -224,33 +47,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Badge } from '@/shared/components/ui/badge'
-import { Button } from '@/shared/components/ui/button'
-import { Card, CardContent, CardFooter } from '@/shared/components/ui/card'
-import { Input } from '@/shared/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/shared/components/ui/select'
+import CategoryList from '@/features/product/filter/ui/CategoryList.vue'
+import FilteringTab from '@/features/product/filter/ui/FilteringTab.vue'
+import LargeProductCard from '@/features/product/productCard/ui/LargeProductCard.vue'
+import SmallProductCard from '@/features/product/productCard/ui/SmallProductCard.vue'
+import { SearchInput } from '@/shared/components/ui/input'
 import { Separator } from '@/shared/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs'
-import {
-  TypographyHead3,
-  TypographyP1,
-  TypographyP2,
-  TypographySubTitle1,
-} from '@/shared/components/ui/typography'
-import { FunnelX, Search } from 'lucide-vue-next'
+import { TypographyHead3 } from '@/shared/components/ui/typography'
 import { ref } from 'vue'
-
-const search = ref<string>('')
-const filter1 = ref<string | undefined>(undefined) // 모집 상태
-const filter2 = ref<string | undefined>(undefined) // 거래 방식
-
 const categories = [
   '패션',
   '뷰티 / 헬스',
@@ -261,9 +66,8 @@ const categories = [
   '스포츠',
   '유아',
 ]
-
-function removeFilter() {
-  filter1.value = undefined
-  filter2.value = undefined
-}
+const selected = ref<string>(categories[0])
+const search = ref<string>('')
+const filter1 = ref<string | undefined>(undefined) // 모집 상태
+const filter2 = ref<string | undefined>(undefined) // 거래 방식
 </script>
