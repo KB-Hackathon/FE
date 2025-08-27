@@ -31,13 +31,7 @@
           <LargeProductCard />
           <LargeProductCard />
 
-          <TypographyHead3>🔥 실시간 트렌드</TypographyHead3>
-          <div class="w-full grid grid-cols-2 gap-2">
-            <SmallProductCard />
-            <SmallProductCard />
-            <SmallProductCard />
-            <SmallProductCard />
-          </div>
+          <TrendProduct />
         </div>
       </TabsContent>
       <TabsContent value="sell">
@@ -49,12 +43,12 @@
 <script setup lang="ts">
 import CategoryList from '@/features/product/filter/ui/CategoryList.vue'
 import FilteringTab from '@/features/product/filter/ui/FilteringTab.vue'
-import LargeProductCard from '@/features/product/productCard/ui/LargeProductCard.vue'
-import SmallProductCard from '@/features/product/productCard/ui/SmallProductCard.vue'
+import TrendProduct from '@/features/product/productList/ui/TrendProduct.vue'
+import LargeProductCard from '@/shared/components/molecules/LargeProductCard.vue'
+
 import { SearchInput } from '@/shared/components/ui/input'
 import { Separator } from '@/shared/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs'
-import { TypographyHead3 } from '@/shared/components/ui/typography'
 import { ref } from 'vue'
 const categories = [
   '패션',
