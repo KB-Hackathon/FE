@@ -1,4 +1,4 @@
-import { Archive, Home, My, Product, Test } from '@/pages'
+import { Archive, Home, My, Product, Seller, Test } from '@/pages'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -33,6 +33,11 @@ const router = createRouter({
       name: 'product',
       path: '/product/:productId',
       component: Product,
+    },
+    {
+      name: 'seller',
+      path: '/seller/:sellerId',
+      component: Seller,
     },
   ],
 })

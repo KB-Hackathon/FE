@@ -1,15 +1,19 @@
 <template>
   <div class="flex w-full flex-col gap-4">
     <div class="w-full h-[250px] bg-slate-300 rounded-md" />
-    <div class="flex w-full gap-3 text-gray-600 items-center">
-      <TypographySubTitle1>주식회사 복숭아마켓</TypographySubTitle1>
+    <div
+      class="flex w-full justify-between text-gray-600 items-center"
+      @click="() => router.push({ name: 'seller', params: { sellerId: '1' } })"
+    >
+      <div class="flex gap-3">
+        <TypographySubTitle1>주식회사 복숭아마켓</TypographySubTitle1>
+        <i class="bi bi-chevron-right" />
+      </div>
       <TypographyP2><span class="text-yellow-400">★</span> 4.5 (135명)</TypographyP2>
-      <i class="bi bi-chevron-right" />
     </div>
     <Separator />
     <TypographyHead3>
-      꿀맛 당도 보장 복숭아 10개입 꿀맛 당도 보장 복숭아 10개입 꿀맛 당도 보장 복숭아
-      10개입
+      꿀맛 당도 보장 복숭아 10개입 꿀맛 당도 보장 복숭아 10개입 꿀맛 당도 보장 복숭아 10개입
     </TypographyHead3>
     <TypographyP2 class="text-gray-500">
       꿀맛 당도 보장 복숭아 10개입 꿀맛 당도 보장 복숭아 10개입 꿀맛 당도 보장 복숭아 10개입 꿀맛
@@ -91,4 +95,7 @@ import {
   TypographySubTitle1,
   TypographySubTitle2,
 } from '@/shared/components/ui/typography'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 </script>
