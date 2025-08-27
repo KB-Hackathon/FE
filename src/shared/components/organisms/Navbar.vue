@@ -15,8 +15,8 @@
 </template>
 <script setup lang="ts">
 import { cn } from '@/lib/utils'
+import { TypographyCaption } from '@/shared/components/ui/typography'
 import { useRoute, useRouter } from 'vue-router'
-import { TypographyCaption } from './ui/typography'
 
 const route = useRoute()
 const router = useRouter()
