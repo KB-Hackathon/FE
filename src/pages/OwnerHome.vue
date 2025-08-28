@@ -44,7 +44,7 @@
     </Card>
     <TypographyHead3>바로가기</TypographyHead3>
     <div class="flex flex-col gap-3">
-      <div class="rounded-lg bg-ccmkt-main/60 p-[15px]">
+      <div class="rounded-lg p-[15px] bg-gradient-to-r from-ccmkt-main/60 to-ccmkt-main/70">
         <TypographyHead2 class="text-[20px]">
           상품 올리기
         </TypographyHead2>
@@ -56,7 +56,7 @@
           <i class="bi bi-chevron-right text-xl" />
         </div>
       </div>
-      <div class="rounded-lg bg-ccmkt-main/70 p-[15px]">
+      <div class="rounded-lg p-[15px] bg-gradient-to-r from-ccmkt-main/70 to-ccmkt-main/90">
         <TypographyHead2 class="text-[20px]">
           내 홍보글 확인하기
         </TypographyHead2>
@@ -68,7 +68,7 @@
         </div>
       </div>
 
-      <div class="rounded-lg bg-ccmkt-main/40 p-[15px]">
+      <div class="rounded-lg p-[15px] bg-gradient-to-r from-ccmkt-main/40 to-ccmkt-main/50">
         <TypographyHead2 class="text-[20px]">
           마케팅 성과 분석하기
         </TypographyHead2>
