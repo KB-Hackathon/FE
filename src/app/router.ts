@@ -1,5 +1,6 @@
 import { Archive, Home, My, Product, Seller, Test } from '@/pages'
 import OwnerHome from '@/pages/OwnerHome.vue'
+import UploadProduct from '@/pages/UploadProduct.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -44,6 +45,11 @@ const router = createRouter({
       name: 'owner_main',
       path: '/owner_main',
       component: OwnerHome,
+    },
+    {
+      name: 'upload_product',
+      path: '/upload',
+      component: UploadProduct,
     },
   ],
 })

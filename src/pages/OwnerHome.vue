@@ -7,7 +7,7 @@
         <TypographyHead1 class="mb-4">
           gxggrcji
         </TypographyHead1>
-        <div class="flex w-full gap-4">
+        <div class="flex w-full gap-6">
           <div class="min-w-[70px] h-[70px] bg-ccmkt-gray rounded-full m-auto" />
 
           <div class="flex flex-col w-full gap-2">
@@ -44,7 +44,10 @@
     </Card>
     <TypographyHead3>바로가기</TypographyHead3>
     <div class="flex flex-col gap-3">
-      <div class="rounded-lg p-[15px] bg-gradient-to-r from-ccmkt-main/60 to-ccmkt-main/70">
+      <div
+        class="p-[15px] bg-ccmkt-main/50 rounded-lg"
+        @click="() => router.push({ name: 'upload_product' })"
+      >
         <TypographyHead2 class="text-[20px]">
           상품 올리기
         </TypographyHead2>
@@ -56,7 +59,7 @@
           <i class="bi bi-chevron-right text-xl" />
         </div>
       </div>
-      <div class="rounded-lg p-[15px] bg-gradient-to-r from-ccmkt-main/70 to-ccmkt-main/90">
+      <div class="p-[15px] bg-[#e5e5e5] rounded-lg">
         <TypographyHead2 class="text-[20px]">
           내 홍보글 확인하기
         </TypographyHead2>
@@ -68,7 +71,7 @@
         </div>
       </div>
 
-      <div class="rounded-lg p-[15px] bg-gradient-to-r from-ccmkt-main/40 to-ccmkt-main/50">
+      <div class="p-[15px] bg-[#ffeeaa] rounded-lg">
         <TypographyHead2 class="text-[20px]">
           마케팅 성과 분석하기
         </TypographyHead2>
@@ -94,4 +97,7 @@ import {
   TypographyP1,
 } from '@/shared/components/ui/typography'
 import TypographySubTitle1 from '@/shared/components/ui/typography/TypographySubTitle1.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 </script>
