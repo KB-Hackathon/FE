@@ -25,9 +25,19 @@
 <script setup lang="ts">
 import Header from '@/shared/components/organisms/Header.vue'
 import Navbar from '@/shared/components/organisms/Navbar.vue'
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, nextTick, onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const isShowFooter = computed(() => route.meta.footer === true)
+
+const router = useRouter()
+const mainRef = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  router.afterEach(async () => {
+    await nextTick()
+    mainRef.value?.scrollTo({ top: 0, behavior: 'auto' })
+  })
+})
 </script>
