@@ -3,7 +3,7 @@
     <TypographySubTitle1 class="font-normal">
       꿀복숭아 공구 모집해용
     </TypographySubTitle1>
-    <TypographyP2 class="text-yellow-400">
+    <TypographyP2 class="text-ccmkt-main">
       ★★★★☆
     </TypographyP2>
 

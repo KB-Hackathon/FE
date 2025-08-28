@@ -1,15 +1,13 @@
 <template>
-  <div
-    class="m-auto max-w-[390px] bg-white w-full flex items-center justify-around px-4 py-3 shadow-top"
-  >
+  <div class="m-auto max-w-[390px] bg-white w-full flex justify-around px-4 pt-3 pb-5 shadow-top">
     <button
       v-for="(tab, index) in tabs"
       :key="index"
       class="flex flex-col gap-1"
       @click="selectTab(tab.value)"
     >
-      <i :class="cn('bi text-xl', isActive(tab.value) ? tab.active_icon : tab.icon)" />
-      <TypographyCaption>{{ tab.label }}</TypographyCaption>
+      <i :class="cn('bi text-xl ', isActive(tab.value) ? tab.active_icon : tab.icon)" />
+      <TypographyCaption> {{ tab.label }}</TypographyCaption>
     </button>
   </div>
 </template>
@@ -34,7 +32,7 @@ const tabs = [
     active_icon: 'bi-house-fill',
     value: 'home',
     label: '홈',
-    location: '/main',
+    location: '/',
   },
   { icon: 'bi-person', active_icon: 'bi-person-fill', value: 'my', label: '마이', location: '/my' },
 ]
@@ -43,7 +41,7 @@ const isActive = (tabValue: string): boolean => {
   const path = route.path
 
   if (tabValue === 'archive') return path.startsWith('/archive')
-  if (tabValue === 'home') return path.startsWith('/main')
+  if (tabValue === 'home') return path === '/'
   if (tabValue === 'my') return path.startsWith('/my')
   return false
 }

@@ -12,7 +12,7 @@ const router = createRouter({
     },
     {
       name: 'home',
-      path: '/main',
+      path: '/',
       component: Home,
       meta: { footer: true },
     },

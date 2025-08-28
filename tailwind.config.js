@@ -8,6 +8,8 @@ export default {
         dohyeon: ['"Do Hyeon"', 'sans-serif'],
       },
       colors: {
+        'ccmkt-main': '#ffcc00',
+        'ccmkt-gray': '#cbd5e1',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

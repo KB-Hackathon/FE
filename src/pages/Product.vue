@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-full flex-col gap-4">
-    <div class="w-full h-[250px] bg-slate-300 rounded-md" />
+    <div class="w-full h-[250px] bg-ccmkt-gray rounded-md" />
     <div
       class="flex w-full justify-between text-gray-600 items-center"
       @click="() => router.push({ name: 'seller', params: { sellerId: '1' } })"
@@ -9,7 +9,7 @@
         <TypographySubTitle1>주식회사 복숭아마켓</TypographySubTitle1>
         <i class="bi bi-chevron-right" />
       </div>
-      <TypographyP2><span class="text-yellow-400">★</span> 4.5 (135명)</TypographyP2>
+      <TypographyP2><span class="text-ccmkt-main">★</span> 4.5 (135명)</TypographyP2>
     </div>
     <Separator />
     <TypographyHead3>
@@ -44,7 +44,7 @@
         2025년 3월 24일 마감
       </TypographyCaption>
     </div>
-    <div class="flex items-center gap-1 -mt-4">
+    <div class="flex items-center gap-1 -mt-4 text-ccmkt-main">
       <TypographyHead1>34,200,000</TypographyHead1>
       <TypographyP1>원 달성</TypographyP1>
       <Badge
@@ -74,9 +74,11 @@
       <i class="bi bi-heart-fill text-2xl text-red-600" />
       <Button
         variant="default"
-        class="w-[150px] bg-[#1fa36e]"
+        class="w-[150px] h-[45px] bg-ccmkt-main"
       >
-        <TypographySubTitle2>참여하기</TypographySubTitle2>
+        <TypographySubTitle1 class="text-black font-bold">
+          참여하기
+        </TypographySubTitle1>
       </Button>
     </div>
   </div>
@@ -93,7 +95,6 @@ import {
   TypographyP1,
   TypographyP2,
   TypographySubTitle1,
-  TypographySubTitle2,
 } from '@/shared/components/ui/typography'
 import { useRouter } from 'vue-router'
 
