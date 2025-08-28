@@ -10,7 +10,7 @@
       :class="
         cn(
           isShowFooter ? 'pb-[100px]' : 'pb-[30px]',
-          'h-[100dvh] pt-[55px] overflow-y-auto m-auto flex flex-col gap-3 justify-start items-center px-5'
+          'bg-[#F9FAFB] h-[100dvh] pt-[55px] overflow-y-auto m-auto flex flex-col gap-3 justify-start items-center px-5'
         )
       "
     >
