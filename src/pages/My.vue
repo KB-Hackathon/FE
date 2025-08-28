@@ -1,7 +1,6 @@
 <template>
   <div class="flex w-full flex-col">
     <Profile />
-    <Summary />
     <Join />
     <Review />
   </div>
@@ -10,5 +9,4 @@
 import Join from '@/features/user/ui/Join.vue'
 import Profile from '@/features/user/ui/Profile.vue'
 import Review from '@/features/user/ui/Review.vue'
-import Summary from '@/features/user/ui/Summary.vue'
 </script>
