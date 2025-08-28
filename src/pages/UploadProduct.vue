@@ -41,6 +41,7 @@
 import Step1 from '@/features/product/upload/ui/Step1.vue'
 import Step2 from '@/features/product/upload/ui/Step2.vue'
 import Step3 from '@/features/product/upload/ui/Step3.vue'
+import Step4 from '@/features/product/upload/ui/Step4.vue'
 import { TypographyHead3 } from '@/shared/components/ui/typography'
 import { useKeyboardSafeBottom } from '@/shared/composables/useKeyboardSafeBottom'
 import { nextTick, onMounted, ref, watch, type ComponentPublicInstance } from 'vue'
@@ -61,7 +62,7 @@ type StepExpose = {
   focusFirstFieldImmediate?: () => void
 }
 
-const steps = [Step1, Step2, Step3]
+const steps = [Step1, Step2, Step3, Step4]
 const currentStep = ref(0)
 const stepRef = ref<ComponentPublicInstance<StepExpose> | null>(null)
 

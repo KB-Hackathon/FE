@@ -11,9 +11,9 @@
 
     <Select v-model="model">
       <SelectTrigger
-        class="w-full h-[45px] text-[23px] border-t-0 border-l-0 border-r-0 rounded-none shadow-none pl-0 pr-0 pb-4 focus:ring-0 border-b-2 border-ccmkt-main"
+        class="w-full h-[45px] text-[23px] font-semibold border-t-0 border-l-0 border-r-0 rounded-none shadow-none pl-0 pr-0 pb-4 focus:ring-0 border-b-2 border-ccmkt-main"
       >
-        <SelectValue placeholder="카테고리를 선택해주세요" />
+        <SelectValue placeholder="카테고리" />
       </SelectTrigger>
       <SelectContent class="w-full">
         <SelectGroup
