@@ -1,4 +1,5 @@
 import { Archive, Home, My, Product, Seller, Test } from '@/pages'
+import OwnerHome from '@/pages/OwnerHome.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -38,6 +39,11 @@ const router = createRouter({
       name: 'seller',
       path: '/seller/:sellerId',
       component: Seller,
+    },
+    {
+      name: 'owner_main',
+      path: '/owner_main',
+      component: OwnerHome,
     },
   ],
 })
