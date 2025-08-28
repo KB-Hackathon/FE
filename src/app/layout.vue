@@ -7,7 +7,12 @@
     <!-- 메인 콘텐츠 -->
     <main
       ref="mainRef"
-      class="h-[100dvh] pt-[55px] pb-[100px] overflow-y-auto m-auto flex flex-col gap-3 justify-start items-center px-5"
+      :class="
+        cn(
+          isShowFooter ? 'pb-[100px]' : 'pb-[30px]',
+          'h-[100dvh] pt-[55px] overflow-y-auto m-auto flex flex-col gap-3 justify-start items-center px-5'
+        )
+      "
     >
       <slot />
     </main>
@@ -23,6 +28,7 @@
 </template>
 
 <script setup lang="ts">
+import { cn } from '@/lib/utils'
 import Header from '@/shared/components/organisms/Header.vue'
 import Navbar from '@/shared/components/organisms/Navbar.vue'
 import { computed, nextTick, onMounted, ref } from 'vue'
