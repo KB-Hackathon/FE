@@ -6,21 +6,16 @@
   >
     <TabsList>
       <TabsTrigger value="buy">
-        <TypographySubTitle1 class="p-1">
-          구매하기
-        </TypographySubTitle1>
+        구매하기
       </TabsTrigger>
       <TabsTrigger value="sell">
-        <TypographySubTitle1 class="p-1">
-          판매하기
-        </TypographySubTitle1>
+        판매하기
       </TabsTrigger>
     </TabsList>
   </Tabs>
 </template>
 <script setup lang="ts">
 import { Tabs, TabsList, TabsTrigger } from '@/shared/components/ui/tabs'
-import { TypographySubTitle1 } from '@/shared/components/ui/typography'
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()

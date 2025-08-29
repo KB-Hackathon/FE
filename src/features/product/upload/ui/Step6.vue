@@ -15,12 +15,47 @@
       <TypographyP1 class="text-gray-700 mb-4">
         모집 종료일
       </TypographyP1>
+      <Popover v-model:open="open">
+        <PopoverTrigger as-child>
+          <Button
+            variant="outline"
+            class="w-full ps-3 text-start font-normal h-[50px] mb-3"
+          >
+            <TypographyP1>
+              {{ endValue ? df.format(toDate(endValue)) : '모집 마감일 선택' }}
+            </TypographyP1>
+            <CalendarIcon class="ms-auto h-4 w-4 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+
+        <PopoverContent
+          side="bottom"
+          align="center"
+          :collision-padding="12"
+          class="p-0 w-[calc(100vw-32px)] max-w-[390px] flex flex-col justify-center items-center"
+        >
+          <Calendar
+            :model-value="endValue"
+            calendar-label="모집 마감일"
+            initial-focus
+            @update:model-value="onPick"
+          />
+          <div class="w-full flex justify-center">
+            <Button
+              class="w-[90%] h-[50px] my-3 bg-ccmkt-main text-black"
+              @click="closePopover"
+            >
+              <TypographySubTitle1>선택</TypographySubTitle1>
+            </Button>
+          </div>
+        </PopoverContent>
+      </Popover>
       <div class="flex flex-col gap-3 mb-3">
         <Button
           :class="
             cn(
               'w-full h-[50px]  active:bg-ccmkt-main focus:bg-ccmkt-main',
-              quick === 'oneWeek' ? 'bg-ccmkt-main' : 'bg-white'
+              quick === 'oneWeek' ? '!bg-ccmkt-main !text-black !border-ccmkt-main' : 'bg-white'
             )
           "
           variant="outline"
@@ -33,7 +68,7 @@
           :class="
             cn(
               'w-full h-[50px]  active:bg-ccmkt-main focus:bg-ccmkt-main',
-              quick === 'twoWeek' ? 'bg-ccmkt-main' : 'bg-white'
+              quick === 'twoWeek' ? '!bg-ccmkt-main !text-black !border-ccmkt-main' : 'bg-white'
             )
           "
           variant="outline"
@@ -43,39 +78,6 @@
           <TypographySubTitle1>이주일 동안</TypographySubTitle1>
         </Button>
       </div>
-
-      <Popover v-model:open="open">
-        <PopoverTrigger as-child>
-          <Button
-            variant="outline"
-            class="w-full ps-3 text-start font-normal h-[50px]"
-          >
-            <TypographyP1>
-              {{
-                endValue ? df.format(toDate(endValue)) : '모집 마감일 선택'
-              }}
-            </TypographyP1>
-            <CalendarIcon class="ms-auto h-4 w-4 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-
-        <PopoverContent class="w-auto p-0">
-          <Calendar
-            :model-value="endValue"
-            calendar-label="모집 마감일"
-            initial-focus
-            @update:model-value="onPick"
-          />
-          <div class="w-full flex justify-center">
-            <Button
-              class="w-[90%] my-3 bg-ccmkt-main text-black"
-              @click="closePopover"
-            >
-              선택
-            </Button>
-          </div>
-        </PopoverContent>
-      </Popover>
     </div>
   </div>
 </template>
@@ -142,12 +144,13 @@ function setTwoWeeksLater() {
   open.value = false
 }
 
-function addDaysISO(iso: string, days: number) {
-  const d = new Date(iso)
-  d.setDate(d.getDate() + days)
-  const yyyy = d.getFullYear()
-  const mm = String(d.getMonth() + 1).padStart(2, '0')
-  const dd = String(d.getDate()).padStart(2, '0')
+function addDaysISO(localIso: string, days: number) {
+  const [y, m, d] = localIso.split('-').map(Number)
+  const dt = new Date(y, m - 1, d)
+  dt.setDate(dt.getDate() + days)
+  const yyyy = dt.getFullYear()
+  const mm = String(dt.getMonth() + 1).padStart(2, '0')
+  const dd = String(dt.getDate()).padStart(2, '0')
   return `${yyyy}-${mm}-${dd}`
 }
 </script>

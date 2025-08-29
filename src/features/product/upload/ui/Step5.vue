@@ -9,12 +9,53 @@
         모집 시작일
       </TypographyP1>
 
+      <Popover v-model:open="open">
+        <PopoverTrigger as-child>
+          <Button
+            variant="outline"
+            :class="
+              cn(
+                'w-full ps-3 text-start font-normal h-[50px] mb-3',
+                !startVal && 'text-muted-foreground'
+              )
+            "
+          >
+            <TypographyP1>
+              {{ startVal ? df.format(toDate(startVal)) : '모집 시작일' }}
+            </TypographyP1>
+            <CalendarIcon class="ms-auto h-4 w-4 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+
+        <PopoverContent
+          side="bottom"
+          align="center"
+          :collision-padding="12"
+          class="p-0 w-[calc(100vw-32px)] max-w-[390px] flex flex-col justify-center items-center"
+        >
+          <Calendar
+            :model-value="startVal"
+            calendar-label="모집 시작일"
+            initial-focus
+            @update:model-value="onPick"
+          />
+          <div class="w-full flex justify-center">
+            <Button
+              class="w-[90%] h-[50px] my-3 bg-ccmkt-main text-black"
+              @click="closePopover"
+            >
+              <TypographySubTitle1>선택</TypographySubTitle1>
+            </Button>
+          </div>
+        </PopoverContent>
+      </Popover>
+
       <div class="flex flex-col gap-3 mb-3">
         <Button
           :class="
             cn(
               'w-full h-[50px] active:bg-ccmkt-main focus:bg-ccmkt-main',
-              quick === 'today' ? 'bg-ccmkt-main' : 'bg-white'
+              quick === 'today' ? '!bg-ccmkt-main !text-black !border-ccmkt-main' : 'bg-white'
             )
           "
           variant="outline"
@@ -22,11 +63,12 @@
         >
           <TypographySubTitle1>오늘부터</TypographySubTitle1>
         </Button>
+
         <Button
           :class="
             cn(
               'w-full h-[50px] active:bg-ccmkt-main focus:bg-ccmkt-main',
-              quick === 'tomorrow' ? 'bg-ccmkt-main' : 'bg-white'
+              quick === 'tomorrow' ? '!bg-ccmkt-main !text-black !border-ccmkt-main' : 'bg-white'
             )
           "
           variant="outline"
@@ -35,43 +77,13 @@
           <TypographySubTitle1>내일부터</TypographySubTitle1>
         </Button>
       </div>
-
-      <Popover v-model:open="open">
-        <PopoverTrigger as-child>
-          <Button
-            variant="outline"
-            :class="
-              cn('w-full ps-3 text-start font-normal h-[50px]', !value && 'text-muted-foreground')
-            "
-          >
-            <TypographyP1>{{ value ? df.format(toDate(value)) : '모집 시작일' }}</TypographyP1>
-            <CalendarIcon class="ms-auto h-4 w-4 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-
-        <PopoverContent class="w-auto p-0">
-          <Calendar
-            :model-value="value"
-            calendar-label="모집 시작일"
-            initial-focus
-            @update:model-value="onPick"
-          />
-          <div class="w-full flex justify-center">
-            <Button
-              class="w-[90%] my-3 bg-ccmkt-main text-black"
-              @click="closePopover"
-            >
-              선택
-            </Button>
-          </div>
-        </PopoverContent>
-      </Popover>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { cn } from '@/lib/utils'
+import type { UploadForm } from '@/pages/UploadProduct.vue'
 import { Button } from '@/shared/components/ui/button'
 import { Calendar } from '@/shared/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/shared/components/ui/popover'
@@ -80,38 +92,32 @@ import {
   TypographyP1,
   TypographySubTitle1,
 } from '@/shared/components/ui/typography'
-
 import { DateFormatter, parseDate } from '@internationalized/date'
-import { toTypedSchema } from '@vee-validate/zod'
 import { CalendarIcon } from 'lucide-vue-next'
 import type { DateValue } from 'reka-ui'
 import { toDate } from 'reka-ui/date'
-import { useForm } from 'vee-validate'
 import { computed, ref } from 'vue'
-import { z } from 'zod'
 
-const open = ref(false)
+const props = defineProps<{ modelValue: UploadForm }>()
+const emit = defineEmits<{ (e: 'update:modelValue', v: UploadForm): void }>()
+
 const df = new DateFormatter('ko-KR', { dateStyle: 'long' })
+const open = ref(false)
 const quick = ref<'today' | 'tomorrow' | null>(null)
 
-const formSchema = toTypedSchema(
-  z.object({
-    startDate: z.string().optional(),
-  })
-)
+function patch(p: Partial<UploadForm>) {
+  emit('update:modelValue', { ...props.modelValue, ...p })
+  console.log(p)
+}
 
-const { setFieldValue, values } = useForm({
-  validationSchema: formSchema,
-})
-
-const value = computed<DateValue | undefined>({
-  get: () => (values.startDate ? (parseDate(values.startDate) as DateValue) : undefined),
+const startVal = computed<DateValue | undefined>({
+  get: () =>
+    props.modelValue.startDate ? (parseDate(props.modelValue.startDate) as DateValue) : undefined,
   set: () => {},
 })
 
 function onPick(v?: DateValue) {
-  if (v) setFieldValue('startDate', v.toString())
-  else setFieldValue('startDate', undefined)
+  patch({ startDate: v ? v.toString() : '' })
   quick.value = null
 }
 
@@ -120,23 +126,23 @@ function closePopover() {
 }
 
 function setToday() {
-  const today = new Date()
-  const yyyy = today.getFullYear()
-  const mm = String(today.getMonth() + 1).padStart(2, '0')
-  const dd = String(today.getDate()).padStart(2, '0')
-  setFieldValue('startDate', `${yyyy}-${mm}-${dd}`)
-  open.value = false
+  patch({ startDate: toLocalISO(new Date()) })
   quick.value = 'today'
+  open.value = false
 }
 
 function setTomorrow() {
   const d = new Date()
   d.setDate(d.getDate() + 1)
+  patch({ startDate: toLocalISO(d) })
+  quick.value = 'tomorrow'
+  open.value = false
+}
+
+function toLocalISO(d: Date) {
   const yyyy = d.getFullYear()
   const mm = String(d.getMonth() + 1).padStart(2, '0')
   const dd = String(d.getDate()).padStart(2, '0')
-  setFieldValue('startDate', `${yyyy}-${mm}-${dd}`)
-  open.value = false
-  quick.value = 'tomorrow'
+  return `${yyyy}-${mm}-${dd}`
 }
 </script>

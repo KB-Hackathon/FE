@@ -9,7 +9,7 @@
       카테고리
     </TypographyP1>
 
-    <Select v-model="model">
+    <Select v-model="category">
       <SelectTrigger
         class="w-full h-[45px] text-[23px] font-semibold border-t-0 border-l-0 border-r-0 rounded-none shadow-none pl-0 pr-0 pb-4 focus:ring-0 border-b-2 border-ccmkt-main"
       >
@@ -33,6 +33,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import type { UploadForm } from '@/pages/UploadProduct.vue'
 import {
   Select,
   SelectContent,
@@ -44,9 +45,10 @@ import {
 import { TypographyHead1, TypographyP1 } from '@/shared/components/ui/typography'
 import { computed } from 'vue'
 
-const props = defineProps<{ modelValue: string }>()
+const props = defineProps<{ modelValue: UploadForm }>()
+
 const emit = defineEmits<{
-  (e: 'update:modelValue', v: string): void
+  (e: 'update:modelValue', v: UploadForm): void
 }>()
 
 const categories = [
@@ -60,8 +62,10 @@ const categories = [
   { value: 'baby', label: '유아' },
 ]
 
-const model = computed({
-  get: () => props.modelValue ?? '',
-  set: (v: string) => emit('update:modelValue', v),
+const category = computed({
+  get: () => props.modelValue.category,
+  set: (val: string) => {
+    emit('update:modelValue', { ...props.modelValue, category: val })
+  },
 })
 </script>

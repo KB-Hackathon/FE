@@ -3,7 +3,7 @@
     <button
       v-for="(tab, index) in tabs"
       :key="index"
-      class="flex flex-col gap-1"
+      class="flex flex-col gap-1 justify-center items-center"
       @click="selectTab(tab.value)"
     >
       <i :class="cn('bi text-xl ', isActive(tab.value) ? tab.active_icon : tab.icon)" />
