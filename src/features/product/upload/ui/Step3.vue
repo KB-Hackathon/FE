@@ -44,11 +44,9 @@ import {
 import { TypographyHead1, TypographyP1 } from '@/shared/components/ui/typography'
 import { computed } from 'vue'
 
-const props = defineProps<{ modelValue?: string }>()
+const props = defineProps<{ modelValue: string }>()
 const emit = defineEmits<{
   (e: 'update:modelValue', v: string): void
-  (e: 'next'): void
-  (e: 'prev'): void
 }>()
 
 const categories = [

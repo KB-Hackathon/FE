@@ -2,7 +2,7 @@
   <div class="relative h-[100svh] overflow-hidden">
     <div class="fixed top-[80px] inset-x-0 mx-auto max-w-[390px] px-5 box-border">
       <TypographyHead1 class="text-gray-700">
-        모집 기간을 선택해주세요
+        모집 시작일을 선택해주세요
       </TypographyHead1>
 
       <TypographyP1 class="text-gray-700 mt-6 mb-4">
@@ -89,8 +89,6 @@ import { toDate } from 'reka-ui/date'
 import { useForm } from 'vee-validate'
 import { computed, ref } from 'vue'
 import { z } from 'zod'
-
-defineEmits<{ (e: 'next'): void; (e: 'prev'): void }>()
 
 const open = ref(false)
 const df = new DateFormatter('ko-KR', { dateStyle: 'long' })
