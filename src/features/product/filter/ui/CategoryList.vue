@@ -1,5 +1,5 @@
 <template>
-  <div class="flex overflow-scroll gap-3 mt-4">
+  <div class="flex overflow-scroll scrollbar-hide gap-3 mt-4">
     <div
       v-for="(category, index) in categories"
       :key="index"

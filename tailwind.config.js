@@ -6,6 +6,7 @@ export default {
     extend: {
       fontFamily: {
         dohyeon: ['"Do Hyeon"', 'sans-serif'],
+        kb: ['KBFont', 'sans-serif'],
       },
       colors: {
         'ccmkt-main': '#ffcc00',

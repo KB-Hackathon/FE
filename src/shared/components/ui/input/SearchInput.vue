@@ -22,7 +22,7 @@ function onInput(e: Event) {
       :value="props.modelValue"
       type="text"
       placeholder="상품을 검색해보세요"
-      class="pl-[50px] py-5 rounded-full"
+      class="pl-[50px] text-[16px] py-5 rounded-full"
       @input="onInput"
     />
     <span class="absolute start-0 inset-y-0 flex items-center justify-center px-4">

@@ -1,12 +1,19 @@
 <template>
   <div class="flex w-full flex-col gap-3">
     <UserTab />
-    <TypographyHead3>인스타그램 정보</TypographyHead3>
+
     <Card>
       <CardContent class="pt-2">
-        <TypographyHead1 class="mb-4">
-          gxggrcji
-        </TypographyHead1>
+        <div class="flex justify-between items-center">
+          <TypographyHead1 class="mb-4">
+            gxggrcji
+          </TypographyHead1>
+          <TypographyHead3
+            class="bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] bg-clip-text text-transparent"
+          >
+            <i class="bi bi-instagram text-xl" />
+          </TypographyHead3>
+        </div>
         <div class="flex w-full gap-6">
           <div class="min-w-[70px] h-[70px] bg-ccmkt-gray rounded-full m-auto" />
 
@@ -42,7 +49,6 @@
         </div>
       </CardContent>
     </Card>
-    <TypographyHead3>바로가기</TypographyHead3>
     <div class="flex flex-col gap-3">
       <div
         class="p-[15px] bg-ccmkt-main/50 rounded-lg"

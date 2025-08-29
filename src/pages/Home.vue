@@ -8,8 +8,8 @@
       :categories="categories"
     />
 
-    <Separator class="my-4" />
-    <div class="flex gap-2 sticky top-0 py-3 bg-white">
+    <!-- <Separator class="my-4" /> -->
+    <div class="flex gap-2 sticky top-0 py-3 bg-[#F9FAFB]">
       <FilteringTab
         v-model:filter1="filter1"
         v-model:filter2="filter2"
@@ -32,7 +32,6 @@ import UserTab from '@/features/user/ui/UserTab.vue'
 import LargeProductCard from '@/shared/components/molecules/LargeProductCard.vue'
 
 import { SearchInput } from '@/shared/components/ui/input'
-import { Separator } from '@/shared/components/ui/separator'
 import { ref } from 'vue'
 const categories = [
   '패션',
