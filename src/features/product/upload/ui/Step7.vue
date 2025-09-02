@@ -51,7 +51,7 @@
 
         <div
           v-if="isCustom"
-          class="relative flex items-center gap-2"
+          class="relative"
         >
           <Input
             v-model="customRecruitment"
@@ -60,7 +60,9 @@
             placeholder="인원 수 입력"
             class="w-full text-[23px] font-semibold border-t-0 border-r-0 border-l-0 border-b-2 border-ccmkt-main focus-visible:ring-0 rounded-none h-[50px] shadow-none pl-0 pr-10 mt-4"
           />
-          <span class="absolute right-0 bottom-2 text-xl select-none">명</span>
+          <TypographyHead1 class="absolute right-2 bottom-2 text-gray-700 pointer-events-none">
+            명
+          </TypographyHead1>
         </div>
       </div>
     </div>
@@ -77,7 +79,7 @@ import { computed, ref } from 'vue'
 const props = defineProps<{ modelValue: UploadForm }>()
 const emit = defineEmits<{ (e: 'update:modelValue', v: UploadForm): void }>()
 
-const isCustom = ref(false)
+const isCustom = ref(true)
 
 const model = computed(() => props.modelValue)
 

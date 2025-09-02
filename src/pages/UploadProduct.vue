@@ -45,6 +45,7 @@ import Step4 from '@/features/product/upload/ui/Step4.vue'
 import Step5 from '@/features/product/upload/ui/Step5.vue'
 import Step6 from '@/features/product/upload/ui/Step6.vue'
 import Step7 from '@/features/product/upload/ui/Step7.vue'
+import Step8 from '@/features/product/upload/ui/Step8.vue'
 import { TypographyHead3 } from '@/shared/components/ui/typography'
 import { useKeyboardSafeBottom } from '@/shared/composables/useKeyboardSafeBottom'
 import { nextTick, onMounted, ref, watch, type ComponentPublicInstance } from 'vue'
@@ -56,8 +57,10 @@ export type UploadForm = {
   price: string | number | null
   startDate: string
   endDate: string
-  option: string
-  expiryDate: string
+  option: 'delivery' | 'coupon'
+  couponName: string | null
+  couponExpiryDate: string | null
+  expirationPeriod: string | number | null
   recruitmentNum: number | null
 }
 
@@ -65,7 +68,7 @@ type StepExpose = {
   focusFirstFieldImmediate?: () => void
 }
 
-const steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7]
+const steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8]
 const currentStep = ref(0)
 const stepRef = ref<ComponentPublicInstance<StepExpose> | null>(null)
 
@@ -75,8 +78,10 @@ const form = ref<UploadForm>({
   price: null,
   startDate: new Date().toISOString().split('T')[0],
   endDate: '',
-  option: '배송',
-  expiryDate: '',
+  option: 'delivery',
+  couponName: null,
+  couponExpiryDate: null,
+  expirationPeriod: null,
   recruitmentNum: null,
 })
 
