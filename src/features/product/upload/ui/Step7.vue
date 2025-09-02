@@ -25,7 +25,7 @@
         <Button
           class="h-[56px] text-lg col-span-2"
           :class="
-            model.recruitmentNum === null
+            model.recruitmentNum === null && !isCustom
               ? '!bg-ccmkt-main !text-black !border-ccmkt-main'
               : 'bg-white border text-black'
           "
@@ -98,7 +98,6 @@ function toggleCustom() {
     patch({ recruitmentNum: props.modelValue.recruitmentNum ?? null })
   }
 }
-
 const customRecruitment = computed({
   get: () => props.modelValue.recruitmentNum ?? '',
   set: (val: string | number) => {

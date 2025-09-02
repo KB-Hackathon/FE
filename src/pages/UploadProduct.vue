@@ -14,7 +14,7 @@
 
     <div
       v-if="currentStep > 0"
-      class="fixed left-0 right-0 z-[60] flex flex-col"
+      class="fixed left-0 right-0 z-[40] flex flex-col"
       :style="{ bottom: `calc(env(safe-area-inset-bottom) + ${kbOffset + 20}px)` }"
     >
       <div class="flex w-[95%] m-auto relative gap-2">
@@ -27,13 +27,45 @@
           </TypographyHead3>
         </button>
         <button
+          v-if="currentStep < 6"
           class="bg-ccmkt-main rounded-lg w-full h-[60px] z-20"
           @click="goNext"
         >
           <TypographyHead3>다음으로</TypographyHead3>
         </button>
+        <button
+          v-else
+          class="bg-ccmkt-main rounded-lg w-full h-[60px] z-20"
+          @click="onClickUploadButtonClick"
+        >
+          <TypographyHead3>미리보기</TypographyHead3>
+        </button>
       </div>
     </div>
+    <AlertDialog v-model:open="draftDialogOpen">
+      <AlertDialogContent class="rounded-lg">
+        <AlertDialogHeader>
+          <AlertDialogTitle class="text-[24px]">
+            AI로 소개 글을 생성할까요?
+          </AlertDialogTitle>
+          <AlertDialogDescription class="text-[16px]">
+            입력한 내용을 바탕으로 AI가 상품소개를 완성합니다.<br>
+            업로드 전 수정할 수 있어요.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            class="h-[50px]"
+            @click="() => (draftDialogOpen = false)"
+          >
+            <TypographyP1>취소</TypographyP1>
+          </AlertDialogCancel>
+          <AlertDialogAction class="bg-ccmkt-main text-black h-[50px]">
+            <TypographyP1>미리보기</TypographyP1>
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   </div>
 </template>
 
@@ -45,7 +77,17 @@ import Step5 from '@/features/product/upload/ui/Step5.vue'
 import Step6 from '@/features/product/upload/ui/Step6.vue'
 import Step7 from '@/features/product/upload/ui/Step7.vue'
 import Step9 from '@/features/product/upload/ui/Step9.vue'
-import { TypographyHead3 } from '@/shared/components/ui/typography'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/shared/components/ui/alert-dialog'
+import { TypographyHead3, TypographyP1 } from '@/shared/components/ui/typography'
 import { useKeyboardSafeBottom } from '@/shared/composables/useKeyboardSafeBottom'
 import { nextTick, onMounted, ref, watch, type ComponentPublicInstance } from 'vue'
 
@@ -72,6 +114,7 @@ type StepExpose = {
 const steps = [Step1, Step2, Step4, Step5, Step6, Step7, Step9]
 const currentStep = ref(0)
 const stepRef = ref<ComponentPublicInstance<StepExpose> | null>(null)
+const draftDialogOpen = ref(false)
 
 const form = ref<UploadForm>({
   title: '',
@@ -113,5 +156,9 @@ function goNext() {
 
 function goPrev() {
   if (currentStep.value > 0) currentStep.value--
+}
+
+function onClickUploadButtonClick() {
+  draftDialogOpen.value = true
 }
 </script>
