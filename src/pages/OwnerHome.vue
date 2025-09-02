@@ -91,24 +91,32 @@
     </div>
   </div>
   <AlertDialog v-model:open="draftDialogOpen">
-    <AlertDialogContent class="rounded-lg">
+    <AlertDialogContent
+      class="rounded-lg w-[95%]"
+      :close-on-escape="true"
+      :close-on-outside-click="true"
+    >
       <AlertDialogHeader>
         <AlertDialogTitle class="text-[24px]">
           임시 저장된 업로드가 있어요
         </AlertDialogTitle>
+
         <AlertDialogDescription class="text-[16px]">
           이전에 작성하던 내용을 불러올까요? <br>새로 시작하면 임시 저장본이 삭제돼요.
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
+        <AlertDialogCancel class="h-[50px] bg-gray-200">
+          <TypographyP1>취소</TypographyP1>
+        </AlertDialogCancel>
         <AlertDialogCancel
-          class="h-[50px]"
+          class="h-[50px] border bg-white text-black hover:bg-white"
           @click="continueDraft"
         >
           <TypographyP1>이어서 작성</TypographyP1>
         </AlertDialogCancel>
         <AlertDialogAction
-          class="bg-ccmkt-main text-black h-[50px]"
+          class="bg-ccmkt-main text-black h-[50px] hover:bg-ccmkt-main"
           @click="startNew"
         >
           <TypographyP1>새로 시작</TypographyP1>

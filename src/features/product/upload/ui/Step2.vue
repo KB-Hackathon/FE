@@ -31,15 +31,15 @@
           </SelectTrigger>
           <SelectContent class="w-full">
             <SelectGroup
-              v-for="(category, index) in categories"
+              v-for="(c, index) in categories"
               :key="index"
               class="pl-0"
             >
               <SelectItem
                 class="text-[15px]"
-                :value="category.value"
+                :value="c.value"
               >
-                {{ category.label }}
+                {{ c.label }}
               </SelectItem>
             </SelectGroup>
           </SelectContent>
@@ -88,6 +88,7 @@ const categories = [
   { value: 'hobby', label: '취미 / 문구' },
   { value: 'sports', label: '스포츠' },
   { value: 'baby', label: '유아' },
+  { value: 'ect', label: '기타' },
 ]
 
 const category = computed({

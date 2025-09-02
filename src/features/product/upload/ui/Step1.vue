@@ -1,5 +1,5 @@
 <template>
-  <div class="animate-fadeUp">
+  <div class="animate-fadeUp w-full flex flex-col justify-center">
     <TypographyHead1 class="text-center mb-8 mt-[150px] text-gray-700">
       안녕하세요 🙌 <br>
       지금부터 상품을 업로드해볼게요 <br>
@@ -11,7 +11,7 @@
     </TypographyHead3>
 
     <button
-      class="bg-ccmkt-main h-[60px] rounded-lg fixed w-[90vw] mt-[80px]"
+      class="bg-ccmkt-main h-[60px] rounded-lg w-[95%] m-auto mt-[80px]"
       @click="$emit('next')"
     >
       <TypographyHead3 class="text-black">
