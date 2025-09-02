@@ -52,7 +52,7 @@
     <div class="flex flex-col gap-3">
       <div
         class="p-[15px] bg-ccmkt-main/50 rounded-lg"
-        @click="() => router.push({ name: 'upload_product' })"
+        @click="onClickUploadButton"
       >
         <TypographyHead2 class="text-[20px]">
           상품 올리기
@@ -90,11 +90,41 @@
       </div>
     </div>
   </div>
+  <AlertDialog v-model:open="draftDialogOpen">
+    <AlertDialogContent>
+      <AlertDialogHeader>
+        <AlertDialogTitle>임시 저장된 업로드가 있어요</AlertDialogTitle>
+        <AlertDialogDescription>
+          이전에 작성하던 내용을 불러올까요? <br>새로 시작하면 임시 저장본이 삭제돼요.
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel @click="continueDraft">
+          <TypographyP1>이어서 작성</TypographyP1>
+        </AlertDialogCancel>
+        <AlertDialogAction
+          class="bg-ccmkt-main text-black"
+          @click="startNew"
+        >
+          <TypographyP1>새로 시작</TypographyP1>
+        </AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
 </template>
 <script setup lang="ts">
 import UserTab from '@/features/user/ui/UserTab.vue'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/shared/components/ui/alert-dialog'
 import { Card, CardContent } from '@/shared/components/ui/card'
-
 import {
   TypographyCaption,
   TypographyHead1,
@@ -103,7 +133,29 @@ import {
   TypographyP1,
 } from '@/shared/components/ui/typography'
 import TypographySubTitle1 from '@/shared/components/ui/typography/TypographySubTitle1.vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const draftDialogOpen = ref(false)
+
+function onClickUploadButton() {
+  const uploadDraft = localStorage.getItem('uploadDraft')
+  if (uploadDraft) {
+    draftDialogOpen.value = true
+  }
+}
+
+function continueDraft() {
+  draftDialogOpen.value = false
+  router.push({ name: 'upload_product' })
+}
+
+function startNew() {
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('uploadDraft')
+  }
+  draftDialogOpen.value = false
+  router.push({ name: 'upload_product' })
+}
 </script>
