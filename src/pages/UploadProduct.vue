@@ -39,14 +39,11 @@
 
 <script setup lang="ts">
 import Step1 from '@/features/product/upload/ui/Step1.vue'
-import Step10 from '@/features/product/upload/ui/Step10.vue'
 import Step2 from '@/features/product/upload/ui/Step2.vue'
-import Step3 from '@/features/product/upload/ui/Step3.vue'
 import Step4 from '@/features/product/upload/ui/Step4.vue'
 import Step5 from '@/features/product/upload/ui/Step5.vue'
 import Step6 from '@/features/product/upload/ui/Step6.vue'
 import Step7 from '@/features/product/upload/ui/Step7.vue'
-import Step8 from '@/features/product/upload/ui/Step8.vue'
 import Step9 from '@/features/product/upload/ui/Step9.vue'
 import { TypographyHead3 } from '@/shared/components/ui/typography'
 import { useKeyboardSafeBottom } from '@/shared/composables/useKeyboardSafeBottom'
@@ -72,7 +69,7 @@ type StepExpose = {
   focusFirstFieldImmediate?: () => void
 }
 
-const steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10]
+const steps = [Step1, Step2, Step4, Step5, Step6, Step7, Step9]
 const currentStep = ref(0)
 const stepRef = ref<ComponentPublicInstance<StepExpose> | null>(null)
 

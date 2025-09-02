@@ -148,6 +148,8 @@ function onClickUploadButton() {
   const uploadDraft = localStorage.getItem('uploadDraft')
   if (uploadDraft) {
     draftDialogOpen.value = true
+  } else {
+    router.push({ name: 'upload_product' })
   }
 }
 
