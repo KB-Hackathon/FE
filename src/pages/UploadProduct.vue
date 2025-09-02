@@ -46,6 +46,7 @@ import Step5 from '@/features/product/upload/ui/Step5.vue'
 import Step6 from '@/features/product/upload/ui/Step6.vue'
 import Step7 from '@/features/product/upload/ui/Step7.vue'
 import Step8 from '@/features/product/upload/ui/Step8.vue'
+import Step9 from '@/features/product/upload/ui/Step9.vue'
 import { TypographyHead3 } from '@/shared/components/ui/typography'
 import { useKeyboardSafeBottom } from '@/shared/composables/useKeyboardSafeBottom'
 import { nextTick, onMounted, ref, watch, type ComponentPublicInstance } from 'vue'
@@ -62,13 +63,14 @@ export type UploadForm = {
   couponExpiryDate: string | null
   expirationPeriod: string | number | null
   recruitmentNum: number | null
+  imageList: string[]
 }
 
 type StepExpose = {
   focusFirstFieldImmediate?: () => void
 }
 
-const steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8]
+const steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9]
 const currentStep = ref(0)
 const stepRef = ref<ComponentPublicInstance<StepExpose> | null>(null)
 
@@ -83,6 +85,7 @@ const form = ref<UploadForm>({
   couponExpiryDate: null,
   expirationPeriod: null,
   recruitmentNum: null,
+  imageList: [],
 })
 
 onMounted(() => {
