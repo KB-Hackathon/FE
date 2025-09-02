@@ -39,6 +39,7 @@
 
 <script setup lang="ts">
 import Step1 from '@/features/product/upload/ui/Step1.vue'
+import Step10 from '@/features/product/upload/ui/Step10.vue'
 import Step2 from '@/features/product/upload/ui/Step2.vue'
 import Step3 from '@/features/product/upload/ui/Step3.vue'
 import Step4 from '@/features/product/upload/ui/Step4.vue'
@@ -64,13 +65,14 @@ export type UploadForm = {
   expirationPeriod: string | number | null
   recruitmentNum: number | null
   imageList: string[]
+  description: string
 }
 
 type StepExpose = {
   focusFirstFieldImmediate?: () => void
 }
 
-const steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9]
+const steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10]
 const currentStep = ref(0)
 const stepRef = ref<ComponentPublicInstance<StepExpose> | null>(null)
 
@@ -86,6 +88,7 @@ const form = ref<UploadForm>({
   expirationPeriod: null,
   recruitmentNum: null,
   imageList: [],
+  description: '',
 })
 
 onMounted(() => {
