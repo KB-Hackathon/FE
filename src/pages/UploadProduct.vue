@@ -34,10 +34,11 @@
         >
           <TypographyHead3>다음으로</TypographyHead3>
         </button>
+
         <button
           v-else
           class="bg-ccmkt-main rounded-lg w-full h-[60px] z-20"
-          @click="dialogPreview.show()"
+          @click="previewOpen = true"
         >
           <TypographyHead3>미리보기</TypographyHead3>
         </button>
@@ -51,93 +52,45 @@
       <div class="flex w-[95%] m-auto relative gap-2">
         <button
           class="bg-gray-400 rounded-lg w-full h-[60px] z-20"
-          @click="dialogBack.show()"
+          @click="backOpen = true"
         >
           <TypographyHead3>이전으로</TypographyHead3>
         </button>
         <button
           class="bg-ccmkt-main rounded-lg w-full h-[60px] z-20"
-          @click="dialogUpload.show()"
+          @click="uploadOpen = true"
         >
           <TypographyHead3>업로드하기</TypographyHead3>
         </button>
       </div>
     </div>
 
-    <AlertDialog v-model:open="dialogPreview.open.value">
-      <AlertDialogContent class="rounded-lg w-[95%]">
-        <AlertDialogHeader>
-          <AlertDialogTitle class="text-[24px]">
-            AI로 소개 글을 생성할까요?
-          </AlertDialogTitle>
-          <AlertDialogDescription class="text-[14px]">
-            입력한 내용을 바탕으로 AI가 상품 소개를 완성합니다.<br>
-            업로드 전에도 수정할 수 있어요.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel class="h-[50px]">
-            <TypographyP1>취소</TypographyP1>
-          </AlertDialogCancel>
-          <AlertDialogAction
-            class="bg-ccmkt-main text-black h-[50px] hover:bg-ccmkt-main"
-            @click="handleConfirmPreview"
-          >
-            <TypographyP1>미리보기</TypographyP1>
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <ConfirmDialog
+      v-model="previewOpen"
+      title="AI로 소개 글을 생성할까요?"
+      confirm-text="미리보기"
+      :description="`입력한 내용을 바탕으로 AI가 상품 소개를 완성합니다.\n업로드 전에도 수정할 수 있어요.`"
+      @confirm="handleConfirmPreview"
+      @cancel="previewOpen = false"
+    />
 
-    <AlertDialog v-model:open="dialogBack.open.value">
-      <AlertDialogContent class="rounded-lg w-[95%]">
-        <AlertDialogHeader>
-          <AlertDialogTitle class="text-[24px]">
-            이전 페이지로 돌아가시겠어요?
-          </AlertDialogTitle>
-          <AlertDialogDescription class="text-[14px]">
-            돌아가면 AI가 생성한 글이 초기화될 수 있습니다.<br>
-            계속하시려면 ‘이전으로’를 눌러주세요.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel class="h-[50px]">
-            <TypographyP1>취소</TypographyP1>
-          </AlertDialogCancel>
-          <AlertDialogAction
-            class="bg-ccmkt-main text-black h-[50px] hover:bg-ccmkt-main"
-            @click="handleBackToForm"
-          >
-            <TypographyP1>이전으로</TypographyP1>
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <ConfirmDialog
+      v-model="backOpen"
+      title="이전 페이지로 돌아가시겠어요?"
+      confirm-text="이전으로"
+      :description="`돌아가면 AI가 생성한 글이 초기화될 수 있습니다.\n계속하시려면 ‘이전으로’를 눌러주세요.`"
+      @confirm="handleBackToForm"
+      @cancel="backOpen = false"
+    />
 
-    <AlertDialog v-model:open="dialogUpload.open.value">
-      <AlertDialogContent class="rounded-lg w-[95%]">
-        <AlertDialogHeader>
-          <AlertDialogTitle class="text-[24px]">
-            상품을 업로드하시겠어요?
-          </AlertDialogTitle>
-          <AlertDialogDescription class="text-[14px]">
-            상품이 업로드되면 다른 사용자들에게 공개돼요.<br>
-            작성한 내용을 다시 한번 확인해 주세요.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel class="h-[50px]">
-            <TypographyP1>취소</TypographyP1>
-          </AlertDialogCancel>
-          <AlertDialogAction
-            class="bg-ccmkt-main text-black h-[50px] hover:bg-ccmkt-main"
-            @click="handleUpload"
-          >
-            <TypographyP1>업로드하기</TypographyP1>
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <ConfirmDialog
+      v-model="uploadOpen"
+      title="상품을 업로드하시겠어요?"
+      confirm-text="업로드하기"
+      :description="`상품이 업로드되면 다른 사용자들에게 공개돼요.\n작성한 내용을 다시 한번 확인해 주세요.`"
+      @confirm="handleUpload"
+      @cancel="uploadOpen = false"
+    />
   </div>
 </template>
 
@@ -152,21 +105,11 @@ import Step6 from '@/features/product/upload/ui/Step6.vue'
 import Step7 from '@/features/product/upload/ui/Step7.vue'
 import Step9 from '@/features/product/upload/ui/Step9.vue'
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/shared/components/ui/alert-dialog'
-import { TypographyHead3, TypographyP1 } from '@/shared/components/ui/typography'
+import { TypographyHead3 } from '@/shared/components/ui/typography'
 import { useKeyboardSafeBottom } from '@/shared/composables/useKeyboardSafeBottom'
 import { ref } from 'vue'
 
-import { useDialog } from '@/shared/composables/useDialog'
+import ConfirmDialog from '@/shared/components/organisms/ConfirmDialog.vue'
 import { useUploadDraft } from '@/shared/composables/useUploadDraft'
 import { useUploadFlow, type UploadForm } from '@/shared/composables/useUploadFlow'
 
@@ -201,12 +144,12 @@ const form = ref<UploadForm>({
 })
 useUploadDraft(form)
 
-const dialogPreview = useDialog(false)
-const dialogBack = useDialog(false)
-const dialogUpload = useDialog(false)
+const previewOpen = ref(false)
+const backOpen = ref(false)
+const uploadOpen = ref(false)
 
 function handleConfirmPreview() {
-  dialogPreview.hide()
+  previewOpen.value = false
   goLoading()
   setTimeout(() => {
     form.value.aiGeneratingDescription = '✨ AI가 생성한 멋진 상품 소개 글입니다.'
@@ -215,13 +158,12 @@ function handleConfirmPreview() {
 }
 
 function handleBackToForm() {
-  dialogBack.hide()
+  backOpen.value = false
   backToLastForm()
 }
 
 function handleUpload() {
-  dialogUpload.hide()
-
+  uploadOpen.value = false
   localStorage.removeItem('uploadDraft')
 }
 </script>
