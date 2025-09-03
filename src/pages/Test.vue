@@ -38,4 +38,17 @@ import SelectComponent from '@/features/test/SelectComponent.vue'
 import TabComponent from '@/features/test/TabComponent.vue'
 import TagInputComponent from '@/features/test/TagInputComponent.vue'
 import ToastComponent from '@/features/test/ToastComponent.vue'
+import { api } from '@/shared/plugin/axios'
+import { onMounted } from 'vue'
+
+async function testExample() {
+  const res = await api.get('https://jsonplaceholder.typicode.com/posts/1', {
+    showGlobalLoader: true,
+  })
+  console.log('example api result:', res)
+}
+
+onMounted(() => {
+  testExample()
+})
 </script>

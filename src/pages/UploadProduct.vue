@@ -3,7 +3,7 @@
     <main>
       <KeepAlive>
         <component
-          :is="steps[currentStep.value]"
+          :is="steps[currentStep]"
           ref="stepRef"
           v-model="form"
           @next="goNext"
@@ -13,9 +13,9 @@
     </main>
 
     <div
-      v-if="currentStep.value > 0 && currentStep.value <= LAST_FORM_STEP"
+      v-if="currentStep > 0 && currentStep <= LAST_FORM_STEP"
       class="fixed left-0 right-0 z-[40] flex flex-col max-w-[390px] mx-auto"
-      :style="{ bottom: `calc(env(safe-area-inset-bottom) + ${kbOffset.value + 20}px)` }"
+      :style="{ bottom: `calc(env(safe-area-inset-bottom) + ${kbOffset + 20}px)` }"
     >
       <div class="flex w-[95%] m-auto relative gap-2">
         <button
@@ -28,7 +28,7 @@
         </button>
 
         <button
-          v-if="currentStep.value < LAST_FORM_STEP"
+          v-if="currentStep < LAST_FORM_STEP"
           class="bg-ccmkt-main rounded-lg w-full h-[60px] z-20"
           @click="goNext"
         >
@@ -46,7 +46,7 @@
     </div>
 
     <div
-      v-if="currentStep.value === PREVIEW_STEP_INDEX"
+      v-if="currentStep === PREVIEW_STEP_INDEX"
       class="fixed left-0 right-0 bottom-0 py-[10px] bg-white z-[40] flex flex-col max-w-[390px] mx-auto"
     >
       <div class="flex w-[95%] m-auto relative gap-2">

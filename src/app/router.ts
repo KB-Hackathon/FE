@@ -1,57 +1,70 @@
 import { Archive, Home, My, Product, Seller, Test } from '@/pages'
 import OwnerHome from '@/pages/OwnerHome.vue'
 import UploadProduct from '@/pages/UploadProduct.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { useLoadingStore } from '@/shared/stores/loading'
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+
+const routes: RouteRecordRaw[] = [
+  {
+    name: 'test',
+    path: '/test',
+    component: Test,
+    meta: { footer: true },
+  },
+  {
+    name: 'home',
+    path: '/',
+    component: Home,
+    meta: { footer: true },
+  },
+  {
+    name: 'archive',
+    path: '/archive',
+    component: Archive,
+    meta: { footer: true },
+  },
+  {
+    name: 'my',
+    path: '/my',
+    component: My,
+    meta: { footer: true },
+  },
+  {
+    name: 'product',
+    path: '/product/:productId',
+    component: Product,
+  },
+  {
+    name: 'seller',
+    path: '/seller/:sellerId',
+    component: Seller,
+  },
+  {
+    name: 'owner_main',
+    path: '/owner_main',
+    component: OwnerHome,
+  },
+  {
+    name: 'upload_product',
+    path: '/upload',
+    component: UploadProduct,
+  },
+]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      name: 'test',
-      path: '/test',
-      component: Test,
-      meta: { footer: true },
-    },
-    {
-      name: 'home',
-      path: '/',
-      component: Home,
-      meta: { footer: true },
-    },
-    {
-      name: 'archive',
-      path: '/archive',
-      component: Archive,
-      meta: { footer: true },
-    },
+  routes,
+})
 
-    {
-      name: 'my',
-      path: '/my',
-      component: My,
-      meta: { footer: true },
-    },
-    {
-      name: 'product',
-      path: '/product/:productId',
-      component: Product,
-    },
-    {
-      name: 'seller',
-      path: '/seller/:sellerId',
-      component: Seller,
-    },
-    {
-      name: 'owner_main',
-      path: '/owner_main',
-      component: OwnerHome,
-    },
-    {
-      name: 'upload_product',
-      path: '/upload',
-      component: UploadProduct,
-    },
-  ],
+router.beforeEach((_to, _from, next) => {
+  useLoadingStore().start()
+  next()
+})
+router.afterEach(() => {
+  useLoadingStore().done()
+})
+router.onError(() => {
+  useLoadingStore().done()
 })
 
 export default router
