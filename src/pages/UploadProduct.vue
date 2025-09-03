@@ -95,7 +95,6 @@
 </template>
 
 <script setup lang="ts">
-import AIGeneratingLoading from '@/features/product/upload/ui/AIGeneratingLoading.vue'
 import Preview from '@/features/product/upload/ui/Preview.vue'
 import Step1 from '@/features/product/upload/ui/Step1.vue'
 import Step2 from '@/features/product/upload/ui/Step2.vue'
@@ -112,10 +111,12 @@ import { ref } from 'vue'
 import ConfirmDialog from '@/shared/components/organisms/ConfirmDialog.vue'
 import { useUploadDraft } from '@/shared/composables/useUploadDraft'
 import { useUploadFlow, type UploadForm } from '@/shared/composables/useUploadFlow'
+import { api } from '@/shared/plugin/axios'
+import { useRouter } from 'vue-router'
 
 const { kbOffset } = useKeyboardSafeBottom()
-
-const steps = [Step1, Step2, Step4, Step5, Step6, Step7, Step9, AIGeneratingLoading, Preview]
+const router = useRouter()
+const steps = [Step1, Step2, Step4, Step5, Step6, Step7, Step9, Preview]
 const {
   currentStep,
   stepRef,
@@ -123,7 +124,7 @@ const {
   LAST_FORM_STEP,
   goNext,
   goPrev,
-  goLoading,
+
   goPreview,
   backToLastForm,
 } = useUploadFlow(steps)
@@ -148,22 +149,39 @@ const previewOpen = ref(false)
 const backOpen = ref(false)
 const uploadOpen = ref(false)
 
-function handleConfirmPreview() {
-  previewOpen.value = false
-  goLoading()
-  setTimeout(() => {
-    form.value.aiGeneratingDescription = '✨ AI가 생성한 멋진 상품 소개 글입니다.'
-    goPreview()
-  }, 3000)
-}
-
 function handleBackToForm() {
   backOpen.value = false
   backToLastForm()
 }
 
-function handleUpload() {
+async function handleUpload() {
   uploadOpen.value = false
   localStorage.removeItem('uploadDraft')
+  try {
+    const res = await api.get<{ url: string }>(`https://httpbin.org/delay/2`, {
+      showGlobalLoader: true,
+    })
+
+    if (res.status >= 200 && res.status < 300) {
+      await router.replace({ name: 'owner_main' })
+    }
+  } catch (e) {
+    console.error('[handleUpload] 업로드 실패:', e)
+  }
+}
+
+async function handleConfirmPreview() {
+  previewOpen.value = false
+  try {
+    await api.get<{ ok: boolean }>('https://httpbin.org/delay/1', {
+      showGlobalLoader: true,
+      loaderMessage: ['AI가 자동 홍보글을 작성중이에요'],
+    })
+    // 모의 생성 결과 주입
+    form.value.aiGeneratingDescription = '✨ AI가 생성한 멋진 상품 소개 글입니다.'
+    goPreview()
+  } catch (e) {
+    console.error('[handleConfirmPreview] 실패:', e)
+  }
 }
 </script>

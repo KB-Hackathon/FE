@@ -6,6 +6,7 @@ type StartOpts = { delayMs?: number; minVisibleMs?: number }
 export const useLoadingStore = defineStore('loading', () => {
   const pending = ref(0)
   const visible = ref(false)
+  const message = ref<string[] | null>(null)
 
   let delayTimer: number | null = null
   let hideTimer: number | null = null
@@ -50,5 +51,5 @@ export const useLoadingStore = defineStore('loading', () => {
   }
 
   const isLoading = computed(() => visible.value)
-  return { isLoading, start, done }
+  return { isLoading, message, start, done }
 })

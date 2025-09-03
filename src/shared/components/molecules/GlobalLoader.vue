@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import { useLoadingStore } from '@/shared/stores/loading'
+import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
+import { TypographyP1 } from '../ui/typography'
+
+const { isLoading, message } = storeToRefs(useLoadingStore())
+
+const lines = computed(() =>
+  message.value && message.value.length > 0 ? message.value : ['잠시만 기다려주세요...']
+)
+</script>
+
 <template>
   <transition name="fade">
     <div
@@ -10,29 +23,14 @@
         <div
           class="h-10 w-10 animate-spin rounded-full border-4 border-ccmkt-main border-t-white"
         />
-        <TypographyP1 class="text-white">
-          로딩 중입니다…
+        <TypographyP1
+          v-for="(m, index) in lines"
+          :key="index"
+          class="text-white text-center"
+        >
+          {{ m }}
         </TypographyP1>
       </div>
     </div>
   </transition>
 </template>
-
-<script setup lang="ts">
-import { useLoadingStore } from '@/shared/stores/loading'
-import { storeToRefs } from 'pinia'
-import { TypographyP1 } from '../ui/typography'
-
-const { isLoading } = storeToRefs(useLoadingStore())
-</script>
-
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.15s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

@@ -8,5 +8,6 @@ declare module 'axios' {
     loaderDelayMs?: number
     /** 최소 노출 시간(ms) – 깜빡임 방지 (선택) */
     loaderMinVisibleMs?: number
+    loaderMessage?: string[]
   }
 }
