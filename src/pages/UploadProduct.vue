@@ -54,7 +54,10 @@
         >
           <TypographyHead3>이전으로</TypographyHead3>
         </button>
-        <button class="bg-ccmkt-main rounded-lg w-full h-[60px] z-20">
+        <button
+          class="bg-ccmkt-main rounded-lg w-full h-[60px] z-20"
+          @click="uploadProduct"
+        >
           <TypographyHead3>업로드하기</TypographyHead3>
         </button>
       </div>
@@ -105,6 +108,31 @@
             @click="onConfirmBackToForm"
           >
             <TypographyP1>이전으로</TypographyP1>
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+
+    <AlertDialog v-model:open="upload">
+      <AlertDialogContent class="rounded-lg w-[95%]">
+        <AlertDialogHeader>
+          <AlertDialogTitle class="text-[24px]">
+            상품을 업로드하시겠어요?
+          </AlertDialogTitle>
+          <AlertDialogDescription class="text-[14px]">
+            상품이 업로드되면 다른 사용자들에게 공개돼요
+            <br>작성한 내용을 다시 한번 확인해 주세요
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel class="h-[50px]">
+            <TypographyP1>취소</TypographyP1>
+          </AlertDialogCancel>
+          <AlertDialogAction
+            class="bg-ccmkt-main text-black h-[50px] hover:bg-ccmkt-main"
+            @click="onConfirmBackToForm"
+          >
+            <TypographyP1>업로드하기</TypographyP1>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -161,7 +189,7 @@ const currentStep = ref(0)
 const stepRef = ref<ComponentPublicInstance<StepExpose> | null>(null)
 const draftDialogOpen = ref(false)
 const cancelUpload = ref(false)
-
+const upload = ref(false)
 const PREVIEW_STEP_INDEX = steps.length - 1
 const LOADING_STEP_INDEX = steps.length - 2
 const LAST_FORM_STEP = steps.length - 3
@@ -227,5 +255,9 @@ function onConfirmPreview() {
     form.value.aiGeneratingDescription = '✨ AI가 생성한 멋진 상품 소개 글입니다.'
     currentStep.value = PREVIEW_STEP_INDEX
   }, 3000)
+}
+
+function uploadProduct() {
+  upload.value = true
 }
 </script>
