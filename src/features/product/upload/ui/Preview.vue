@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex flex-col gap-3">
+  <div class="w-full flex flex-col gap-3 pb-[60px]">
     <div
       class="flex gap-2 overflow-x-auto snap-x snap-mandatory scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none]"
       style="-webkit-overflow-scrolling: touch"

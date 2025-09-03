@@ -37,9 +37,25 @@
         <button
           v-else
           class="bg-ccmkt-main rounded-lg w-full h-[60px] z-20"
-          @click="onClickUploadButtonClick"
+          @click="onClickUploadButton"
         >
           <TypographyHead3>미리보기</TypographyHead3>
+        </button>
+      </div>
+    </div>
+    <div
+      v-if="currentStep == PREVIEW_STEP_INDEX"
+      class="fixed left-0 right-0 bottom-0 py-[10px] bg-white z-[40] flex flex-col max-w-[390px] mx-auto"
+    >
+      <div class="flex w-[95%] m-auto relative gap-2">
+        <button
+          class="bg-gray-400 rounded-lg w-full h-[60px] z-20"
+          @click="onClickCancelUploadButton"
+        >
+          <TypographyHead3>이전으로</TypographyHead3>
+        </button>
+        <button class="bg-ccmkt-main rounded-lg w-full h-[60px] z-20">
+          <TypographyHead3>업로드하기</TypographyHead3>
         </button>
       </div>
     </div>
@@ -64,6 +80,31 @@
             @click="onConfirmPreview"
           >
             <TypographyP1>미리보기</TypographyP1>
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+
+    <AlertDialog v-model:open="cancelUpload">
+      <AlertDialogContent class="rounded-lg w-[95%]">
+        <AlertDialogHeader>
+          <AlertDialogTitle class="text-[24px]">
+            이전 페이지로 돌아가시겠어요?
+          </AlertDialogTitle>
+          <AlertDialogDescription class="text-[14px]">
+            돌아가면 AI가 생성한 글이 초기화될 수 있습니다
+            <br>계속하시려면 ‘이전으로’를 눌러주세요
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel class="h-[50px]">
+            <TypographyP1>취소</TypographyP1>
+          </AlertDialogCancel>
+          <AlertDialogAction
+            class="bg-ccmkt-main text-black h-[50px] hover:bg-ccmkt-main"
+            @click="onConfirmBackToForm"
+          >
+            <TypographyP1>이전으로</TypographyP1>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -119,6 +160,7 @@ const steps = [Step1, Step2, Step4, Step5, Step6, Step7, Step9, AIGeneratingLoad
 const currentStep = ref(0)
 const stepRef = ref<ComponentPublicInstance<StepExpose> | null>(null)
 const draftDialogOpen = ref(false)
+const cancelUpload = ref(false)
 
 const PREVIEW_STEP_INDEX = steps.length - 1
 const LOADING_STEP_INDEX = steps.length - 2
@@ -164,8 +206,17 @@ function goPrev() {
   if (currentStep.value > 0) currentStep.value--
 }
 
-function onClickUploadButtonClick() {
+function onClickUploadButton() {
   draftDialogOpen.value = true
+}
+
+function onClickCancelUploadButton() {
+  cancelUpload.value = true
+}
+
+function onConfirmBackToForm() {
+  cancelUpload.value = false
+  currentStep.value = LAST_FORM_STEP
 }
 
 function onConfirmPreview() {
