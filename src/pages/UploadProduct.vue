@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col w-full">
-    <main>
+    <main class="relative">
       <KeepAlive>
         <component
           :is="steps[currentStep]"
@@ -10,7 +10,48 @@
           @prev="goPrev"
         />
       </KeepAlive>
+      <div class="pointer-events-none fixed inset-x-0 top-[60px] z-[30]">
+        <div class="mx-auto max-w-[390px] px-5 pt-3">
+          <button
+            class="pointer-events-auto flex items-center gap-2 text-gray-700"
+            @click="cancelOpen = true"
+          >
+            <i class="bi bi-arrow-left text-md" />
+            <TypographySubTitle2 class="text-md">
+              뒤로가기
+            </TypographySubTitle2>
+          </button>
+        </div>
+      </div>
     </main>
+
+    <div
+      v-if="currentStep == 0"
+      class="fixed left-0 right-0 z-[40] flex flex-col max-w-[390px] mx-auto"
+      :style="{ bottom: `calc(env(safe-area-inset-bottom) + ${kbOffset + 20}px)` }"
+    >
+      <div class="flex w-[95%] m-auto relative gap-2">
+        <!-- <button @click="cancelOpen = true" class="bg-gray-400 rounded-lg w-full h-[60px] z-20">
+          <TypographyHead3 class="text-white"> 취소하기 </TypographyHead3>
+        </button> -->
+
+        <button
+          v-if="currentStep < LAST_FORM_STEP"
+          class="bg-ccmkt-main rounded-lg w-full h-[60px] z-20"
+          @click="goNext"
+        >
+          <TypographyHead3>다음으로</TypographyHead3>
+        </button>
+
+        <button
+          v-else
+          class="bg-ccmkt-main rounded-lg w-full h-[60px] z-20"
+          @click="previewOpen = true"
+        >
+          <TypographyHead3>미리보기</TypographyHead3>
+        </button>
+      </div>
+    </div>
 
     <div
       v-if="currentStep > 0 && currentStep <= LAST_FORM_STEP"
@@ -66,6 +107,15 @@
     </div>
 
     <ConfirmDialog
+      v-model="cancelOpen"
+      title="상품 업로드를 취소하시겠어요?"
+      confirm-text="취소하기"
+      :description="`상품 업로드를 정말 취소하시겠어요?\n지금까지 입력한 내용은 저장되니 안심하세요.`"
+      @confirm="cancel"
+      @cancel="cancelOpen = false"
+    />
+
+    <ConfirmDialog
       v-model="previewOpen"
       title="AI로 소개 글을 생성할까요?"
       confirm-text="미리보기"
@@ -96,15 +146,15 @@
 
 <script setup lang="ts">
 import Preview from '@/features/product/upload/ui/Preview.vue'
-import Step1 from '@/features/product/upload/ui/Step1.vue'
 import Step2 from '@/features/product/upload/ui/Step2.vue'
 import Step3 from '@/features/product/upload/ui/Step3.vue'
 import Step4 from '@/features/product/upload/ui/Step4.vue'
 import Step5 from '@/features/product/upload/ui/Step5.vue'
 import Step6 from '@/features/product/upload/ui/Step6.vue'
 import Step7 from '@/features/product/upload/ui/Step7.vue'
+
 import ConfirmDialog from '@/shared/components/organisms/ConfirmDialog.vue'
-import { TypographyHead3 } from '@/shared/components/ui/typography'
+import { TypographyHead3, TypographySubTitle2 } from '@/shared/components/ui/typography'
 import { useKeyboardSafeBottom } from '@/shared/composables/useKeyboardSafeBottom'
 import { useUploadDraft } from '@/shared/composables/useUploadDraft'
 import { useUploadFlow, type UploadForm } from '@/shared/composables/useUploadFlow'
@@ -114,7 +164,7 @@ import { useRouter } from 'vue-router'
 
 const { kbOffset } = useKeyboardSafeBottom()
 const router = useRouter()
-const steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Preview]
+const steps = [Step2, Step3, Step4, Step5, Step6, Step7, Preview]
 const {
   currentStep,
   stepRef,
@@ -122,7 +172,6 @@ const {
   LAST_FORM_STEP,
   goNext,
   goPrev,
-
   goPreview,
   backToLastForm,
 } = useUploadFlow(steps)
@@ -146,10 +195,16 @@ useUploadDraft(form, 'uploadDraft')
 const previewOpen = ref(false)
 const backOpen = ref(false)
 const uploadOpen = ref(false)
+const cancelOpen = ref(false)
 
 function handleBackToForm() {
   backOpen.value = false
   backToLastForm()
+}
+
+function cancel() {
+  cancelOpen.value = false
+  router.replace({ name: 'owner_main' })
 }
 
 async function handleUpload() {

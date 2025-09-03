@@ -1,12 +1,12 @@
 <template>
   <div class="relative h-[100svh] overflow-hidden">
-    <div class="fixed top-[80px] inset-x-0 mx-auto max-w-[390px] px-5 box-border">
+    <div class="fixed top-[110px] inset-x-0 mx-auto max-w-[390px] px-5 box-border">
       <TypographyHead1 class="text-gray-700">
         모집 인원을 선택해주세요
       </TypographyHead1>
     </div>
 
-    <div class="fixed inset-x-0 top-[150px] mx-auto max-w-[390px] px-5 box-border space-y-4">
+    <div class="fixed inset-x-0 top-[180px] mx-auto max-w-[390px] px-5 box-border space-y-4">
       <div class="grid grid-cols-2 gap-3">
         <Button
           v-for="n in [50, 100]"

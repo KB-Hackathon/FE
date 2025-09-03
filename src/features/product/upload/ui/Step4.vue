@@ -1,6 +1,6 @@
 <template>
   <div class="relative h-[100svh] overflow-hidden">
-    <div class="fixed top-[80px] inset-x-0 mx-auto max-w-[390px] px-5 box-border">
+    <div class="fixed top-[110px] inset-x-0 mx-auto max-w-[390px] px-5 box-border">
       <TypographyHead1 class="text-gray-700">
         모집 시작일을 선택해주세요
       </TypographyHead1>
@@ -94,6 +94,7 @@ import {
 import type { UploadForm } from '@/shared/composables/useUploadFlow'
 import { DateFormatter, parseDate } from '@internationalized/date'
 import { CalendarIcon } from 'lucide-vue-next'
+
 import type { DateValue } from 'reka-ui'
 import { toDate } from 'reka-ui/date'
 import { computed, ref } from 'vue'
@@ -107,12 +108,13 @@ const quick = ref<'today' | 'tomorrow' | null>(null)
 
 function patch(p: Partial<UploadForm>) {
   emit('update:modelValue', { ...props.modelValue, ...p })
-  console.log(p)
 }
 
 const startVal = computed<DateValue | undefined>({
   get: () =>
-    props.modelValue.startDate ? (parseDate(props.modelValue.startDate) as DateValue) : undefined,
+    props.modelValue.startDate
+      ? (parseDate(props.modelValue.startDate) as unknown as DateValue)
+      : undefined,
   set: () => {},
 })
 

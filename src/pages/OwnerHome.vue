@@ -91,11 +91,7 @@
     </div>
   </div>
   <AlertDialog v-model:open="draftDialogOpen">
-    <AlertDialogContent
-      class="rounded-lg w-[95%]"
-      :close-on-escape="true"
-      :close-on-outside-click="true"
-    >
+    <AlertDialogContent class="rounded-lg w-[95%]">
       <AlertDialogHeader>
         <AlertDialogTitle class="text-[24px]">
           임시 저장된 업로드가 있어요

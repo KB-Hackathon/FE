@@ -22,8 +22,8 @@ export function useUploadFlow<S extends ReadonlyArray<Component>>(steps: S) {
   const stepRef = ref<ComponentPublicInstance<StepExpose> | null>(null)
 
   const PREVIEW_STEP_INDEX = steps.length - 1
-  const LOADING_STEP_INDEX = steps.length - 2
-  const LAST_FORM_STEP = steps.length - 3
+
+  const LAST_FORM_STEP = steps.length - 2
 
   function goNext() {
     if (currentStep.value < LAST_FORM_STEP) {
@@ -34,10 +34,6 @@ export function useUploadFlow<S extends ReadonlyArray<Component>>(steps: S) {
 
   function goPrev() {
     if (currentStep.value > 0) currentStep.value--
-  }
-
-  function goLoading() {
-    currentStep.value = LOADING_STEP_INDEX
   }
 
   function goPreview() {
@@ -52,11 +48,9 @@ export function useUploadFlow<S extends ReadonlyArray<Component>>(steps: S) {
     currentStep,
     stepRef,
     PREVIEW_STEP_INDEX,
-    LOADING_STEP_INDEX,
     LAST_FORM_STEP,
     goNext,
     goPrev,
-    goLoading,
     goPreview,
     backToLastForm,
   }

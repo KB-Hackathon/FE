@@ -1,6 +1,6 @@
 <template>
   <div class="relative h-[100svh] overflow-hidden">
-    <div class="fixed top-[80px] inset-x-0 mx-auto max-w-[390px] px-5 box-border">
+    <div class="fixed top-[110px] inset-x-0 mx-auto max-w-[390px] px-5 box-border">
       <TypographyHead1 class="text-gray-700">
         모집 종료일을 선택해주세요
       </TypographyHead1>
@@ -109,12 +109,16 @@ const open = ref(false)
 const quick = ref<'oneWeek' | 'twoWeek' | null>(null)
 
 const formattedStartDate = computed(() =>
-  props.modelValue.startDate ? df.format(toDate(parseDate(props.modelValue.startDate))) : '-'
+  props.modelValue.startDate
+    ? df.format(toDate(parseDate(props.modelValue.startDate) as unknown as DateValue))
+    : '-'
 )
 
 const endValue = computed<DateValue | undefined>({
   get: () =>
-    props.modelValue.endDate ? (parseDate(props.modelValue.endDate) as DateValue) : undefined,
+    props.modelValue.endDate
+      ? (parseDate(props.modelValue.endDate) as unknown as DateValue)
+      : undefined,
   set: () => {},
 })
 

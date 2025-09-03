@@ -1,10 +1,10 @@
 <template>
   <div class="relative h-[100svh] overflow-hidden">
-    <div class="fixed top-[80px] inset-x-0 mx-auto max-w-[390px] px-5 box-border">
+    <div class="fixed top-[110px] inset-x-0 mx-auto max-w-[390px] px-5 box-border">
       <TypographyHead1 class="text-gray-700">
         사진과 설명을 입력해주세요
       </TypographyHead1>
-      <div class="fixed inset-x-0 top-[140px] mx-auto max-w-[390px] px-5 box-border">
+      <div class="fixed inset-x-0 top-[170px] mx-auto max-w-[390px] px-5 box-border">
         <TypographyP1 class="text-gray-700">
           사진
         </TypographyP1>
