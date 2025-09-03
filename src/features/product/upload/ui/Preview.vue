@@ -68,7 +68,7 @@
         <div class="flex gap-3 items-center">
           <TypographyHead3>쿠폰 명</TypographyHead3>
           <TypographyP1 class="text-gray-700">
-            {{ modelValue.couponName }}
+            {{ modelValue.couponName ?? modelValue.title }}
           </TypographyP1>
         </div>
         <div class="flex gap-3 items-center">
@@ -81,10 +81,10 @@
       <Separator class="my-4" />
       <div class="flex gap-3 items-center">
         <TypographyHead3>태그</TypographyHead3>
-        <TypographyP1>
-          <i class="bi bi-exclamation-circle mr-1" />
-          ai가 자동 생성한 태그 리스트입니다
-        </TypographyP1>
+        <TypographyP2>
+          <i class="bi bi-exclamation-circle" />
+          AI가 자동 생성한 태그 리스트입니다
+        </TypographyP2>
       </div>
       <TagsInput
         v-model="tags"

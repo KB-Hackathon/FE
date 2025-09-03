@@ -32,7 +32,7 @@
             :class="
               model.option === 'delivery'
                 ? '!bg-ccmkt-main !text-black !border-ccmkt-main'
-                : 'bg-white border text-black'
+                : 'bg-white border text-black hover:bg-white'
             "
             @click="selectQuick('delivery')"
           >
@@ -43,7 +43,7 @@
             :class="
               model.option === 'coupon'
                 ? '!bg-ccmkt-main !text-black !border-ccmkt-main'
-                : 'bg-white border text-black'
+                : 'bg-white border text-black hover:bg-white'
             "
             @click="selectQuick('coupon')"
           >
@@ -71,7 +71,6 @@
               v-model="expirationPeriod"
               class="text-[23px] font-semibold border-t-0 border-r-0 border-l-0 border-b-2 border-ccmkt-main focus-visible:ring-0 rounded-none h-[50px] shadow-none pl-0"
               placeholder="유효기간"
-              type="number"
               inputmode="numeric"
             />
             <TypographyHead1 class="absolute right-2 bottom-2 text-gray-700 pointer-events-none">

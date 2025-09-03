@@ -15,7 +15,7 @@
           :class="
             model.recruitmentNum === n
               ? '!bg-ccmkt-main !text-black !border-ccmkt-main'
-              : 'bg-white border text-black'
+              : 'bg-white border text-black hover:bg-white'
           "
           @click="selectQuick(n)"
         >
@@ -27,7 +27,7 @@
           :class="
             model.recruitmentNum === null && !isCustom
               ? '!bg-ccmkt-main !text-black !border-ccmkt-main'
-              : 'bg-white border text-black'
+              : 'bg-white border text-black hover:bg-white'
           "
           @click="selectQuick(null)"
         >
@@ -42,7 +42,7 @@
             isCustom ||
               (model.recruitmentNum !== null && ![50, 100].includes(model.recruitmentNum || 0))
               ? '!bg-ccmkt-main !text-black !border-ccmkt-main'
-              : 'bg-white border text-black'
+              : 'bg-white border text-black hover:bg-white'
           "
           @click="toggleCustom"
         >

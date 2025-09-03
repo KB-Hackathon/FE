@@ -105,7 +105,6 @@ export type UploadForm = {
   endDate: string
   option: 'delivery' | 'coupon'
   couponName: string | null
-
   expirationPeriod: string | number | null
   recruitmentNum: number | null
   imageList: string[]

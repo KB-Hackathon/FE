@@ -80,15 +80,15 @@ const titleEl = ref<ComponentPublicInstance<InputExpose> | null>(null)
 const focusFirstFieldImmediate = useFocusFirstFieldImmediate(titleEl)
 
 const categories = [
-  { value: 'fashion', label: '패션' },
-  { value: 'beauty', label: '뷰티 / 헬스' },
-  { value: 'digital', label: '디지털/가전' },
-  { value: 'life', label: '생활 / 주방' },
-  { value: 'food', label: '식품' },
-  { value: 'hobby', label: '취미 / 문구' },
-  { value: 'sports', label: '스포츠' },
-  { value: 'baby', label: '유아' },
-  { value: 'ect', label: '기타' },
+  { value: '패션', label: '패션' },
+  { value: '뷰티/헬스', label: '뷰티/헬스' },
+  { value: '디지털/가전', label: '디지털/가전' },
+  { value: '생활/주방', label: '생활/주방' },
+  { value: '식품', label: '식품' },
+  { value: '취미/문구', label: '취미/문구' },
+  { value: '스포츠', label: '스포츠' },
+  { value: '유아', label: '유아' },
+  { value: '기타', label: '기타' },
 ]
 
 const category = computed({
