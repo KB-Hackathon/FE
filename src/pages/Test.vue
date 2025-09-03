@@ -42,7 +42,7 @@ import { api } from '@/shared/plugin/axios'
 import { onMounted } from 'vue'
 
 async function testExample() {
-  const res = await api.get('https://jsonplaceholder.typicode.com/posts/1', {
+  const res = await api.get<{ url: string }>(`https://httpbin.org/delay/2`, {
     showGlobalLoader: true,
   })
   console.log('example api result:', res)
