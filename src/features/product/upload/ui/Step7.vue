@@ -2,108 +2,98 @@
   <div class="relative h-[100svh] overflow-hidden">
     <div class="fixed top-[80px] inset-x-0 mx-auto max-w-[390px] px-5 box-border">
       <TypographyHead1 class="text-gray-700">
-        모집 인원을 선택해주세요
+        사진과 설명을 입력해주세요
       </TypographyHead1>
-    </div>
+      <div class="fixed inset-x-0 top-[140px] mx-auto max-w-[390px] px-5 box-border">
+        <TypographyP1 class="text-gray-700">
+          사진
+        </TypographyP1>
+        <div class="flex justify-start my-1 mb-8 mt-4">
+          <button
+            type="button"
+            class="flex items-center justify-center w-[70px] h-[70px] rounded-[16px] bg-ccmkt-main text-whites transition-all"
+            @click="triggerFileInput"
+          >
+            <i class="bi bi-plus-circle text-[24px] font-bold" />
+          </button>
 
-    <div class="fixed inset-x-0 top-[150px] mx-auto max-w-[390px] px-5 box-border space-y-4">
-      <div class="grid grid-cols-2 gap-3">
-        <Button
-          v-for="n in [50, 100]"
-          :key="n"
-          class="h-[56px] text-lg"
-          :class="
-            model.recruitmentNum === n
-              ? '!bg-ccmkt-main !text-black !border-ccmkt-main'
-              : 'bg-white border text-black hover:bg-white'
-          "
-          @click="selectQuick(n)"
-        >
-          {{ n }}명
-        </Button>
-
-        <Button
-          class="h-[56px] text-lg col-span-2"
-          :class="
-            model.recruitmentNum === null && !isCustom
-              ? '!bg-ccmkt-main !text-black !border-ccmkt-main'
-              : 'bg-white border text-black hover:bg-white'
-          "
-          @click="selectQuick(null)"
-        >
-          제한 없음
-        </Button>
-      </div>
-
-      <div class="space-y-2">
-        <Button
-          class="w-full h-[56px] text-lg"
-          :class="
-            isCustom ||
-              (model.recruitmentNum !== null && ![50, 100].includes(model.recruitmentNum || 0))
-              ? '!bg-ccmkt-main !text-black !border-ccmkt-main'
-              : 'bg-white border text-black hover:bg-white'
-          "
-          @click="toggleCustom"
-        >
-          직접 입력
-        </Button>
-
-        <div
-          v-if="isCustom"
-          class="relative"
-        >
-          <Input
-            v-model="customRecruitment"
-            type="number"
-            inputmode="numeric"
-            placeholder="인원 수 입력"
-            class="w-full text-[23px] font-semibold border-t-0 border-r-0 border-l-0 border-b-2 border-ccmkt-main focus-visible:ring-0 rounded-none h-[50px] shadow-none pl-0 pr-10 mt-4"
-          />
-          <TypographyHead1 class="absolute right-2 bottom-2 text-gray-700 pointer-events-none">
-            명
-          </TypographyHead1>
+          <!-- 숨겨진 파일 input -->
+          <input
+            ref="fileInput"
+            type="file"
+            accept="image/*"
+            multiple
+            class="hidden"
+            @change="handleImageUpload"
+          >
+          <div
+            v-if="imagePreviews.length > 0"
+            class="grid grid-cols-2 gap-4 mt-4 mb-8"
+          >
+            <div
+              v-for="(preview, index) in imagePreviews"
+              :key="'new-' + index"
+              class="relative inline-block"
+            >
+              <img
+                :src="preview"
+                class="w-[150px] h-[100px] object-cover rounded-[12px] shadow"
+                :alt="`업로드된 이미지 ${index + 1}`"
+              >
+              <button
+                type="button"
+                class="absolute top-2 right-2 bg-black/60 rounded-full w-7 h-7 flex items-center justify-center text-white text-sm hover:scale-105 transition"
+                @click="removeImage(index)"
+              >
+                <i class="bi bi-x-circle" />
+              </button>
+            </div>
+          </div>
         </div>
+        <TypographyP1 class="text-gray-700">
+          설명
+        </TypographyP1>
+
+        <Textarea
+          ref="titleEl"
+          v-model="description"
+          class="mt-3 resize-none h-[250px] text-[17px]"
+          placeholder="상품에 대해 간단한 설명을 입력하면
+자동 홍보 게시글이 더 자연스러워집니다 (최대 400자)"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Button } from '@/shared/components/ui/button'
-import { Input } from '@/shared/components/ui/input'
-import { TypographyHead1 } from '@/shared/components/ui/typography'
+import { Textarea } from '@/shared/components/ui/textarea'
+import { TypographyHead1, TypographyP1 } from '@/shared/components/ui/typography'
 import type { UploadForm } from '@/shared/composables/useUploadFlow'
 import { computed, ref } from 'vue'
 
+const fileInput = ref<HTMLInputElement | null>(null)
+const imagePreviews = ref<string[]>([])
 const props = defineProps<{ modelValue: UploadForm }>()
 const emit = defineEmits<{ (e: 'update:modelValue', v: UploadForm): void }>()
 
-const isCustom = ref(true)
+// const model = computed(() => props.modelValue)
 
-const model = computed(() => props.modelValue)
-
-function patch(p: Partial<UploadForm>) {
-  emit('update:modelValue', { ...props.modelValue, ...p })
+function triggerFileInput() {
+  fileInput.value?.click()
 }
 
-function selectQuick(v: number | null) {
-  patch({ recruitmentNum: v })
-  isCustom.value = false
-}
+// function patch(p: Partial<UploadForm>) {
+//   emit('update:modelValue', { ...props.modelValue, ...p })
+// }
 
-function toggleCustom() {
-  isCustom.value = !isCustom.value
-  if (isCustom.value) {
-    patch({ recruitmentNum: props.modelValue.recruitmentNum ?? null })
-  }
-}
-const customRecruitment = computed({
-  get: () => props.modelValue.recruitmentNum ?? '',
-  set: (val: string | number) => {
-    patch({
-      recruitmentNum: val === '' ? null : Number(val),
-    })
+const handleImageUpload = async (_event: Event) => {}
+
+const description = computed({
+  get: () => props.modelValue.description,
+  set: (val: string) => {
+    emit('update:modelValue', { ...props.modelValue, description: val })
   },
 })
+const removeImage = (_index: number) => {}
 </script>

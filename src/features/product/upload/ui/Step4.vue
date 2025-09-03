@@ -1,157 +1,148 @@
 <template>
   <div class="relative h-[100svh] overflow-hidden">
-    <div class="fixed top-[80px]">
+    <div class="fixed top-[80px] inset-x-0 mx-auto max-w-[390px] px-5 box-border">
       <TypographyHead1 class="text-gray-700">
-        가격 및 판매 유형을 입력해주세요
+        모집 시작일을 선택해주세요
       </TypographyHead1>
 
-      <div class="fixed inset-x-0 top-[140px] mx-auto max-w-[390px] px-5 box-border">
-        <TypographyP1 class="text-gray-700">
-          상품 가격
-        </TypographyP1>
-        <div class="relative">
-          <Input
-            ref="titleEl"
-            v-model="price"
-            class="w-full text-[23px] font-semibold border-t-0 border-r-0 border-l-0 border-b-2 border-ccmkt-main focus-visible:ring-0 rounded-none h-[50px] shadow-none pl-0 pr-8"
-            placeholder="상품 가격"
-            inputmode="numeric"
-            autocapitalize="off"
-            autocomplete="off"
-            autocorrect="off"
-            enterkeyhint="next"
-          />
+      <TypographyP1 class="text-gray-700 mt-6 mb-4">
+        모집 시작일
+      </TypographyP1>
 
-          <TypographyHead1 class="absolute right-2 bottom-2 text-gray-700 pointer-events-none">
-            원
-          </TypographyHead1>
-        </div>
-        <div class="grid grid-cols-2 gap-3 mt-7">
+      <Popover v-model:open="open">
+        <PopoverTrigger as-child>
           <Button
-            class="h-[56px] text-lg"
+            variant="outline"
             :class="
-              model.option === 'delivery'
-                ? '!bg-ccmkt-main !text-black !border-ccmkt-main'
-                : 'bg-white border text-black hover:bg-white'
+              cn(
+                'w-full ps-3 text-start font-normal h-[50px] mb-3',
+                !startVal && 'text-muted-foreground'
+              )
             "
-            @click="selectQuick('delivery')"
           >
-            배송
+            <TypographyP1>
+              {{ startVal ? df.format(toDate(startVal)) : '모집 시작일' }}
+            </TypographyP1>
+            <CalendarIcon class="ms-auto h-4 w-4 opacity-50" />
           </Button>
-          <Button
-            class="h-[56px] text-lg"
-            :class="
-              model.option === 'coupon'
-                ? '!bg-ccmkt-main !text-black !border-ccmkt-main'
-                : 'bg-white border text-black hover:bg-white'
-            "
-            @click="selectQuick('coupon')"
-          >
-            쿠폰
-          </Button>
-        </div>
-        <div
-          v-if="model.option === 'coupon'"
-          class="space-y-4 mt-5"
+        </PopoverTrigger>
+
+        <PopoverContent
+          side="bottom"
+          align="center"
+          :collision-padding="12"
+          class="p-0 w-[calc(100vw-32px)] max-w-[390px] flex flex-col justify-center items-center"
         >
-          <TypographyP1 class="-mb-4">
-            쿠폰명
-          </TypographyP1>
-          <Input
-            v-model="couponName"
-            class="text-[23px] font-semibold border-t-0 border-r-0 border-l-0 border-b-2 border-ccmkt-main focus-visible:ring-0 rounded-none h-[50px] shadow-none pl-0"
-            :placeholder="model.title"
+          <Calendar
+            :model-value="startVal"
+            calendar-label="모집 시작일"
+            initial-focus
+            @update:model-value="onPick"
           />
-          <TypographyP1 class="pt-5">
-            유효기간
-          </TypographyP1>
-          <TypographyHead3>구매일로부터</TypographyHead3>
-          <div class="relative">
-            <Input
-              v-model="expirationPeriod"
-              class="text-[23px] font-semibold border-t-0 border-r-0 border-l-0 border-b-2 border-ccmkt-main focus-visible:ring-0 rounded-none h-[50px] shadow-none pl-0"
-              placeholder="유효기간"
-              inputmode="numeric"
-            />
-            <TypographyHead1 class="absolute right-2 bottom-2 text-gray-700 pointer-events-none">
-              일
-            </TypographyHead1>
+          <div class="w-full flex justify-center">
+            <Button
+              class="w-[90%] h-[50px] my-3 bg-ccmkt-main text-black"
+              @click="closePopover"
+            >
+              <TypographySubTitle1>선택</TypographySubTitle1>
+            </Button>
           </div>
-        </div>
-        <div
-          v-else
-          class="space-y-4 mt-5"
+        </PopoverContent>
+      </Popover>
+
+      <div class="flex flex-col gap-3 mb-3">
+        <Button
+          :class="
+            cn(
+              'w-full h-[50px] active:bg-ccmkt-main focus:bg-ccmkt-main',
+              quick === 'today' ? '!bg-ccmkt-main !text-black !border-ccmkt-main' : 'bg-white'
+            )
+          "
+          variant="outline"
+          @click="setToday"
         >
-          <TypographyP2 class="text-gray-600">
-            <i class="bi bi-exclamation-circle mr-1" />
-            배송 유의사항
-            <br>
-            배송 유의사항 배송 유의사항 배송 유의사항 배송 유의사항 배송 유의사항 배송 유의사항 배송
-            유의사항 배송 유의사항
-          </TypographyP2>
-        </div>
+          <TypographySubTitle1>오늘부터</TypographySubTitle1>
+        </Button>
+
+        <Button
+          :class="
+            cn(
+              'w-full h-[50px] active:bg-ccmkt-main focus:bg-ccmkt-main',
+              quick === 'tomorrow' ? '!bg-ccmkt-main !text-black !border-ccmkt-main' : 'bg-white'
+            )
+          "
+          variant="outline"
+          @click="setTomorrow"
+        >
+          <TypographySubTitle1>내일부터</TypographySubTitle1>
+        </Button>
       </div>
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
+import { cn } from '@/lib/utils'
 import { Button } from '@/shared/components/ui/button'
-import { Input } from '@/shared/components/ui/input'
+import { Calendar } from '@/shared/components/ui/calendar'
+import { Popover, PopoverContent, PopoverTrigger } from '@/shared/components/ui/popover'
 import {
   TypographyHead1,
-  TypographyHead3,
   TypographyP1,
-  TypographyP2,
+  TypographySubTitle1,
 } from '@/shared/components/ui/typography'
-import { useFocusFirstFieldImmediate } from '@/shared/composables/useFocusFirstFieldImmediate'
 import type { UploadForm } from '@/shared/composables/useUploadFlow'
-import { computed, ref, type ComponentPublicInstance, type Ref } from 'vue'
+import { DateFormatter, parseDate } from '@internationalized/date'
+import { CalendarIcon } from 'lucide-vue-next'
+import type { DateValue } from 'reka-ui'
+import { toDate } from 'reka-ui/date'
+import { computed, ref } from 'vue'
 
-type InputExpose = {
-  focus: () => void
-  el: Ref<HTMLInputElement | null>
-}
 const props = defineProps<{ modelValue: UploadForm }>()
 const emit = defineEmits<{ (e: 'update:modelValue', v: UploadForm): void }>()
-const model = computed(() => props.modelValue)
-const price = computed({
-  get: () => props.modelValue.price ?? '',
-  set: (val: string | number) => {
-    emit('update:modelValue', {
-      ...props.modelValue,
-      price: val === '' ? null : Number(val),
-    })
-  },
-})
 
-const titleEl = ref<ComponentPublicInstance<InputExpose> | null>(null)
-const focusFirstFieldImmediate = useFocusFirstFieldImmediate(titleEl)
-
-defineExpose({ focusFirstFieldImmediate })
+const df = new DateFormatter('ko-KR', { dateStyle: 'long' })
+const open = ref(false)
+const quick = ref<'today' | 'tomorrow' | null>(null)
 
 function patch(p: Partial<UploadForm>) {
   emit('update:modelValue', { ...props.modelValue, ...p })
+  console.log(p)
 }
 
-function selectQuick(v: 'delivery' | 'coupon') {
-  patch({ option: v })
+const startVal = computed<DateValue | undefined>({
+  get: () =>
+    props.modelValue.startDate ? (parseDate(props.modelValue.startDate) as DateValue) : undefined,
+  set: () => {},
+})
+
+function onPick(v?: DateValue) {
+  patch({ startDate: v ? v.toString() : '' })
+  quick.value = null
 }
 
-const expirationPeriod = computed({
-  get: () => props.modelValue.expirationPeriod ?? '',
-  set: (val: string | number) => {
-    patch({
-      expirationPeriod: val === '' ? null : Number(val),
-    })
-  },
-})
+function closePopover() {
+  open.value = false
+}
 
-const couponName = computed({
-  get: () => props.modelValue.couponName ?? '',
-  set: (val: string) => {
-    patch({
-      couponName: val === '' ? null : val,
-    })
-  },
-})
+function setToday() {
+  patch({ startDate: toLocalISO(new Date()) })
+  quick.value = 'today'
+  open.value = false
+}
+
+function setTomorrow() {
+  const d = new Date()
+  d.setDate(d.getDate() + 1)
+  patch({ startDate: toLocalISO(d) })
+  quick.value = 'tomorrow'
+  open.value = false
+}
+
+function toLocalISO(d: Date) {
+  const yyyy = d.getFullYear()
+  const mm = String(d.getMonth() + 1).padStart(2, '0')
+  const dd = String(d.getDate()).padStart(2, '0')
+  return `${yyyy}-${mm}-${dd}`
+}
 </script>
