@@ -67,9 +67,9 @@
 </template>
 
 <script setup lang="ts">
-import type { UploadForm } from '@/pages/UploadProduct.vue'
 import { Textarea } from '@/shared/components/ui/textarea'
 import { TypographyHead1, TypographyP1 } from '@/shared/components/ui/typography'
+import type { UploadForm } from '@/shared/composables/useUploadFlow'
 import { computed, ref } from 'vue'
 
 const fileInput = ref<HTMLInputElement | null>(null)

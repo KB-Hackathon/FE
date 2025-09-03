@@ -109,7 +109,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { UploadForm } from '@/pages/UploadProduct.vue'
+import type { UploadForm } from '@/shared/composables/useUploadFlow'
 
 import exampleImage1 from '@/assets/images/exampleImage1.png'
 import exampleImage2 from '@/assets/images/exampleImage2.png'

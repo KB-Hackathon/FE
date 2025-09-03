@@ -37,33 +37,34 @@
         <button
           v-else
           class="bg-ccmkt-main rounded-lg w-full h-[60px] z-20"
-          @click="onClickUploadButton"
+          @click="dialogPreview.show()"
         >
           <TypographyHead3>미리보기</TypographyHead3>
         </button>
       </div>
     </div>
+
     <div
-      v-if="currentStep == PREVIEW_STEP_INDEX"
+      v-if="currentStep === PREVIEW_STEP_INDEX"
       class="fixed left-0 right-0 bottom-0 py-[10px] bg-white z-[40] flex flex-col max-w-[390px] mx-auto"
     >
       <div class="flex w-[95%] m-auto relative gap-2">
         <button
           class="bg-gray-400 rounded-lg w-full h-[60px] z-20"
-          @click="onClickCancelUploadButton"
+          @click="dialogBack.show()"
         >
           <TypographyHead3>이전으로</TypographyHead3>
         </button>
         <button
           class="bg-ccmkt-main rounded-lg w-full h-[60px] z-20"
-          @click="uploadProduct"
+          @click="dialogUpload.show()"
         >
           <TypographyHead3>업로드하기</TypographyHead3>
         </button>
       </div>
     </div>
 
-    <AlertDialog v-model:open="draftDialogOpen">
+    <AlertDialog v-model:open="dialogPreview.open.value">
       <AlertDialogContent class="rounded-lg w-[95%]">
         <AlertDialogHeader>
           <AlertDialogTitle class="text-[24px]">
@@ -80,7 +81,7 @@
           </AlertDialogCancel>
           <AlertDialogAction
             class="bg-ccmkt-main text-black h-[50px] hover:bg-ccmkt-main"
-            @click="onConfirmPreview"
+            @click="handleConfirmPreview"
           >
             <TypographyP1>미리보기</TypographyP1>
           </AlertDialogAction>
@@ -88,15 +89,15 @@
       </AlertDialogContent>
     </AlertDialog>
 
-    <AlertDialog v-model:open="cancelUpload">
+    <AlertDialog v-model:open="dialogBack.open.value">
       <AlertDialogContent class="rounded-lg w-[95%]">
         <AlertDialogHeader>
           <AlertDialogTitle class="text-[24px]">
             이전 페이지로 돌아가시겠어요?
           </AlertDialogTitle>
           <AlertDialogDescription class="text-[14px]">
-            돌아가면 AI가 생성한 글이 초기화될 수 있습니다
-            <br>계속하시려면 ‘이전으로’를 눌러주세요
+            돌아가면 AI가 생성한 글이 초기화될 수 있습니다.<br>
+            계속하시려면 ‘이전으로’를 눌러주세요.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -105,7 +106,7 @@
           </AlertDialogCancel>
           <AlertDialogAction
             class="bg-ccmkt-main text-black h-[50px] hover:bg-ccmkt-main"
-            @click="onConfirmBackToForm"
+            @click="handleBackToForm"
           >
             <TypographyP1>이전으로</TypographyP1>
           </AlertDialogAction>
@@ -113,15 +114,15 @@
       </AlertDialogContent>
     </AlertDialog>
 
-    <AlertDialog v-model:open="upload">
+    <AlertDialog v-model:open="dialogUpload.open.value">
       <AlertDialogContent class="rounded-lg w-[95%]">
         <AlertDialogHeader>
           <AlertDialogTitle class="text-[24px]">
             상품을 업로드하시겠어요?
           </AlertDialogTitle>
           <AlertDialogDescription class="text-[14px]">
-            상품이 업로드되면 다른 사용자들에게 공개돼요
-            <br>작성한 내용을 다시 한번 확인해 주세요
+            상품이 업로드되면 다른 사용자들에게 공개돼요.<br>
+            작성한 내용을 다시 한번 확인해 주세요.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -130,7 +131,7 @@
           </AlertDialogCancel>
           <AlertDialogAction
             class="bg-ccmkt-main text-black h-[50px] hover:bg-ccmkt-main"
-            @click="onConfirmBackToForm"
+            @click="handleUpload"
           >
             <TypographyP1>업로드하기</TypographyP1>
           </AlertDialogAction>
@@ -150,6 +151,7 @@ import Step5 from '@/features/product/upload/ui/Step5.vue'
 import Step6 from '@/features/product/upload/ui/Step6.vue'
 import Step7 from '@/features/product/upload/ui/Step7.vue'
 import Step9 from '@/features/product/upload/ui/Step9.vue'
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -162,37 +164,26 @@ import {
 } from '@/shared/components/ui/alert-dialog'
 import { TypographyHead3, TypographyP1 } from '@/shared/components/ui/typography'
 import { useKeyboardSafeBottom } from '@/shared/composables/useKeyboardSafeBottom'
-import { nextTick, onMounted, ref, watch, type ComponentPublicInstance } from 'vue'
+import { ref } from 'vue'
+
+import { useDialog } from '@/shared/composables/useDialog'
+import { useUploadDraft } from '@/shared/composables/useUploadDraft'
+import { useUploadFlow, type UploadForm } from '@/shared/composables/useUploadFlow'
 
 const { kbOffset } = useKeyboardSafeBottom()
 
-export type UploadForm = {
-  title: string
-  category: string
-  price: string | number | null
-  startDate: string
-  endDate: string
-  option: 'delivery' | 'coupon'
-  couponName: string | null
-  expirationPeriod: string | number | null
-  recruitmentNum: number | null
-  imageList: string[]
-  description: string
-  aiGeneratingDescription: string | null
-}
-
-type StepExpose = { focusFirstFieldImmediate?: () => void }
-
 const steps = [Step1, Step2, Step4, Step5, Step6, Step7, Step9, AIGeneratingLoading, Preview]
-
-const currentStep = ref(0)
-const stepRef = ref<ComponentPublicInstance<StepExpose> | null>(null)
-const draftDialogOpen = ref(false)
-const cancelUpload = ref(false)
-const upload = ref(false)
-const PREVIEW_STEP_INDEX = steps.length - 1
-const LOADING_STEP_INDEX = steps.length - 2
-const LAST_FORM_STEP = steps.length - 3
+const {
+  currentStep,
+  stepRef,
+  PREVIEW_STEP_INDEX,
+  LAST_FORM_STEP,
+  goNext,
+  goPrev,
+  goLoading,
+  goPreview,
+  backToLastForm,
+} = useUploadFlow(steps)
 
 const form = ref<UploadForm>({
   title: '',
@@ -202,62 +193,35 @@ const form = ref<UploadForm>({
   endDate: '',
   option: 'delivery',
   couponName: null,
-
   expirationPeriod: null,
   recruitmentNum: null,
   imageList: [],
   description: '',
   aiGeneratingDescription: '',
 })
+useUploadDraft(form)
 
-onMounted(() => {
-  const saved = localStorage.getItem('uploadDraft')
-  if (saved) {
-    try {
-      Object.assign(form.value, JSON.parse(saved))
-    } catch (e) {
-      console.error(e)
-    }
-  }
-})
+const dialogPreview = useDialog(false)
+const dialogBack = useDialog(false)
+const dialogUpload = useDialog(false)
 
-watch(form, (v) => localStorage.setItem('uploadDraft', JSON.stringify(v)), { deep: true })
-
-function goNext() {
-  if (currentStep.value < LAST_FORM_STEP) {
-    currentStep.value++
-    nextTick(() => stepRef.value?.focusFirstFieldImmediate?.())
-  }
-}
-
-function goPrev() {
-  if (currentStep.value > 0) currentStep.value--
-}
-
-function onClickUploadButton() {
-  draftDialogOpen.value = true
-}
-
-function onClickCancelUploadButton() {
-  cancelUpload.value = true
-}
-
-function onConfirmBackToForm() {
-  cancelUpload.value = false
-  currentStep.value = LAST_FORM_STEP
-}
-
-function onConfirmPreview() {
-  draftDialogOpen.value = false
-  currentStep.value = LOADING_STEP_INDEX
-
+function handleConfirmPreview() {
+  dialogPreview.hide()
+  goLoading()
   setTimeout(() => {
     form.value.aiGeneratingDescription = '✨ AI가 생성한 멋진 상품 소개 글입니다.'
-    currentStep.value = PREVIEW_STEP_INDEX
+    goPreview()
   }, 3000)
 }
 
-function uploadProduct() {
-  upload.value = true
+function handleBackToForm() {
+  dialogBack.hide()
+  backToLastForm()
+}
+
+function handleUpload() {
+  dialogUpload.hide()
+
+  localStorage.removeItem('uploadDraft')
 }
 </script>

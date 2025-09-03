@@ -49,7 +49,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { UploadForm } from '@/pages/UploadProduct.vue'
 import { Input } from '@/shared/components/ui/input'
 import {
   Select,
@@ -61,6 +60,7 @@ import {
 } from '@/shared/components/ui/select'
 import { TypographyHead1, TypographyP1 } from '@/shared/components/ui/typography'
 import { useFocusFirstFieldImmediate } from '@/shared/composables/useFocusFirstFieldImmediate'
+import type { UploadForm } from '@/shared/composables/useUploadFlow'
 import { computed, ref, type ComponentPublicInstance, type Ref } from 'vue'
 type InputExpose = {
   focus: () => void

@@ -83,7 +83,6 @@
 
 <script setup lang="ts">
 import { cn } from '@/lib/utils'
-import type { UploadForm } from '@/pages/UploadProduct.vue'
 import { Button } from '@/shared/components/ui/button'
 import { Calendar } from '@/shared/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/shared/components/ui/popover'
@@ -92,6 +91,7 @@ import {
   TypographyP1,
   TypographySubTitle1,
 } from '@/shared/components/ui/typography'
+import type { UploadForm } from '@/shared/composables/useUploadFlow'
 import { DateFormatter, parseDate } from '@internationalized/date'
 import { CalendarIcon } from 'lucide-vue-next'
 import type { DateValue } from 'reka-ui'

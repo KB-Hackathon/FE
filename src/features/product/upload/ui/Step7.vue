@@ -70,10 +70,10 @@
 </template>
 
 <script setup lang="ts">
-import type { UploadForm } from '@/pages/UploadProduct.vue'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import { TypographyHead1 } from '@/shared/components/ui/typography'
+import type { UploadForm } from '@/shared/composables/useUploadFlow'
 import { computed, ref } from 'vue'
 
 const props = defineProps<{ modelValue: UploadForm }>()
