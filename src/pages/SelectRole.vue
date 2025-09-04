@@ -16,7 +16,7 @@
     <div class="flex flex-col gap-3">
       <Button
         class="w-full h-[50px] bg-ccmkt-gray shadow-none hover:bg-ccmkt-gray"
-        @click="router.replace({ name: 'additional_info' })"
+        @click="router.replace({ name: 'home' })"
       >
         <TypographyHead2 class="text-black">
           사고싶어요
@@ -24,7 +24,7 @@
       </Button>
       <Button
         class="w-full h-[50px] bg-ccmkt-main shadow-none hover:bg-ccmkt-main"
-        @click="router.replace({ name: 'additional_info' })"
+        @click="router.replace({ name: 'business_lookup' })"
       >
         <TypographyHead2 class="text-black">
           팔고싶어요

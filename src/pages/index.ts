@@ -1,5 +1,6 @@
 export { default as AdditionalInfo } from './AdditionalInfo.vue'
 export { default as Archive } from './Archive.vue'
+export { default as BusinessLookup } from './BusinessLookup.vue'
 export { default as Home } from './Home.vue'
 export { default as Login } from './Login.vue'
 export { default as My } from './My.vue'

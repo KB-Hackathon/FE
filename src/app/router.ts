@@ -1,6 +1,7 @@
 import {
   AdditionalInfo,
   Archive,
+  BusinessLookup,
   Home,
   Login,
   My,
@@ -43,6 +44,12 @@ const routes: RouteRecordRaw[] = [
     name: 'additional_info',
     path: '/additional_info',
     component: AdditionalInfo,
+    meta: { header: false },
+  },
+  {
+    name: 'business_lookup',
+    path: '/business_lookup',
+    component: BusinessLookup,
     meta: { header: false },
   },
   {
