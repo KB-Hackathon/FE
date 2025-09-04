@@ -1,17 +1,8 @@
 <template>
   <form
-    class="w-full flex flex-col gap-5 -mt-[30px]"
+    class="w-full flex flex-col gap-5"
     @submit.prevent="onSubmit"
   >
-    <button
-      type="button"
-      class="flex gap-3 mb-[30px]"
-      @click="router.go(-1)"
-    >
-      <i class="bi bi-arrow-left" />
-      <TypographyP1>뒤로가기</TypographyP1>
-    </button>
-
     <TypographyHead2>
       상품 판매를 위해 <br>
       사업자 조회가 필요합니다.
