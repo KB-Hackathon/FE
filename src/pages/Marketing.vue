@@ -253,7 +253,7 @@ const agePieOptions = {
         </div>
       </div>
     </div>
-    <TypographyP1 class="-mb-[20px]">
+    <TypographyP1 class="-mb-[30px]">
       상품별 매출액
     </TypographyP1>
     <div class="mt-4 w-full max-w-[390px]">
