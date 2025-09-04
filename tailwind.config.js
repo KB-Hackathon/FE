@@ -11,6 +11,8 @@ export default {
       colors: {
         'ccmkt-main': '#ffcc00',
         'ccmkt-gray': '#cbd5e1',
+        'ccmkt-bg-white': '#F9FAFB',
+        naver: '#03c75a',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

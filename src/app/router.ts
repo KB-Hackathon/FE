@@ -1,4 +1,4 @@
-import { Archive, Home, My, Product, Seller, Test } from '@/pages'
+import { Archive, Home, Login, My, Product, Seller, Test } from '@/pages'
 import OwnerHome from '@/pages/OwnerHome.vue'
 import UploadProduct from '@/pages/UploadProduct.vue'
 import { useLoadingStore } from '@/shared/stores/loading'
@@ -16,6 +16,12 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     component: Home,
     meta: { footer: true },
+  },
+  {
+    name: 'login',
+    path: '/login',
+    component: Login,
+    meta: { header: false },
   },
   {
     name: 'archive',
