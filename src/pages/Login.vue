@@ -20,7 +20,7 @@
         소셜 로그인
       </TypographyCaption>
     </div>
-    <button>
+    <button @click="router.push({ name: 'select_role' })">
       <img
         :src="kakao_login_button"
         class="w-full"
@@ -30,18 +30,18 @@
   <div class="bg-naver w-full h-[53px] text-white relative items-center justify-center rounded-md">
     <img
       :src="naver_icon"
-      class="absolute left-3 top-1/2 -translate-y-1/2 w-[40px]"
+      class="absolute left-2 top-1/2 -translate-y-1/2 w-[40px]"
     >
-    <p class="absolute left-1/2 top-1/2 ml-[13px] -translate-x-1/2 -translate-y-1/2 text-[18px]">
+    <p class="absolute left-1/2 top-1/2 ml-[13px] -translate-x-1/2 -translate-y-1/2 text-[17px]">
       네이버 로그인
     </p>
   </div>
   <div class="bg-[#F2F2F2] border w-full h-[53px] relative items-center justify-center rounded-md">
     <img
       :src="google_icon"
-      class="absolute left-3 top-1/2 -translate-y-1/2 w-[40px]"
+      class="absolute left-2 top-1/2 -translate-y-1/2 w-[40px]"
     >
-    <p class="absolute left-1/2 top-1/2 ml-[13px] -translate-x-1/2 -translate-y-1/2 text-[18px]">
+    <p class="absolute left-1/2 top-1/2 ml-[10px] -translate-x-1/2 -translate-y-1/2 text-[17px]">
       구글 로그인
     </p>
   </div>

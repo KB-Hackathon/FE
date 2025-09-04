@@ -3,6 +3,7 @@ export { default as Home } from './Home.vue'
 export { default as Login } from './Login.vue'
 export { default as My } from './My.vue'
 export { default as Product } from './Product.vue'
+export { default as SelectRole } from './SelectRole.vue'
 export { default as Seller } from './Seller.vue'
 
 export { default as Test } from './Test.vue'
