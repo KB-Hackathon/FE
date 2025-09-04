@@ -20,7 +20,7 @@
         소셜 로그인
       </TypographyCaption>
     </div>
-    <button @click="router.push({ name: 'additional_info' })">
+    <button @click="onClickKakaoLoginButton">
       <img
         :src="kakao_login_button"
         class="w-full"
@@ -55,4 +55,7 @@ import { TypographyCaption, TypographyHead1, TypographyP1 } from '@/shared/compo
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+function onClickKakaoLoginButton() {
+  window.location.href = `${import.meta.env.VITE_APP_API_URL}/oauth2/authorization/kakao`
+}
 </script>

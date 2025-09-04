@@ -88,6 +88,18 @@
           <i class="bi bi-chevron-right text-xl" />
         </div>
       </div>
+
+      <div class="p-[15px] bg-[#d9d9d9] rounded-lg">
+        <TypographyHead2 class="text-[20px]">
+          QR 코드 조회하기
+        </TypographyHead2>
+        <div class="flex w-full justify-between mt-1">
+          <TypographyP1 class="text-gray-600 font-bold">
+            내가 판매한 쿠폰의 QR 코드를 조회해요
+          </TypographyP1>
+          <i class="bi bi-chevron-right text-xl" />
+        </div>
+      </div>
     </div>
   </div>
   <AlertDialog v-model:open="draftDialogOpen">

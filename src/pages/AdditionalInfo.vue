@@ -38,7 +38,27 @@
       class="input-style"
       placeholder="주소"
     />
-
+    <RadioGroup
+      v-model="form.gender"
+      default-value="MALE"
+    >
+      <div class="flex items-center justify-start gap-6 mt-3">
+        <div class="flex items-center space-x-2">
+          <RadioGroupItem
+            id="r1"
+            value="FEMALE"
+          />
+          <Label for="r1"><TypographySubTitle1>여성</TypographySubTitle1> </Label>
+        </div>
+        <div class="flex items-center space-x-2">
+          <RadioGroupItem
+            id="r2"
+            value="MALE"
+          />
+          <Label for="r2"><TypographySubTitle1>남성</TypographySubTitle1> </Label>
+        </div>
+      </div>
+    </RadioGroup>
     <Button
       type="submit"
       class="fixed bottom-[30px] inset-x-0 mx-[10px] bg-ccmkt-main hover:bg-ccmkt-main h-[50px]"
@@ -107,22 +127,26 @@ import {
 } from '@/shared/components/ui/alert-dialog'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
+import { Label } from '@/shared/components/ui/label'
+import { RadioGroup, RadioGroupItem } from '@/shared/components/ui/radio-group'
 import {
   TypographyHead2,
   TypographyHead3,
   TypographyP1,
   TypographyP2,
+  TypographySubTitle1,
 } from '@/shared/components/ui/typography'
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
+type Gender = 'MALE' | 'FEMALE'
 const form = reactive({
   name: '',
   birth: '',
   phone: '',
   address: '',
+  gender: 'MALE',
 })
 
 const dialog = reactive<{
@@ -142,6 +166,7 @@ function onSubmit() {
   if (!form.birth) missing.push('생년월일 (8자리)')
   if (!form.phone) missing.push("휴대전화번호 ('-' 제외)")
   if (!form.address) missing.push('주소')
+  if (!form.gender) missing.push('성별')
 
   if (form.birth && form.birth.length !== 8) missing.push('생년월일 형식(8자리)')
   if (form.phone && !/^\d+$/.test(form.phone)) missing.push('휴대전화번호는 숫자만')
