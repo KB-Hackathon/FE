@@ -4,6 +4,7 @@ import {
   BusinessLookup,
   Home,
   Login,
+  Marketing,
   My,
   Product,
   SelectRole,
@@ -83,6 +84,11 @@ const routes: RouteRecordRaw[] = [
     name: 'upload_product',
     path: '/upload',
     component: UploadProduct,
+  },
+  {
+    name: 'marketing',
+    path: '/marketing',
+    component: Marketing,
   },
 ]
 

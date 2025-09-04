@@ -59,15 +59,18 @@
         </div>
       </div>
     </RadioGroup>
-    <Button
-      type="submit"
-      class="fixed bottom-[30px] inset-x-0 mx-[10px] bg-ccmkt-main hover:bg-ccmkt-main h-[50px]"
-    >
-      <TypographyHead3 class="text-black">
-        회원가입
-      </TypographyHead3>
-    </Button>
-
+    <div class="fixed bottom-[30px] left-10 right-10">
+      <div class="mx-auto w-[calc(100vw-20px)] max-w-[370px]">
+        <Button
+          type="submit"
+          class="w-full bg-ccmkt-main hover:bg-ccmkt-main h-[50px]"
+        >
+          <TypographyHead3 class="text-black">
+            회원가입
+          </TypographyHead3>
+        </Button>
+      </div>
+    </div>
     <AlertDialog v-model:open="dialog.open">
       <AlertDialogContent class="rounded-lg w-[95%]">
         <AlertDialogHeader>

@@ -77,7 +77,10 @@
         </div>
       </div>
 
-      <div class="p-[15px] bg-[#ffeeaa] rounded-lg">
+      <div
+        class="p-[15px] bg-[#ffeeaa] rounded-lg"
+        @click="router.push({ name: 'marketing' })"
+      >
         <TypographyHead2 class="text-[20px]">
           마케팅 성과 분석하기
         </TypographyHead2>
