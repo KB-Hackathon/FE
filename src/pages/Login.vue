@@ -20,7 +20,7 @@
         소셜 로그인
       </TypographyCaption>
     </div>
-    <button @click="router.push({ name: 'select_role' })">
+    <button @click="router.push({ name: 'additional_info' })">
       <img
         :src="kakao_login_button"
         class="w-full"
