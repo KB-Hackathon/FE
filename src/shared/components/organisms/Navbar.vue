@@ -12,12 +12,14 @@
   </div>
 </template>
 <script setup lang="ts">
+import { useAuthStore } from '@/entities/user/user.store'
 import { cn } from '@/lib/utils'
 import { TypographyCaption } from '@/shared/components/ui/typography'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
+const { isLoggedIn } = useAuthStore()
 
 const tabs = [
   {
@@ -34,7 +36,13 @@ const tabs = [
     label: '홈',
     location: '/',
   },
-  { icon: 'bi-person', active_icon: 'bi-person-fill', value: 'my', label: '마이', location: '/my' },
+  {
+    icon: 'bi-person',
+    active_icon: 'bi-person-fill',
+    value: 'my',
+    label: '마이',
+    location: isLoggedIn ? '/my' : '/login',
+  },
 ]
 
 const isActive = (tabValue: string): boolean => {
