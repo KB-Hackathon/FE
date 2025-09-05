@@ -59,8 +59,8 @@
         </div>
       </div>
     </RadioGroup>
-    <div class="fixed bottom-[30px] left-10 right-10">
-      <div class="mx-auto w-[calc(100vw-20px)] max-w-[370px]">
+    <div class="fixed bottom-[30px] left-5 right-5">
+      <div class="mx-auto">
         <Button
           type="submit"
           class="w-full bg-ccmkt-main hover:bg-ccmkt-main h-[50px]"
@@ -141,10 +141,12 @@ import {
   TypographySubTitle1,
 } from '@/shared/components/ui/typography'
 import { reactive } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const router = useRouter()
-const signupToken = ''
+const route = useRoute()
+
+const signupToken = route.query.signup_token as string
 
 const form = reactive({
   name: '',

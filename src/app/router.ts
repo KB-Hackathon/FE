@@ -44,7 +44,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     name: 'additional_info',
-    path: '/additional_info',
+    path: '/auth/signUp/additional',
     component: AdditionalInfo,
     meta: { header: false },
   },
