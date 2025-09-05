@@ -11,3 +11,16 @@ export interface AdditionalInfoRequest {
   phoneNumber?: string
   image?: string
 }
+
+export interface RegisterSellerResponse {
+  id: number
+  bizNo: string
+  companyName: string
+  repName: string
+  industryBusinessType: string
+  bizDescription: string
+  companyPhoneNumber: string
+  zipCode: string
+  roadNameAddress: string
+  companyClassificationCode: string
+}

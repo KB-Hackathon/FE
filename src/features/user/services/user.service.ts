@@ -1,4 +1,8 @@
-import { AdditionalInfoRequest, UploadImageResponse } from '@/entities/user/user.api.type'
+import {
+  AdditionalInfoRequest,
+  RegisterSellerResponse,
+  UploadImageResponse,
+} from '@/entities/user/user.api.type'
 import { UserInfo } from '@/entities/user/user.entity'
 import { api, ApiData } from '@/shared/plugin/axios'
 import { API_END_POINT } from '@/shared/utils/fetcher'
@@ -25,5 +29,11 @@ export async function getUserInfo(): Promise<ApiData<UserInfo>> {
 export async function postAdditionalInfo(form: AdditionalInfoRequest): Promise<ApiData<boolean>> {
   const { url, method } = API_END_POINT.user.postAdditional()
   const result = await api<ApiData<boolean>>({ url, method, data: form })
+  return result.data
+}
+
+export async function registerSeller(bizNo: string): Promise<ApiData<RegisterSellerResponse>> {
+  const { url, method } = API_END_POINT.user.postAdditional()
+  const result = await api<ApiData<RegisterSellerResponse>>({ url, method, data: { bizNo } })
   return result.data
 }
