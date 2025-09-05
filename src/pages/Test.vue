@@ -67,6 +67,7 @@ import TabComponent from '@/features/test/TabComponent.vue'
 import TagInputComponent from '@/features/test/TagInputComponent.vue'
 import ToastComponent from '@/features/test/ToastComponent.vue'
 import { uploadImage } from '@/features/user/services/user.service'
+import { TypographyP1 } from '@/shared/components/ui/typography'
 import { api } from '@/shared/plugin/axios'
 import { onMounted, ref } from 'vue'
 
@@ -99,11 +100,11 @@ async function onFileChange(e: Event) {
   const req: FormData = formData
   try {
     const res = await uploadImage(req)
-    uploadedUrl.value = res.url
+    uploadedUrl.value = res.data.url
   } catch (err) {
     console.error('이미지 업로드 실패:', err)
   } finally {
-    target.value = '' // 같은 파일 다시 선택 가능하게 리셋
+    target.value = ''
   }
 }
 </script>
