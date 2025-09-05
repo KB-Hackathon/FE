@@ -1,21 +1,131 @@
-import { Category } from './product.entity'
+import { Product, categoryList } from '@/entities/product/product.entity'
 
-import babyImg from '@/assets/images/category/baby.png'
-import beautyImg from '@/assets/images/category/beauty.png'
-import digitalImg from '@/assets/images/category/digital.png'
-import fashionImg from '@/assets/images/category/fashion.png'
-import foodImg from '@/assets/images/category/food.png'
-import hobbyImg from '@/assets/images/category/hobby.png'
-import livingImg from '@/assets/images/category/living.png'
-import sportsImg from '@/assets/images/category/sports.png'
+export const productMocks: Product[] = [
+  {
+    id: 'p1',
+    title: '맛있는 찰옥수수 냉동 옥수수 10개',
+    description: '달콤하고 쫀득한 찰옥수수, 냉동 보관으로 신선함 유지',
+    seller: { id: 's1', name: '주식회사 착착' },
+    category: categoryList[4],
+    media: [
+      'https://flexgcdn-natural8127.moall.shop/data/goods/natural8127/small/thum2/1000x1000(1).jpg',
+    ],
+    pricing: { salePrice: 12000 },
+    groupBuying: { progressPct: 35, endAt: '2025-09-30' },
+    productType: '쿠폰',
+    tags: ['옥수수', '냉동', '착착마켓'],
+  },
+  {
+    id: 'p2',
+    title: '여름 반팔 티셔츠 세트',
+    description: '시원하고 편한 기본 반팔 티셔츠 3종 세트',
+    seller: { id: 's2', name: '패션스토어' },
+    category: categoryList[0],
+    media: ['https://stylebiggirl.co.kr/web/upload/info/2021/BYH148.jpg'],
+    pricing: { originalPrice: 30000, salePrice: 24900 },
+    groupBuying: { progressPct: 70, endAt: '2025-09-07' },
+    productType: '배송',
+    tags: ['여름', '티셔츠', '패션'],
+  },
+  {
+    id: 'p3',
+    title: '뷰티 마스크팩 20매 세트',
+    description: '수분 가득, 매일 쓰는 데일리 마스크팩',
+    seller: { id: 's3', name: '뷰티하우스' },
+    category: categoryList[1],
+    media: [
+      'https://kioland.co.kr/web/product/big/202505/bd55022153d02607c913da713e57ebe3.jpg',
+      'https://godomall.speedycdn.net/d38889e2d902ed3dcc124f1c31cbbf35/goods/26/image/detail/26_Detail0.jpg',
+    ],
+    pricing: { originalPrice: 20000, salePrice: 9900 },
+    groupBuying: { progressPct: 55, endAt: '2025-09-25' },
+    productType: '쿠폰',
+    tags: ['마스크팩', '스킨케어'],
+  },
+  {
+    id: 'p4',
+    title: '무선 이어폰 Pro',
+    description: '최신 블루투스 5.3 지원, 고음질 무선 이어폰',
+    seller: { id: 's4', name: '디지털샵' },
+    category: categoryList[2],
+    media: [
+      'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airpods-pro-2-hero-select-202409_FMT_WHH?wid=750&hei=556&fmt=jpeg&qlt=90&.v=1724041668836',
+    ],
+    pricing: { originalPrice: 159000, salePrice: 129000 },
+    groupBuying: { progressPct: 80, endAt: '2025-09-28' },
+    productType: '배송',
+    tags: ['이어폰', '블루투스'],
+  },
+  {
+    id: 'p5',
+    title: '주방용 스테인리스 냄비 세트',
+    description: '튼튼하고 오래가는 3종 냄비 세트',
+    seller: { id: 's5', name: '리빙마켓' },
+    category: categoryList[3],
+    media: [
+      'https://m.health.chosun.com/site/data/img_dir/2022/12/22/2022122202044_0.jpg',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm3xWNa3QzWLL7ZUGNpIReez7NZYc2od6eXNrS24zUItcGPW7saqgQjrQ5HXIILc8mZE0&usqp=CAU',
+    ],
+    pricing: { originalPrice: 89000, salePrice: 59000 },
+    groupBuying: { progressPct: 25, endAt: '2025-09-22' },
+    productType: '배송',
+    tags: ['주방', '냄비'],
+  },
+]
 
-export const categoryList: Category[] = [
-  { name: '패션', image: fashionImg },
-  { name: '뷰티 / 헬스', image: beautyImg },
-  { name: '디지털/가전', image: digitalImg },
-  { name: '생활 / 주방', image: livingImg },
-  { name: '식품', image: foodImg },
-  { name: '취미 / 문구', image: hobbyImg },
-  { name: '스포츠', image: sportsImg },
-  { name: '유아', image: babyImg },
+export const trendMocks: Product[] = [
+  {
+    id: 't1',
+    title: '프리미엄 꿀복숭아 5kg 박스',
+    description: '달콤하고 신선한 복숭아를 산지 직송으로 받아보세요',
+    seller: { id: 's11', name: '주식회사 복숭아마켓' },
+    category: categoryList[4],
+    media: ['https://cdn.monthly.knnews.co.kr/news/photo/202107/778_2078_3659.jpg'],
+    pricing: { originalPrice: 45000, salePrice: 39800 },
+    groupBuying: { progressPct: 62, endAt: '2025-09-25' },
+    productType: '배송',
+    tags: ['복숭아', '과일', '산지직송'],
+  },
+  {
+    id: 't2',
+    title: '스포츠 기능성 러닝화',
+    description: '통기성과 착화감이 뛰어난 최신형 러닝화',
+    seller: { id: 's12', name: '스포츠스토어' },
+    category: categoryList[6],
+    media: [
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHJnEb9LH6bhCStNUNix6XPyzFPbbNLdQPIA&s',
+    ],
+    pricing: { originalPrice: 99000, salePrice: 79000 },
+    groupBuying: { progressPct: 85, endAt: '2025-09-15' },
+    productType: '배송',
+    tags: ['러닝화', '스포츠'],
+  },
+  {
+    id: 't3',
+    title: '유기농 아기 이유식 세트',
+    description: '안전하고 건강한 재료로 만든 아기 이유식 7팩',
+    seller: { id: 's13', name: '맘마스토어' },
+    category: categoryList[7],
+    media: [
+      'https://i.namu.wiki/i/92of6qgixR3Ek99iZDDcYGU8OL09KEXvUBCQve2UuFK9uJHdzsoCLlTX_QXFCX4DCw_i39A4zSOoSpu_Isa73w.webp',
+    ],
+    pricing: { originalPrice: 35000, salePrice: 29900 },
+    groupBuying: { progressPct: 40, endAt: '2025-09-27' },
+    productType: '쿠폰',
+    tags: ['유아식', '이유식'],
+  },
+  {
+    id: 't4',
+    title: '프리미엄 드립 커피 세트',
+    description: '핸드드립 원두 5종, 집에서 즐기는 고급 커피',
+    seller: { id: 's14', name: '커피랩' },
+    category: categoryList[4],
+    media: [
+      'https://i.namu.wiki/i/Dxgr1y3jdkR01iM7VoziSTD2eI-WJrDtuqOOSC-CULkYq7EJk2Ao9nG5NzhpyF4Gp35S9pPf9LFYw53zKwm5IQ.webp',
+    ],
+    pricing: { originalPrice: 28000, salePrice: 19900 },
+    groupBuying: { progressPct: 95, endAt: '2025-09-18' },
+    productType: '배송',
+    tags: ['커피', '드립백'],
+  },
 ]

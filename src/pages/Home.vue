@@ -9,24 +9,26 @@
     />
 
     <!-- <Separator class="my-4" /> -->
-    <div class="flex gap-2 sticky top-0 py-3 bg-[#F9FAFB]">
+    <div class="flex gap-2 sticky -top-1 py-3 bg-[#F9FAFB]">
       <FilteringTab
         v-model:filter1="filter1"
         v-model:filter2="filter2"
       />
     </div>
     <div class="flex flex-col gap-4 mt-3">
-      <LargeProductCard />
-      <LargeProductCard />
-      <LargeProductCard />
+      <LargeProductCard
+        v-for="(product, index) in productList"
+        :key="index"
+        :product="product"
+      />
 
       <TrendProduct />
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { Category } from '@/entities/product/product.entity'
-import { categoryList } from '@/entities/product/product.mock'
+import { Category, categoryList } from '@/entities/product/product.entity'
+import { productMocks } from '@/entities/product/product.mock'
 import CategoryList from '@/features/product/filter/ui/CategoryList.vue'
 import FilteringTab from '@/features/product/filter/ui/FilteringTab.vue'
 import TrendProduct from '@/features/product/productList/ui/TrendProduct.vue'
@@ -41,4 +43,6 @@ const selected = ref<Category>(categories[0])
 const search = ref<string>('')
 const filter1 = ref<string | undefined>(undefined) // 모집 상태
 const filter2 = ref<string | undefined>(undefined) // 거래 방식
+
+const productList = productMocks
 </script>
