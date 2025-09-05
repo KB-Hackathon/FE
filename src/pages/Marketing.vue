@@ -5,18 +5,13 @@ import {
   TypographySubTitle1,
 } from '@/shared/components/ui/typography'
 import { formatNumber } from '@/shared/utils/format'
-import { useRouter } from 'vue-router'
 
-const router = useRouter()
 // --- 임의 데이터 ---
 const successCount = 5
 const failCount = 10
 const total = successCount + failCount
 const successRate = total ? Math.round((successCount / total) * 100) : 0
 const salesPerProduct = [
-  { name: '쫀득쿠키 30개입 쿠폰', sales: 400000 },
-  { name: '쫀득쿠키 30개입 쿠폰', sales: 400000 },
-  { name: '쫀득쿠키 30개입 쿠폰', sales: 400000 },
   { name: '쫀득쿠키 30개입 쿠폰', sales: 400000 },
   { name: '쫀득쿠키 30개입 쿠폰', sales: 400000 },
 ]

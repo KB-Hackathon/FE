@@ -2,6 +2,7 @@ import {
   AdditionalInfo,
   Archive,
   BusinessLookup,
+  Coupon,
   Home,
   Login,
   Marketing,
@@ -63,6 +64,12 @@ const routes: RouteRecordRaw[] = [
     name: 'my',
     path: '/my',
     component: My,
+    meta: { footer: true },
+  },
+  {
+    name: 'coupon',
+    path: '/my/coupon',
+    component: Coupon,
     meta: { footer: true },
   },
   {
