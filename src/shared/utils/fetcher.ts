@@ -1,3 +1,4 @@
+import { product } from '@/entities/product/product.api'
 import { user } from '@/entities/user/user.api'
 import type { Method as AxiosMethod } from 'axios'
 
@@ -28,7 +29,7 @@ export type ApiEndpoint = {
   method: AxiosMethod | Method
 }
 
-export const API_END_POINT = { user }
+export const API_END_POINT = { user, product }
 export type JsonRequestOptions = Omit<RequestOptions, 'raw'>
 
 // ========== Types ==========
