@@ -1,6 +1,6 @@
 <template>
   <form
-    class="w-full flex flex-col gap-5 -mt-[30px]"
+    class="w-full flex flex-col gap-5 -mt-[30px] h-[100vh]"
     @submit.prevent="onSubmit"
   >
     <button
@@ -59,18 +59,18 @@
         </div>
       </div>
     </RadioGroup>
-    <div class="fixed bottom-[30px] left-5 right-5">
-      <div class="mx-auto">
-        <Button
-          type="submit"
-          class="w-full bg-ccmkt-main hover:bg-ccmkt-main h-[50px]"
-        >
-          <TypographyHead3 class="text-black">
-            회원가입
-          </TypographyHead3>
-        </Button>
-      </div>
+
+    <div class="fixed left-0 right-0 bottom-4 z-[40] flex flex-col w-[370px] max-w-[390px] mx-auto">
+      <Button
+        type="submit"
+        class="w-full h-[50px] bg-ccmkt-main hover:bg-ccmkt-main"
+      >
+        <TypographyHead3 class="text-black">
+          회원가입
+        </TypographyHead3>
+      </Button>
     </div>
+
     <AlertDialog v-model:open="dialog.open">
       <AlertDialogContent class="rounded-lg w-[95%]">
         <AlertDialogHeader>
@@ -80,7 +80,7 @@
           <AlertDialogDescription>
             <template v-if="dialog.mode === 'error'">
               <TypographyP2>다음 항목을 입력해주세요.</TypographyP2> <br>
-              <ul class="list-none pl-5">
+              <ul class="list-disc pl-5">
                 <li
                   v-for="f in dialog.missing"
                   :key="f"
