@@ -28,7 +28,7 @@
     />
 
     <Input
-      v-model="form.phone"
+      v-model="form.phoneNumber"
       class="input-style"
       placeholder="휴대전화번호 ('-' 제외)"
     />
@@ -105,7 +105,7 @@
           <AlertDialogAction
             v-if="dialog.mode === 'confirm'"
             class="h-[50px] bg-ccmkt-main hover:bg-ccmkt-main"
-            @click="doSubmit"
+            @click="submit"
           >
             <TypographyP1 class="text-black">
               진행
@@ -118,6 +118,7 @@
 </template>
 
 <script setup lang="ts">
+import { postAdditionalInfo } from '@/features/user/services/user.service'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -143,11 +144,12 @@ import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-type Gender = 'MALE' | 'FEMALE'
+const signupToken = ''
+
 const form = reactive({
   name: '',
   birth: '',
-  phone: '',
+  phoneNumber: '',
   address: '',
   gender: 'MALE',
 })
@@ -167,12 +169,12 @@ function onSubmit() {
 
   if (!form.name) missing.push('이름')
   if (!form.birth) missing.push('생년월일 (8자리)')
-  if (!form.phone) missing.push("휴대전화번호 ('-' 제외)")
+  if (!form.phoneNumber) missing.push("휴대전화번호 ('-' 제외)")
   if (!form.address) missing.push('주소')
   if (!form.gender) missing.push('성별')
 
   if (form.birth && form.birth.length !== 8) missing.push('생년월일 형식(8자리)')
-  if (form.phone && !/^\d+$/.test(form.phone)) missing.push('휴대전화번호는 숫자만')
+  if (form.phoneNumber && !/^\d+$/.test(form.phoneNumber)) missing.push('휴대전화번호는 숫자만')
 
   if (missing.length) {
     dialog.mode = 'error'
@@ -186,9 +188,25 @@ function onSubmit() {
   dialog.open = true
 }
 
-function doSubmit() {
+async function submit() {
+  const date = new Date()
+  const now = date.getFullYear()
+  const birthYear = Number(form.birth.slice(0, 4))
+
   dialog.open = false
-  router.replace({ name: 'select_role' })
+  try {
+    await postAdditionalInfo({
+      signupToken: signupToken,
+      name: form.name,
+      age: now - birthYear,
+      gender: form.gender,
+      address: form.address,
+      phoneNumber: form.phoneNumber,
+    })
+    router.replace({ name: 'select_role' })
+  } catch (e) {
+    console.error(e)
+  }
 }
 </script>
 

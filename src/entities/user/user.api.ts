@@ -5,6 +5,10 @@ export const user = {
     url: `${import.meta.env.VITE_APP_API_URL}/s3/image`,
     method: Method.POST,
   }),
+  postAdditional: () => ({
+    url: `${import.meta.env.VITE_APP_API_URL}/api/oauth/signup/additional`,
+    method: Method.POST,
+  }),
   getUserInfo: () => ({
     url: `${import.meta.env.VITE_APP_API_URL}/api/member/me`,
     method: Method.GET,
