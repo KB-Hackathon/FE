@@ -5,4 +5,8 @@ export const product = {
     url: `${import.meta.env.VITE_APP_API_URL}/api/products/narrative`,
     method: Method.POST,
   }),
+  postProduct: () => ({
+    url: `${import.meta.env.VITE_APP_API_URL}/api/products/save`,
+    method: Method.POST,
+  }),
 }
