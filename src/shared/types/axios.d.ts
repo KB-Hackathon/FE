@@ -10,4 +10,19 @@ declare module 'axios' {
     loaderMinVisibleMs?: number
     loaderMessage?: string[]
   }
+
+  interface AxiosRequestConfig {
+    showGlobalLoader?: boolean
+    loaderMessage?: string | string[]
+    loaderDelayMs?: number
+    loaderMinVisibleMs?: number
+  }
+
+  // 인터셉터 내부에서 사용되는 내부 Config (response/err.config 타입)
+  interface InternalAxiosRequestConfig {
+    showGlobalLoader?: boolean
+    loaderMessage?: string | string[]
+    loaderDelayMs?: number
+    loaderMinVisibleMs?: number
+  }
 }

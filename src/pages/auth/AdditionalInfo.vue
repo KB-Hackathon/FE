@@ -118,7 +118,8 @@
 </template>
 
 <script setup lang="ts">
-import { postAdditionalInfo } from '@/features/user/services/user.service'
+import { useAuthStore } from '@/entities/user/user.store'
+import { getUserInfo, postAdditionalInfo } from '@/features/user/services/user.service'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -147,6 +148,8 @@ const router = useRouter()
 const route = useRoute()
 
 const signupToken = route.query.signup_token as string
+const accessToken = route.query.access_token as string
+const auth = useAuthStore()
 
 const form = reactive({
   name: '',
@@ -205,6 +208,14 @@ async function submit() {
       address: form.address,
       phoneNumber: form.phoneNumber,
     })
+
+    if (accessToken) {
+      auth.setAccessToken(accessToken)
+      auth.setLoggedIn(true)
+    }
+
+    const result = await getUserInfo()
+    if (result) auth.setUserInfo(result.data)
     router.replace({ name: 'select_role' })
   } catch (e) {
     console.error(e)

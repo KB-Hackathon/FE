@@ -1,6 +1,7 @@
 export { default as AdditionalInfo } from './auth/AdditionalInfo.vue'
 export { default as BusinessLookup } from './auth/BusinessLookup.vue'
 export { default as Login } from './auth/Login.vue'
+export { default as LoginRedirect } from './auth/LoginRedirect.vue'
 export { default as SelectRole } from './auth/SelectRole.vue'
 export { default as Home } from './Home.vue'
 export { default as Marketing } from './owner/Marketing.vue'

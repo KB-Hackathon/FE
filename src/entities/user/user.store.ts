@@ -5,6 +5,7 @@ type AuthState = {
   hasHydrated: boolean
   userInfo: UserInfo | null
   isLoggedIn: boolean
+  accessToken: string | null
 }
 
 export const useAuthStore = defineStore('auth', {
@@ -12,6 +13,7 @@ export const useAuthStore = defineStore('auth', {
     hasHydrated: false,
     userInfo: null,
     isLoggedIn: false,
+    accessToken: null,
   }),
   actions: {
     setHydrated(v: boolean) {
@@ -20,10 +22,14 @@ export const useAuthStore = defineStore('auth', {
     setUserInfo(info: UserInfo) {
       this.userInfo = info
     },
+    setAccessToken(accessToken: string) {
+      this.accessToken = accessToken
+    },
     clearUserInfo() {
       this.hasHydrated = true
       this.userInfo = null
       this.isLoggedIn = false
+      this.accessToken = null
     },
     setLoggedIn(v: boolean) {
       this.isLoggedIn = v

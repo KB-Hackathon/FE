@@ -5,6 +5,7 @@ import {
   Coupon,
   Home,
   Login,
+  LoginRedirect,
   Marketing,
   My,
   OwnerHome,
@@ -47,6 +48,12 @@ const routes: RouteRecordRaw[] = [
     name: 'additional_info',
     path: '/auth/signUp/additional',
     component: AdditionalInfo,
+    meta: { header: false },
+  },
+  {
+    name: 'login_redirect',
+    path: '/auth/signIn/success',
+    component: LoginRedirect,
     meta: { header: false },
   },
   {
