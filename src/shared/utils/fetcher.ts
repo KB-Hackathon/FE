@@ -1,3 +1,6 @@
+import { user } from '@/entities/user/user.api'
+import type { Method as AxiosMethod } from 'axios'
+
 export interface Paged<T> {
   content: T[]
   totalPages: number
@@ -7,23 +10,25 @@ export interface Paged<T> {
 export interface ApiData<T> {
   code: string
   data: T
+  message?: string
+  status: string
 }
 
 export enum Method {
-  GET = 'GET',
-  POST = 'POST',
-  PUT = 'PUT',
-  DELETE = 'DELETE',
-  PATCH = 'PATCH',
+  GET = 'get',
+  POST = 'post',
+  PUT = 'put',
+  DELETE = 'delete',
+  PATCH = 'patch',
 }
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 
 export type ApiEndpoint = {
   url: string
-  method: Method
+  method: AxiosMethod | Method
 }
 
-export const API_END_POINT = {}
+export const API_END_POINT = { user }
 export type JsonRequestOptions = Omit<RequestOptions, 'raw'>
 
 // ========== Types ==========
