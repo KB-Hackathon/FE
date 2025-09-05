@@ -7,13 +7,14 @@ import {
   Login,
   Marketing,
   My,
+  OwnerHome,
   Product,
   SelectRole,
   Seller,
   Test,
+  UploadProduct,
 } from '@/pages'
-import OwnerHome from '@/pages/OwnerHome.vue'
-import UploadProduct from '@/pages/UploadProduct.vue'
+
 import { useLoadingStore } from '@/shared/stores/loading'
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 
