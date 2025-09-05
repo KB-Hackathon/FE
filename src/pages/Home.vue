@@ -8,7 +8,6 @@
       :categories="categories"
     />
 
-    <!-- <Separator class="my-4" /> -->
     <div class="flex gap-2 sticky -top-1 py-3 bg-[#F9FAFB]">
       <FilteringTab
         v-model:filter1="filter1"
@@ -21,8 +20,14 @@
         :key="index"
         :product="product"
       />
-
       <TrendProduct />
+
+      <LargeProductCard
+        v-for="(product, index) in productList"
+        :key="index"
+        :product="product"
+      />
+      <RecommendProduct />
     </div>
   </div>
 </template>
@@ -31,6 +36,7 @@ import { Category, categoryList } from '@/entities/product/product.entity'
 import { productMocks } from '@/entities/product/product.mock'
 import CategoryList from '@/features/product/filter/ui/CategoryList.vue'
 import FilteringTab from '@/features/product/filter/ui/FilteringTab.vue'
+import RecommendProduct from '@/features/product/productList/ui/RecommendProduct.vue'
 import TrendProduct from '@/features/product/productList/ui/TrendProduct.vue'
 import UserTab from '@/features/user/ui/UserTab.vue'
 import LargeProductCard from '@/shared/components/molecules/LargeProductCard.vue'
