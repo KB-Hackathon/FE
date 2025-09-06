@@ -9,8 +9,8 @@ export const product = {
     url: `${import.meta.env.VITE_APP_API_URL}/api/products/save`,
     method: Method.POST,
   }),
-  getProducts: (category: string, status: string, isCoupon: boolean) => ({
-    url: `${import.meta.env.VITE_APP_API_URL}/api/products?category=${category}&status=${status}&isCoupon=${isCoupon}`,
+  getProducts: (_category: string, _status: string, _isCoupon: boolean) => ({
+    url: `${import.meta.env.VITE_APP_API_URL}/api/products`,
     method: Method.GET,
   }),
 }
