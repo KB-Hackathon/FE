@@ -1,3 +1,5 @@
+import { ProductInfo, Seller } from './product.entity'
+
 export interface AiNarrativeRequest {
   title: string
   category: string
@@ -28,4 +30,15 @@ export interface UploadProductRequest {
 
 export interface UploadProductResponse {
   productId: number
+}
+
+export interface GetProductListRequest {
+  category: string
+  status: string
+  isCoupon: boolean
+}
+
+export interface GetProductListResponse {
+  seller: Seller
+  product: ProductInfo
 }

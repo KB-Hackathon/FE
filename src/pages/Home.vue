@@ -16,14 +16,14 @@
     </div>
     <div class="flex flex-col gap-4 mt-3">
       <LargeProductCard
-        v-for="(product, index) in productList"
+        v-for="(product, index) in products"
         :key="index"
         :product="product"
       />
       <TrendProduct />
 
       <LargeProductCard
-        v-for="(product, index) in productList"
+        v-for="(product, index) in products"
         :key="index"
         :product="product"
       />
@@ -32,17 +32,18 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Category, categoryList } from '@/entities/product/product.entity'
-import { productMocks } from '@/entities/product/product.mock'
+import { Category, categoryList, Product } from '@/entities/product/product.entity'
+import { products } from '@/entities/product/product.mock'
 import CategoryList from '@/features/product/filter/ui/CategoryList.vue'
 import FilteringTab from '@/features/product/filter/ui/FilteringTab.vue'
+import { getProductList } from '@/features/product/productList/services/productList.service'
 import RecommendProduct from '@/features/product/productList/ui/RecommendProduct.vue'
 import TrendProduct from '@/features/product/productList/ui/TrendProduct.vue'
 import UserTab from '@/features/user/ui/UserTab.vue'
 import LargeProductCard from '@/shared/components/molecules/LargeProductCard.vue'
 
 import { SearchInput } from '@/shared/components/ui/input'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 const categories = categoryList
 
 const selected = ref<Category>(categories[0])
@@ -50,5 +51,19 @@ const search = ref<string>('')
 const filter1 = ref<string | undefined>(undefined) // 모집 상태
 const filter2 = ref<string | undefined>(undefined) // 거래 방식
 
-const productList = productMocks
+const productList = ref<Product[]>([])
+
+async function getProducts() {
+  const result = await getProductList({ category: '의류', status: 'SUCCESS', isCoupon: true })
+
+  if (!result.data || result.data.length === 0) {
+    productList.value = products
+  } else {
+    productList.value = result.data
+  }
+}
+
+onMounted(() => {
+  getProducts()
+})
 </script>

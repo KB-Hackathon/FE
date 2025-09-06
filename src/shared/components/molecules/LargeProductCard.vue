@@ -1,7 +1,8 @@
+<!-- ProductCard.vue -->
 <template>
   <Card
     class="cursor-pointer overflow-hidden"
-    @click="() => router.push({ name: 'product', params: { productId: product.id } })"
+    @click="() => router.push({ name: 'product', params: { productId: info.productId } })"
   >
     <!-- 커버 이미지 -->
     <div class="w-full h-[150px] bg-ccmkt-gray">
@@ -20,15 +21,15 @@
         v-if="progressText"
         class="text-ccmkt-main"
       >
-        {{ progressText }} <span v-if="progressText">중이에요</span>
+        {{ progressText }} <span>중이에요</span>
       </TypographyHead3>
 
       <TypographySubTitle1 class="mt-1">
-        {{ product.title }}
+        {{ info.title }}
       </TypographySubTitle1>
 
       <TypographyP1 class="text-gray-400 mt-1">
-        {{ product.seller.name }}
+        {{ seller.companyName }}
       </TypographyP1>
     </CardContent>
 
@@ -41,7 +42,7 @@
         {{ deadline.text }}
       </Badge>
       <Badge variant="secondary">
-        {{ product.productType }}
+        {{ info.isCoupon ? '쿠폰' : '배송' }}
       </Badge>
     </CardFooter>
   </Card>
@@ -59,12 +60,36 @@ import {
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { getCover, getDeadlineInfo, getProgressText } from '@/entities/product/product.util'
-
 const props = defineProps<{ product: Product }>()
 const router = useRouter()
 
-const cover = computed(() => getCover(props.product))
-const progressText = computed(() => getProgressText(props.product))
-const deadline = computed(() => getDeadlineInfo(props.product.groupBuying?.endAt))
+const info = computed(() => props.product.product)
+const seller = computed(() => props.product.seller)
+
+const cover = computed(() => info.value.images?.[0]?.url ?? '')
+
+// 진행률: totalPrice / targetAmount * 100 (0~100로 보정)
+const progressPct = computed(() => {
+  const target = info.value.targetAmount
+  const count = info.value.presentPersonCount
+  if (!target) return undefined
+  return Math.max(0, Math.min(100, Math.round((count / target) * 100)))
+})
+const progressText = computed(() =>
+  typeof progressPct.value === 'number' ? `${progressPct.value}% 달성` : ''
+)
+
+const deadline = computed(() => {
+  const endAt = info.value.recruitmentEndPeriod
+  if (!endAt) return { text: '', urgent: false }
+
+  const end = new Date(endAt).setHours(0, 0, 0, 0)
+  const now = new Date().setHours(0, 0, 0, 0)
+  const days = Math.max(0, Math.ceil((end - now) / (1000 * 60 * 60 * 24)))
+
+  return {
+    text: days <= 3 ? '마감임박' : `${days}일 남음`,
+    urgent: days <= 3,
+  }
+})
 </script>
