@@ -1,20 +1,7 @@
-import { Product } from '@/entities/product/product.entity'
-
-/** 첫 번째 미디어(커버 이미지) */
-export function getCover(product: Product): string {
-  return product?.media?.[0] ?? ''
-}
-
 /** 진행률(0~100) 클램프 */
 export function clampPercent(value?: number): number | undefined {
   if (typeof value !== 'number' || Number.isNaN(value)) return undefined
   return Math.max(0, Math.min(100, Math.round(value)))
-}
-
-/** 카드 상단의 "35% 달성 중이에요" 텍스트 */
-export function getProgressText(product: Product): string {
-  const pct = clampPercent(product.groupBuying?.progressPct)
-  return typeof pct === 'number' ? `${pct}% 달성` : ''
 }
 
 /** 남은 일수 계산 (endAt 기준). 없으면 undefined */
