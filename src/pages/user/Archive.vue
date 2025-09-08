@@ -3,14 +3,11 @@
     <div class="h-[70px] rounded-md bg-ccmkt-gray mb-5 flex justify-center items-center">
       캐로셀 광고같은거..
     </div>
-    <WishProduct />
+    <!-- <WishProduct /> -->
     <div class="h-[130px] rounded-md bg-ccmkt-gray my-5 flex justify-center items-center">
       광고..
     </div>
-    <RecentProduct />
+    <!-- <RecentProduct /> -->
   </div>
 </template>
-<script setup lang="ts">
-import RecentProduct from '@/features/product/productList/ui/RecentProduct.vue'
-import WishProduct from '@/features/product/productList/ui/WishProduct.vue'
-</script>
+<script setup lang="ts"></script>

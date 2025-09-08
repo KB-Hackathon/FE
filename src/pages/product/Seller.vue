@@ -1,7 +1,7 @@
 <template>
   <div class="flex w-full flex-col">
     <div>
-      <div class="bg-white mb-8 pb-2">
+      <div class="mb-8 pb-2">
         <TypographyHead2>주식회사 복숭아마켓</TypographyHead2>
         <div class="flex gap-2 my-3">
           <Badge variant="secondary">
