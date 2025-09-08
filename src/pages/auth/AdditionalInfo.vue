@@ -12,7 +12,10 @@
       <TypographyP1>뒤로가기</TypographyP1>
     </button>
 
-    <TypographyHead2> 계속하시려면 추가정보 입력이 필요합니다. </TypographyHead2>
+    <TypographyHead2>
+      계속하시려면 <br>
+      추가정보 입력이 필요합니다.
+    </TypographyHead2>
 
     <Input
       v-model="form.name"

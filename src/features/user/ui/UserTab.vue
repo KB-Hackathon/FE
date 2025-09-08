@@ -2,7 +2,6 @@
   <Tabs
     v-model="tab"
     class="mb-4"
-    @update:model-value="onTabChange"
   >
     <TabsList>
       <TabsTrigger value="buy">
@@ -14,21 +13,43 @@
     </TabsList>
   </Tabs>
 </template>
+
 <script setup lang="ts">
+import { useAuthStore } from '@/entities/user/user.store'
 import { Tabs, TabsList, TabsTrigger } from '@/shared/components/ui/tabs'
-import { computed } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+
 const route = useRoute()
 const router = useRouter()
+const auth = useAuthStore()
 
-const tab = computed<string>({
-  get: () => (route.name === 'owner_main' ? 'sell' : 'buy'),
-  set: (val: string) => onTabChange(val),
+const tab = ref(route.name === 'owner_main' ? 'sell' : 'buy')
+watch(
+  () => route.name,
+  (name) => {
+    tab.value = name === 'owner_main' ? 'sell' : 'buy'
+  }
+)
+
+watch(tab, async (v) => {
+  if (v === 'buy') {
+    if (route.name !== 'home') await router.push({ name: 'home' })
+    return
+  }
+
+  if (!auth.isLoggedIn) {
+    await router.push({ name: 'login' })
+    return
+  }
+
+  if (auth.userInfo?.role === 'BUYER') {
+    await router.push({ name: 'business_lookup' })
+    return
+  }
+
+  if (route.name !== 'owner_main') {
+    await router.push({ name: 'owner_main' })
+  }
 })
-
-function onTabChange(payload: string | number) {
-  const v = String(payload)
-  if (v === 'buy') router.push({ name: 'home' })
-  else if (v === 'sell') router.push({ name: 'owner_main' })
-}
 </script>

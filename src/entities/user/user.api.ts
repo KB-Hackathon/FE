@@ -14,7 +14,7 @@ export const user = {
     method: Method.GET,
   }),
   postRegisterSeller: () => ({
-    url: `${import.meta.env.VITE_APP_API_URL}/api/seller/register`,
+    url: `${import.meta.env.VITE_APP_API_URL}/api/sellers/register`,
     method: Method.POST,
   }),
 }

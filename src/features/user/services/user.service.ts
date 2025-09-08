@@ -33,7 +33,7 @@ export async function postAdditionalInfo(form: AdditionalInfoRequest): Promise<A
 }
 
 export async function registerSeller(bizNo: string): Promise<ApiData<RegisterSellerResponse>> {
-  const { url, method } = API_END_POINT.user.postAdditional()
+  const { url, method } = API_END_POINT.user.postRegisterSeller()
   const result = await api<ApiData<RegisterSellerResponse>>({ url, method, data: { bizNo } })
   return result.data
 }

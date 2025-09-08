@@ -47,6 +47,7 @@
       <Button
         type="button"
         class="w-1/2 bg-ccmkt-main hover:bg-ccmkt-main h-[50px]"
+        @click="onSubmit"
       >
         <TypographySubTitle1 class="text-black">
           사업자 조회하기
@@ -124,6 +125,8 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '@/entities/user/user.store'
+import { getUserInfo, registerSeller } from '@/features/user/services/user.service'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -146,6 +149,7 @@ import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const authStore = useAuthStore()
 
 // 폼 상태
 const form = reactive({
@@ -187,14 +191,14 @@ function onSubmit() {
   dialog.open = true
 }
 
-// 실제 조회 (API 연동 자리)
-function doLookup() {
+async function doLookup() {
   dialog.open = false
-  // TODO: 실제 조회 API 호출로 교체
-  console.log('사업자 조회 요청:', { ...form })
 
-  // 예시: 결과 페이지 혹은 다음 단계로
-  router.replace({ name: 'select_role' })
+  await registerSeller(form.businessNumber)
+  authStore.isLoggedIn = true
+  const result = await getUserInfo()
+  if (result) authStore.setUserInfo(result.data)
+  router.replace({ name: 'owner_main' })
 }
 
 function onBuyOnlyClick() {
