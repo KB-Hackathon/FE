@@ -1,6 +1,6 @@
 import {
-  AiNarrativeRequest,
-  AiNarrativeResponse,
+  ProductNarrativeRequest,
+  ProductNarrativeResponse,
   UploadProductRequest,
 } from '@/entities/product/product.api.type'
 import { UploadImageResponse } from '@/entities/user/user.api.type'
@@ -8,10 +8,16 @@ import { api, ApiData } from '@/shared/plugin/axios'
 import { API_END_POINT } from '@/shared/utils/fetcher'
 
 export async function getAiNarrative(
-  form: AiNarrativeRequest
-): Promise<ApiData<AiNarrativeResponse>> {
+  form: ProductNarrativeRequest
+): Promise<ApiData<ProductNarrativeResponse>> {
   const { url, method } = API_END_POINT.product.getAiNarrative()
-  const result = await api<ApiData<AiNarrativeResponse>>({ url, method, data: form })
+  const result = await api<ApiData<ProductNarrativeResponse>>({
+    url,
+    method,
+    data: form,
+    showGlobalLoader: true,
+    loaderMessage: ['AI가 자동 홍보글을 작성중이에요'],
+  })
   return result.data
 }
 

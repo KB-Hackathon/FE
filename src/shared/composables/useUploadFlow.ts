@@ -1,6 +1,7 @@
 import { nextTick, ref, type Component, type ComponentPublicInstance } from 'vue'
 
 export type UploadForm = {
+  productId: number
   title: string
   category: string
   price: string | number | null
@@ -13,6 +14,7 @@ export type UploadForm = {
   imageList: string[]
   description: string
   aiGeneratingDescription: string | null
+  hashtags: string[]
 }
 
 type StepExpose = { focusFirstFieldImmediate?: () => void }

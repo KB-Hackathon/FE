@@ -145,6 +145,7 @@
 </template>
 
 <script setup lang="ts">
+import { getAiNarrative } from '@/features/product/upload/services/upload.service'
 import Preview from '@/features/product/upload/ui/Preview.vue'
 import Step2 from '@/features/product/upload/ui/Step2.vue'
 import Step3 from '@/features/product/upload/ui/Step3.vue'
@@ -159,6 +160,7 @@ import { useKeyboardSafeBottom } from '@/shared/composables/useKeyboardSafeBotto
 import { useUploadDraft } from '@/shared/composables/useUploadDraft'
 import { useUploadFlow, type UploadForm } from '@/shared/composables/useUploadFlow'
 import { api } from '@/shared/plugin/axios'
+import { formatDateTime2 } from '@/shared/utils/format'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -177,6 +179,7 @@ const {
 } = useUploadFlow(steps)
 
 const form = ref<UploadForm>({
+  productId: 0,
   title: '',
   category: '기타',
   price: null,
@@ -189,6 +192,7 @@ const form = ref<UploadForm>({
   imageList: [],
   description: '',
   aiGeneratingDescription: '',
+  hashtags: [],
 })
 useUploadDraft(form, 'uploadDraft')
 
@@ -226,12 +230,19 @@ async function handleUpload() {
 async function handleConfirmPreview() {
   previewOpen.value = false
   try {
-    await api.get<{ ok: boolean }>('https://httpbin.org/delay/1', {
-      showGlobalLoader: true,
-      loaderMessage: ['AI가 자동 홍보글을 작성중이에요'],
+    const result = await getAiNarrative({
+      title: form.value.title,
+      category: form.value.category,
+      summary: form.value.description,
+      images: form.value.imageList,
+      price: Number(form.value.price),
+      recruitmentEndPeriod: formatDateTime2(form.value.endDate),
     })
-    // 모의 생성 결과 주입
-    form.value.aiGeneratingDescription = '✨ AI가 생성한 멋진 상품 소개 글입니다.'
+
+    form.value.aiGeneratingDescription = result.data.caption
+    form.value.productId = result.data.productId
+    form.value.hashtags = result.data.hashtags
+
     goPreview()
   } catch (e) {
     console.error('[handleConfirmPreview] 실패:', e)

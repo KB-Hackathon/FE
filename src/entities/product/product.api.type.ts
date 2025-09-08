@@ -1,18 +1,5 @@
 import { ProductInfo, Seller } from './product.entity'
 
-export interface AiNarrativeRequest {
-  title: string
-  category: string
-  summary: string
-  images: string[]
-}
-
-export interface AiNarrativeResponse {
-  productId: number
-  caption: string
-  hashtags: string[]
-}
-
 export interface UploadProductRequest {
   title: string
   category: string
@@ -41,4 +28,19 @@ export interface GetProductListRequest {
 export interface GetProductResponse {
   seller: Seller
   product: ProductInfo
+}
+
+export interface ProductNarrativeRequest {
+  title: string
+  category: string
+  summary: string
+  images: string[]
+  price: number
+  recruitmentEndPeriod: string
+}
+
+export interface ProductNarrativeResponse {
+  productId: number
+  caption: string
+  hashtags: string[]
 }

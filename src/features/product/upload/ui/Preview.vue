@@ -5,7 +5,7 @@
       style="-webkit-overflow-scrolling: touch"
     >
       <div
-        v-for="(imageUrl, imgIndex) in previewImages"
+        v-for="(imageUrl, imgIndex) in props.modelValue.imageList"
         :key="imgIndex"
         class="flex-none basis-full snap-center"
       >
@@ -26,9 +26,7 @@
         {{ modelValue.title }}
       </TypographyHead1>
       <TypographyP2 class="text-gray-500">
-        꿀맛 당도 보장 복숭아 10개입 꿀맛 당도 보장 복숭아 10개입 꿀맛 당도 보장 복숭아 10개입 꿀맛
-        당도 보장 복숭아 10개입 꿀맛 당도 보장 복숭아 10개입 꿀맛 당도 보장 복숭아 10개입 꿀맛 당도
-        보장 복숭아 10개입 꿀맛 당도 보장 복숭아 10개입 꿀맛 당도 보장 복숭아 10개입
+        {{ modelValue.aiGeneratingDescription }}
       </TypographyP2>
       <div class="flex justify-between items-center">
         <div class="flex gap-2">
@@ -87,11 +85,11 @@
         </TypographyP2>
       </div>
       <TagsInput
-        v-model="tags"
+        v-model="hashtagsProxy"
         class="mt-2"
       >
         <TagsInputItem
-          v-for="item in tags"
+          v-for="item in hashtagsProxy"
           :key="item"
           class="p-2 mt-2"
           :value="item"
@@ -111,9 +109,6 @@
 <script setup lang="ts">
 import type { UploadForm } from '@/shared/composables/useUploadFlow'
 
-import exampleImage1 from '@/assets/images/exampleImage1.png'
-import exampleImage2 from '@/assets/images/exampleImage2.png'
-import exampleImage3 from '@/assets/images/exampleImage3.png'
 import { Badge } from '@/shared/components/ui/badge'
 import { Separator } from '@/shared/components/ui/separator'
 import {
@@ -131,11 +126,15 @@ import {
   TypographySubTitle1,
 } from '@/shared/components/ui/typography'
 import { formatNumber } from '@/shared/utils/format'
-import { ref } from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps<{ modelValue: UploadForm }>()
-const tags = ref<string[]>(['tag1', 'tag2', 'tag3'])
-const previewImages = props.modelValue.imageList?.length
-  ? props.modelValue.imageList
-  : [exampleImage1, exampleImage2, exampleImage3]
+const emit = defineEmits<{ (e: 'update:modelValue', v: UploadForm): void }>()
+
+const hashtagsProxy = computed<string[]>({
+  get: () => props.modelValue.hashtags ?? [],
+  set: (val) => {
+    emit('update:modelValue', { ...props.modelValue, hashtags: val })
+  },
+})
 </script>

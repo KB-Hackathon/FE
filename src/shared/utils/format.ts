@@ -26,6 +26,11 @@ export function formatDateTime(dateString: string): string {
   return `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`
 }
 
+// YYYY-MM-DD -> YYYY-MM-DDTHH:mm:ss
+export function formatDateTime2(dateString: string): string {
+  return dateString + 'T23:59:59'
+}
+
 // 숫자 포맷 (3자리 콤마)
 export const formatNumber = (value: number) =>
   value.toLocaleString('ko-KR', { maximumFractionDigits: 0 })

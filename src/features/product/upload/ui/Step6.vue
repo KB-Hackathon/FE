@@ -21,18 +21,6 @@
         >
           {{ n }}명
         </Button>
-
-        <Button
-          class="h-[56px] text-lg col-span-2"
-          :class="
-            model.recruitmentNum === null && !isCustom
-              ? '!bg-ccmkt-main !text-black !border-ccmkt-main'
-              : 'bg-white border text-black hover:bg-white'
-          "
-          @click="selectQuick(null)"
-        >
-          제한 없음
-        </Button>
       </div>
 
       <div class="space-y-2">

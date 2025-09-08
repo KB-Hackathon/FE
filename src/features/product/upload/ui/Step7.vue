@@ -17,37 +17,35 @@
             <i class="bi bi-plus-circle text-[24px] font-bold" />
           </button>
 
-          <!-- 숨겨진 파일 input -->
           <input
             ref="fileInput"
             type="file"
-            accept="image/*"
-            multiple
             class="hidden"
-            @change="handleImageUpload"
+            accept="image/*"
+            @change="onFileChange"
           >
+        </div>
+        <div
+          v-if="images.length > 0"
+          class="grid grid-cols-2 gap-4 mt-4 mb-8 h-[120px] overflow-scroll"
+        >
           <div
-            v-if="imagePreviews.length > 0"
-            class="grid grid-cols-2 gap-4 mt-4 mb-8"
+            v-for="(preview, index) in images"
+            :key="'new-' + index"
+            class="relative inline-block"
           >
-            <div
-              v-for="(preview, index) in imagePreviews"
-              :key="'new-' + index"
-              class="relative inline-block"
+            <img
+              :src="preview"
+              class="w-[150px] h-[100px] object-cover rounded-[12px] shadow"
+              :alt="`업로드된 이미지 ${index + 1}`"
             >
-              <img
-                :src="preview"
-                class="w-[150px] h-[100px] object-cover rounded-[12px] shadow"
-                :alt="`업로드된 이미지 ${index + 1}`"
-              >
-              <button
-                type="button"
-                class="absolute top-2 right-2 bg-black/60 rounded-full w-7 h-7 flex items-center justify-center text-white text-sm hover:scale-105 transition"
-                @click="removeImage(index)"
-              >
-                <i class="bi bi-x-circle" />
-              </button>
-            </div>
+            <button
+              type="button"
+              class="absolute -top-2 right-2 bg-black/60 rounded-full w-7 h-7 flex items-center justify-center text-white text-sm hover:scale-105 transition"
+              @click="removeImage(index)"
+            >
+              <i class="bi bi-x-circle" />
+            </button>
           </div>
         </div>
         <TypographyP1 class="text-gray-700">
@@ -67,27 +65,15 @@
 </template>
 
 <script setup lang="ts">
+import { uploadImage } from '@/features/user/services/user.service'
 import { Textarea } from '@/shared/components/ui/textarea'
 import { TypographyHead1, TypographyP1 } from '@/shared/components/ui/typography'
 import type { UploadForm } from '@/shared/composables/useUploadFlow'
 import { computed, ref } from 'vue'
 
-const fileInput = ref<HTMLInputElement | null>(null)
-const imagePreviews = ref<string[]>([])
+const images = ref<string[]>([])
 const props = defineProps<{ modelValue: UploadForm }>()
 const emit = defineEmits<{ (e: 'update:modelValue', v: UploadForm): void }>()
-
-// const model = computed(() => props.modelValue)
-
-function triggerFileInput() {
-  fileInput.value?.click()
-}
-
-// function patch(p: Partial<UploadForm>) {
-//   emit('update:modelValue', { ...props.modelValue, ...p })
-// }
-
-const handleImageUpload = async (_event: Event) => {}
 
 const description = computed({
   get: () => props.modelValue.description,
@@ -95,5 +81,42 @@ const description = computed({
     emit('update:modelValue', { ...props.modelValue, description: val })
   },
 })
-const removeImage = (_index: number) => {}
+
+const fileInput = ref<HTMLInputElement | null>(null)
+
+function triggerFileInput() {
+  fileInput.value?.click()
+}
+
+async function onFileChange(e: Event) {
+  const target = e.target as HTMLInputElement
+  const file = target.files?.[0]
+  if (!file) return
+
+  const formData = new FormData()
+  formData.append('file', file)
+
+  try {
+    const res = await uploadImage(formData)
+
+    images.value.push(res.data.url)
+
+    emit('update:modelValue', {
+      ...props.modelValue,
+      imageList: [...props.modelValue.imageList, res.data.url],
+    })
+  } catch (err) {
+    console.error('이미지 업로드 실패:', err)
+  } finally {
+    target.value = ''
+  }
+}
+
+const removeImage = (index: number) => {
+  images.value.splice(index, 1)
+  emit('update:modelValue', {
+    ...props.modelValue,
+    imageList: [...images.value],
+  })
+}
 </script>
