@@ -71,8 +71,8 @@ import { TypographyHead1, TypographyP1 } from '@/shared/components/ui/typography
 import type { UploadForm } from '@/shared/composables/useUploadFlow'
 import { computed, ref } from 'vue'
 
-const images = ref<string[]>([])
 const props = defineProps<{ modelValue: UploadForm }>()
+const images = ref<string[]>(props.modelValue.imageList || [])
 const emit = defineEmits<{ (e: 'update:modelValue', v: UploadForm): void }>()
 
 const description = computed({
