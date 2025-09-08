@@ -50,6 +50,7 @@
 
 <script setup lang="ts">
 import type { Product } from '@/entities/product/product.entity'
+import { getDeadlineInfo } from '@/entities/product/product.util'
 import { Badge } from '@/shared/components/ui/badge'
 import { Card, CardContent, CardFooter } from '@/shared/components/ui/card'
 import {
@@ -79,17 +80,5 @@ const progressText = computed(() =>
   typeof progressPct.value === 'number' ? `${progressPct.value}% 달성` : ''
 )
 
-const deadline = computed(() => {
-  const endAt = info.value.recruitmentEndPeriod
-  if (!endAt) return { text: '', urgent: false }
-
-  const end = new Date(endAt).setHours(0, 0, 0, 0)
-  const now = new Date().setHours(0, 0, 0, 0)
-  const days = Math.max(0, Math.ceil((end - now) / (1000 * 60 * 60 * 24)))
-
-  return {
-    text: days <= 3 ? '마감임박' : `${days}일 남음`,
-    urgent: days <= 3,
-  }
-})
+const deadline = computed(() => getDeadlineInfo(props.product.product.recruitmentEndPeriod))
 </script>

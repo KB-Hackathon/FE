@@ -41,6 +41,7 @@ export const productInfos: ProductInfo[] = [
     totalPrice: 12000 * 70,
     recruitmentStartPeriod: '2025-09-01',
     recruitmentEndPeriod: '2025-09-30',
+    tags: [],
   },
   {
     productId: 'p2',
@@ -55,6 +56,7 @@ export const productInfos: ProductInfo[] = [
     totalPrice: 24900 * 210,
     recruitmentStartPeriod: '2025-08-25',
     recruitmentEndPeriod: '2025-09-20',
+    tags: [],
   },
   {
     productId: 'p3',
@@ -72,6 +74,7 @@ export const productInfos: ProductInfo[] = [
     totalPrice: 129000 * 120,
     recruitmentStartPeriod: '2025-09-05',
     recruitmentEndPeriod: '2025-09-28',
+    tags: [],
   },
   {
     productId: 'p4',
@@ -86,6 +89,7 @@ export const productInfos: ProductInfo[] = [
     totalPrice: 59000 * 42, // 2,478,000
     recruitmentStartPeriod: '2025-09-10',
     recruitmentEndPeriod: '2025-09-25',
+    tags: [],
   },
   {
     productId: 'p5',
@@ -103,6 +107,7 @@ export const productInfos: ProductInfo[] = [
     totalPrice: 9900 * 260,
     recruitmentStartPeriod: '2025-09-02',
     recruitmentEndPeriod: '2025-09-18',
+    tags: [],
   },
 ]
 

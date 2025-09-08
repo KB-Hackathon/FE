@@ -46,14 +46,12 @@
       <TypographyHead2>{{ product.product.presentPersonCount }}</TypographyHead2>
       <TypographyP1> 명 참여중 </TypographyP1>
       <TypographyCaption class="text-gray-600 ml-1">
-        {{ product.product.recruitmentEndPeriod }} 마감
+        {{ formatDateTime(product.product.recruitmentEndPeriod) }} 마감
       </TypographyCaption>
     </div>
     <div class="flex items-center gap-1 -mt-4 text-ccmkt-main">
       <TypographyHead1>
-        {{
-          formatNumber(product.product.presentPersonCount * product.product.price)
-        }}
+        {{ formatNumber(product.product.presentPersonCount * product.product.price) }}
       </TypographyHead1>
       <TypographyP1>원 달성</TypographyP1>
       <Badge
@@ -93,6 +91,7 @@
 </template>
 <script setup lang="ts">
 import { Product } from '@/entities/product/product.entity'
+import { getDeadlineInfo } from '@/entities/product/product.util'
 import { getProduct } from '@/features/product/productList/services/productList.service'
 import { Badge } from '@/shared/components/ui/badge'
 import { Button } from '@/shared/components/ui/button'
@@ -106,7 +105,7 @@ import {
   TypographyP2,
   TypographySubTitle1,
 } from '@/shared/components/ui/typography'
-import { formatNumber } from '@/shared/utils/format'
+import { formatDateTime, formatNumber } from '@/shared/utils/format'
 import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -120,19 +119,7 @@ async function getProductFunction() {
   product.value = result.data
 }
 
-const deadline = computed(() => {
-  const endAt = product.value?.product.recruitmentEndPeriod
-  if (!endAt) return { text: '', urgent: false }
-
-  const end = new Date(endAt).setHours(0, 0, 0, 0)
-  const now = new Date().setHours(0, 0, 0, 0)
-  const days = Math.max(0, Math.ceil((end - now) / (1000 * 60 * 60 * 24)))
-
-  return {
-    text: days <= 3 ? '마감임박' : `${days}일 남음`,
-    urgent: days <= 3,
-  }
-})
+const deadline = computed(() => getDeadlineInfo(product.value?.product.recruitmentEndPeriod))
 
 onMounted(() => {
   getProductFunction()
