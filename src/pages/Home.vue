@@ -16,17 +16,12 @@
     </div>
     <div class="flex flex-col gap-4 mt-3">
       <LargeProductCard
-        v-for="(product, index) in products"
+        v-for="(product, index) in productList"
         :key="index"
         :product="product"
       />
-      <TrendProduct />
+      <TrendProduct :product-list="productList" />
 
-      <LargeProductCard
-        v-for="(product, index) in products"
-        :key="index"
-        :product="product"
-      />
       <RecommendProduct />
     </div>
   </div>
