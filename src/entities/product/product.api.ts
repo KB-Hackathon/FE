@@ -13,4 +13,8 @@ export const product = {
     url: `${import.meta.env.VITE_APP_API_URL}/api/products`,
     method: Method.GET,
   }),
+  getProduct: (productId: string) => ({
+    url: `${import.meta.env.VITE_APP_API_URL}/api/products/${productId}`,
+    method: Method.GET,
+  }),
 }

@@ -38,7 +38,7 @@ export interface GetProductListRequest {
   isCoupon: boolean
 }
 
-export interface GetProductListResponse {
+export interface GetProductResponse {
   seller: Seller
   product: ProductInfo
 }

@@ -46,6 +46,7 @@ export interface ProductInfo {
   totalPrice: number
   recruitmentStartPeriod: string
   recruitmentEndPeriod: string
+  tags: string[]
 }
 
 export interface Product {
