@@ -27,7 +27,7 @@
         </div>
         <div
           v-if="images.length > 0"
-          class="grid grid-cols-2 gap-4 mt-4 mb-8 h-[120px] overflow-scroll"
+          class="grid grid-cols-2 gap-4 my-4 h-[130px] overflow-scroll pt-3"
         >
           <div
             v-for="(preview, index) in images"

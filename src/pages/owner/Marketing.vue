@@ -1,11 +1,23 @@
 <script setup lang="ts">
+import { getMarketReport } from '@/features/market/services/market.service'
 import {
   TypographyHead2,
   TypographyP1,
   TypographySubTitle1,
 } from '@/shared/components/ui/typography'
 import { formatNumber } from '@/shared/utils/format'
+import { onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
+const sellerId = route.query.sellerId as string
+async function getReportFunction() {
+  const result = await getMarketReport(sellerId)
+}
+
+onMounted(() => {
+  getReportFunction()
+})
 // --- 임의 데이터 ---
 const successCount = 5
 const failCount = 10

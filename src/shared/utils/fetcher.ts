@@ -1,3 +1,4 @@
+import { market } from '@/entities/market/market.api'
 import { product } from '@/entities/product/product.api'
 import { user } from '@/entities/user/user.api'
 import type { Method as AxiosMethod } from 'axios'
@@ -29,7 +30,7 @@ export type ApiEndpoint = {
   method: AxiosMethod | Method
 }
 
-export const API_END_POINT = { user, product }
+export const API_END_POINT = { user, product, market }
 export type JsonRequestOptions = Omit<RequestOptions, 'raw'>
 
 // ========== Types ==========
