@@ -12,7 +12,7 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const sellerId = route.query.sellerId as string
 async function getReportFunction() {
-  const result = await getMarketReport(sellerId)
+  await getMarketReport(sellerId)
 }
 
 onMounted(() => {
@@ -143,30 +143,42 @@ const genderPieOptions = {
 // =======================
 // Pie 2: 연령대
 // =======================
-const ageLabels = ['10대', '20대', '30대', '40대', '50대+']
-const ageSeries = [5, 36, 30, 20, 10]
+const ageLabels = ['10대', '20대', '30대', '40대', '50대', '60대']
+
+const ageSeries = [5, 30, 25, 20, 12, 8]
 const ageColors = ageLabels.map((_, i) => toAlpha(baseColors[i % baseColors.length]))
 
-const agePieOptions = {
-  labels: ageLabels,
+const ageBarSeries = [{ name: '비율', data: ageSeries }]
+
+const ageBarOptions = {
+  chart: { type: 'bar', toolbar: { show: false } },
   colors: ageColors,
-  legend: {
-    show: false,
-    horizontalAlign: 'center',
-    labels: { colors: '#000' },
-    fontSize: '12px',
-    fontWeight: 500,
-    markers: { width: 12, height: 12, radius: 12, offsetX: -6 },
-    itemMargin: { horizontal: 16, vertical: 4 },
-  },
-  plotOptions: { pie: { dataLabels: { offset: -16 } } },
-  dataLabels: {
-    style: { fontSize: '14px', fontWeight: 'bold', colors: ['#000'] },
-    dropShadow: { enabled: false },
-    formatter: (val: number) => {
-      return val > 10 ? `${val.toFixed(0)}%` : ''
+  plotOptions: {
+    bar: {
+      distributed: true,
+      columnWidth: '60%',
+      borderRadius: 6,
+      dataLabels: { position: 'top' },
     },
   },
+  dataLabels: {
+    enabled: true,
+    formatter: (val: number) => `${val}%`,
+    offsetY: -15,
+    style: { fontSize: '12px', fontWeight: 'bold', colors: ['#000'] },
+  },
+  xaxis: {
+    categories: ageLabels,
+    axisBorder: { show: false },
+    axisTicks: { show: false },
+    labels: { style: { fontSize: '12px', colors: '#000' } },
+  },
+  yaxis: {
+    labels: { show: false },
+  },
+  grid: { show: false },
+  tooltip: { y: { formatter: (val: number) => `${val}%` } },
+  legend: { show: false },
 }
 </script>
 
@@ -207,19 +219,21 @@ const agePieOptions = {
       />
     </div>
 
-    <div class="grid grid-cols-2 gap-6">
+    <div class="flex items-start justify-start">
       <!-- 성별 -->
-      <div>
-        <TypographyP1>성별 분포</TypographyP1>
+      <div class="w-[150px]">
+        <TypographyP1 class="text-center mb-7">
+          성별 분포
+        </TypographyP1>
         <apexchart
           type="pie"
-          height="140"
+          height="200"
           :options="genderPieOptions"
           :series="genderSeries"
         />
 
         <!-- 범례 -->
-        <div class="mt-2 grid grid-cols-2 gap-y-2 pl-[20px]">
+        <div class="mt-6 grid grid-cols-2 gap-y-2 pl-[20px]">
           <div
             v-for="(label, i) in genderLabels"
             :key="label"
@@ -236,28 +250,16 @@ const agePieOptions = {
 
       <!-- 연령대 -->
       <div>
-        <TypographyP1>연령대 분포</TypographyP1>
+        <TypographyP1 class="text-center">
+          연령대 분포
+        </TypographyP1>
         <apexchart
-          type="pie"
-          height="140"
-          :options="agePieOptions"
-          :series="ageSeries"
+          type="bar"
+          height="230"
+          width="220"
+          :options="ageBarOptions"
+          :series="ageBarSeries"
         />
-
-        <!-- 범례 -->
-        <div class="mt-2 grid grid-cols-2 gap-y-2 pl-[20px]">
-          <div
-            v-for="(label, i) in ageLabels"
-            :key="label"
-            class="flex items-center gap-2"
-          >
-            <span
-              class="inline-block w-3 h-3 rounded-full"
-              :style="{ background: ageColors[i] }"
-            />
-            <span class="text-sm text-black truncate">{{ label }}</span>
-          </div>
-        </div>
       </div>
     </div>
     <TypographyP1 class="-mb-[30px]">

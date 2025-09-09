@@ -1,11 +1,12 @@
 <template>
+  <!-- eslint-disable vue/no-v-html vue/no-v-text-v-html-on-component -->
   <div class="w-full flex flex-col gap-3 pb-[60px]">
     <div
       class="flex gap-2 overflow-x-auto snap-x snap-mandatory scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none]"
       style="-webkit-overflow-scrolling: touch"
     >
       <div
-        v-for="(imageUrl, imgIndex) in props.modelValue.imageList"
+        v-for="(imageUrl, imgIndex) in props.modelValue.images"
         :key="imgIndex"
         class="flex-none basis-full snap-center"
       >
@@ -25,9 +26,11 @@
       <TypographyHead1 class="text-gray-700">
         {{ modelValue.title }}
       </TypographyHead1>
-      <TypographyP2 class="text-gray-500">
-        {{ modelValue.aiGeneratingDescription }}
-      </TypographyP2>
+
+      <TypographyP1
+        class="mt-3 mb-7"
+        v-html="modelValue.aiGeneratingDescription!.replace(/\n/g, '<br/>')"
+      />
       <div class="flex justify-between items-center">
         <div class="flex gap-2">
           <Badge variant="secondary">
@@ -132,9 +135,9 @@ const props = defineProps<{ modelValue: UploadForm }>()
 const emit = defineEmits<{ (e: 'update:modelValue', v: UploadForm): void }>()
 
 const hashtagsProxy = computed<string[]>({
-  get: () => props.modelValue.hashtags ?? [],
+  get: () => props.modelValue.tags ?? [],
   set: (val) => {
-    emit('update:modelValue', { ...props.modelValue, hashtags: val })
+    emit('update:modelValue', { ...props.modelValue, tags: val })
   },
 })
 </script>

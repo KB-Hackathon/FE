@@ -1,6 +1,7 @@
 import { ProductInfo, Seller } from './product.entity'
 
 export interface UploadProductRequest {
+  productId: number
   title: string
   category: string
   images: string[]
@@ -9,7 +10,7 @@ export interface UploadProductRequest {
   price: number
   isCoupon: boolean
   couponName: string
-  couponExpiration: string
+  couponExpiration: number
   targetAmount: number
   recruitmentStartPeriod: string
   recruitmentEndPeriod: string

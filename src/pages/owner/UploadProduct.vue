@@ -10,7 +10,10 @@
           @prev="goPrev"
         />
       </KeepAlive>
-      <div class="pointer-events-none fixed inset-x-0 top-[60px] z-[30]">
+      <div
+        v-if="currentStep !== 6"
+        class="pointer-events-none fixed inset-x-0 top-[60px] z-[30]"
+      >
         <div class="mx-auto max-w-[390px] px-5 pt-3">
           <button
             class="pointer-events-auto flex items-center gap-2 text-gray-700"
@@ -141,11 +144,18 @@
       @confirm="handleUpload"
       @cancel="uploadOpen = false"
     />
+    <ConfirmDialog
+      v-model="successOpen"
+      title="상품이 성공적으로 업로드되었습니다."
+      confirm-text="확인"
+      :description="`업로드가 완료되었어요.\n상품 상세 페이지로 이동합니다.`"
+      @confirm="handleSuccessConfirm"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { getAiNarrative } from '@/features/product/upload/services/upload.service'
+import { getAiNarrative, uploadProduct } from '@/features/product/upload/services/upload.service'
 import Preview from '@/features/product/upload/ui/Preview.vue'
 import Step2 from '@/features/product/upload/ui/Step2.vue'
 import Step3 from '@/features/product/upload/ui/Step3.vue'
@@ -159,8 +169,7 @@ import { TypographyHead3, TypographySubTitle2 } from '@/shared/components/ui/typ
 import { useKeyboardSafeBottom } from '@/shared/composables/useKeyboardSafeBottom'
 import { useUploadDraft } from '@/shared/composables/useUploadDraft'
 import { useUploadFlow, type UploadForm } from '@/shared/composables/useUploadFlow'
-import { api } from '@/shared/plugin/axios'
-import { formatDateTime2 } from '@/shared/utils/format'
+import { formatDateTime2, formatDateTime3 } from '@/shared/utils/format'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -189,10 +198,10 @@ const form = ref<UploadForm>({
   couponName: null,
   expirationPeriod: null,
   recruitmentNum: null,
-  imageList: [],
+  images: [],
   description: '',
   aiGeneratingDescription: '',
-  hashtags: [],
+  tags: [],
 })
 useUploadDraft(form, 'uploadDraft')
 
@@ -200,6 +209,7 @@ const previewOpen = ref(false)
 const backOpen = ref(false)
 const uploadOpen = ref(false)
 const cancelOpen = ref(false)
+const successOpen = ref(false)
 
 function handleBackToForm() {
   backOpen.value = false
@@ -213,18 +223,35 @@ function cancel() {
 
 async function handleUpload() {
   uploadOpen.value = false
-  localStorage.removeItem('uploadDraft')
+
   try {
-    const res = await api.get<{ url: string }>(`https://httpbin.org/delay/2`, {
-      showGlobalLoader: true,
+    await uploadProduct({
+      productId: Number(form.value.productId),
+      title: form.value.title,
+      category: form.value.category,
+      images: form.value.images,
+      description: form.value.aiGeneratingDescription!,
+      tags: form.value.tags,
+      price: Number(form.value.price),
+      isCoupon: form.value.option == 'coupon' ? true : false,
+      couponName: form.value.couponName!,
+      couponExpiration: Number(form.value.expirationPeriod),
+      targetAmount: Number(form.value.recruitmentNum),
+      recruitmentStartPeriod: formatDateTime3(form.value.startDate),
+      recruitmentEndPeriod: formatDateTime3(form.value.endDate),
     })
 
-    if (res.status >= 200 && res.status < 300) {
-      await router.replace({ name: 'owner_main' })
-    }
+    successOpen.value = true
   } catch (e) {
     console.error('[handleUpload] 업로드 실패:', e)
   }
+}
+
+function handleSuccessConfirm() {
+  successOpen.value = false
+  localStorage.removeItem('uploadDraft')
+  const id = form.value.productId
+  router.replace({ name: 'product', params: { productId: id } })
 }
 
 async function handleConfirmPreview() {
@@ -234,14 +261,14 @@ async function handleConfirmPreview() {
       title: form.value.title,
       category: form.value.category,
       summary: form.value.description,
-      images: form.value.imageList,
+      images: form.value.images,
       price: Number(form.value.price),
       recruitmentEndPeriod: formatDateTime2(form.value.endDate),
     })
 
     form.value.aiGeneratingDescription = result.data.caption
     form.value.productId = result.data.productId
-    form.value.hashtags = result.data.hashtags
+    form.value.tags = result.data.hashtags
 
     goPreview()
   } catch (e) {

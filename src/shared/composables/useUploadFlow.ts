@@ -11,10 +11,10 @@ export type UploadForm = {
   couponName: string | null
   expirationPeriod: string | number | null
   recruitmentNum: number | null
-  imageList: string[]
+  images: string[]
   description: string
   aiGeneratingDescription: string | null
-  hashtags: string[]
+  tags: string[]
 }
 
 type StepExpose = { focusFirstFieldImmediate?: () => void }

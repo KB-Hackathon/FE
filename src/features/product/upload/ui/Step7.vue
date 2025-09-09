@@ -72,7 +72,7 @@ import type { UploadForm } from '@/shared/composables/useUploadFlow'
 import { computed, ref } from 'vue'
 
 const props = defineProps<{ modelValue: UploadForm }>()
-const images = ref<string[]>(props.modelValue.imageList || [])
+const images = ref<string[]>(props.modelValue.images || [])
 const emit = defineEmits<{ (e: 'update:modelValue', v: UploadForm): void }>()
 
 const description = computed({
@@ -103,7 +103,7 @@ async function onFileChange(e: Event) {
 
     emit('update:modelValue', {
       ...props.modelValue,
-      imageList: [...props.modelValue.imageList, res.data.url],
+      images: [...props.modelValue.images, res.data.url],
     })
   } catch (err) {
     console.error('이미지 업로드 실패:', err)
@@ -116,7 +116,7 @@ const removeImage = (index: number) => {
   images.value.splice(index, 1)
   emit('update:modelValue', {
     ...props.modelValue,
-    imageList: [...images.value],
+    images: [...images.value],
   })
 }
 </script>
