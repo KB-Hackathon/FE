@@ -69,7 +69,7 @@
         :key="index"
         variant="outline"
       >
-        {{ tag }}
+        {{ (tag as { tagId: number; name: string }).name }}
       </Badge>
     </div>
   </div>
