@@ -5,18 +5,17 @@
     </SelectTrigger>
     <SelectContent>
       <SelectGroup>
-        <SelectItem value="전체">
-          전체
-        </SelectItem>
-        <SelectItem value="모집 중">
-          모집 중
-        </SelectItem>
-        <SelectItem value="모집 예정">
-          모집 예정
-        </SelectItem>
-        <SelectItem value="모집 완료">
-          모집 완료
-        </SelectItem>
+        <SelectGroup>
+          <SelectItem value="--">
+            전체
+          </SelectItem>
+          <SelectItem value="SUCCESS">
+            모집 완료
+          </SelectItem>
+          <SelectItem value="PENDING">
+            모집 중
+          </SelectItem>
+        </SelectGroup>
       </SelectGroup>
     </SelectContent>
   </Select>

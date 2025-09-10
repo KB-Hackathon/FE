@@ -9,10 +9,18 @@ export const product = {
     url: `${import.meta.env.VITE_APP_API_URL}/api/products/save`,
     method: Method.POST,
   }),
-  getProducts: (_category: string, _status: string, _isCoupon: boolean) => ({
-    url: `${import.meta.env.VITE_APP_API_URL}/api/products`,
-    method: Method.GET,
-  }),
+  getProducts: (category?: string, status?: string, isCoupon?: boolean) => {
+    const params = new URLSearchParams()
+
+    if (category) params.append('category', category)
+    if (status) params.append('status', status)
+    if (isCoupon !== undefined) params.append('isCoupon', String(isCoupon))
+
+    return {
+      url: `${import.meta.env.VITE_APP_API_URL}/api/products?${params.toString()}`,
+      method: Method.GET,
+    }
+  },
   getProduct: (productId: string) => ({
     url: `${import.meta.env.VITE_APP_API_URL}/api/products/${productId}`,
     method: Method.GET,

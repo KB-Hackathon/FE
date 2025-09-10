@@ -7,7 +7,7 @@
     <div class="-mt-2 w-full flex justify-center">
       <div
         class="flex items-end justify-between"
-        style="width: 200px; height: 230px"
+        style="width: 180px; height: 230px"
       >
         <div
           v-for="(pct, idx) in scaledSeries"

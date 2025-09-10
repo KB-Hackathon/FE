@@ -1,8 +1,8 @@
 <template>
-  <TypographyP1 class="-mb-[20px]">
+  <TypographyP1 class="mt-4">
     상품별 매출액
   </TypographyP1>
-  <div class="mt-4 w-full max-w-[390px]">
+  <div class="w-full max-w-[390px]">
     <div
       v-for="(item, index) in salesPerProduct"
       :key="index"

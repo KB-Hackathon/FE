@@ -27,8 +27,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Category, categoryList, Product } from '@/entities/product/product.entity'
-import { products } from '@/entities/product/product.mock'
+import type { GetProductListRequest, GetProductResponse } from '@/entities/product/product.api.type'
+import { Category, categoryList } from '@/entities/product/product.entity'
 import CategoryList from '@/features/product/filter/ui/CategoryList.vue'
 import FilteringTab from '@/features/product/filter/ui/FilteringTab.vue'
 import { getProductList } from '@/features/product/productList/services/productList.service'
@@ -36,29 +36,51 @@ import RecommendProduct from '@/features/product/productList/ui/RecommendProduct
 import TrendProduct from '@/features/product/productList/ui/TrendProduct.vue'
 import UserTab from '@/features/user/ui/UserTab.vue'
 import LargeProductCard from '@/shared/components/molecules/LargeProductCard.vue'
-
 import { SearchInput } from '@/shared/components/ui/input'
-import { onMounted, ref } from 'vue'
+import { ref, watch } from 'vue'
+
+// 고정 카테고리 목록
 const categories = categoryList
 
-const selected = ref<Category>(categories[0])
+// 상태들
+const selected = ref<Category | undefined>(undefined)
 const search = ref<string>('')
-const filter1 = ref<string | undefined>(undefined) // 모집 상태
-const filter2 = ref<string | undefined>(undefined) // 거래 방식
+const filter1 = ref<string | undefined>(undefined)
+const filter2 = ref<string | undefined>(undefined)
 
-const productList = ref<Product[]>([])
+const productList = ref<GetProductResponse[]>([])
 
-async function getProducts() {
-  const result = await getProductList({ category: '의류', status: 'SUCCESS', isCoupon: true })
-
-  if (!result.data || result.data.length === 0) {
-    productList.value = products
-  } else {
-    productList.value = result.data
-  }
+function toIsCoupon(v: string | undefined): boolean | undefined {
+  if (v === 'coupon') return true
+  if (v === 'delivery') return false
+  return undefined
 }
 
-onMounted(() => {
-  getProducts()
+async function getProducts(): Promise<void> {
+  const params: GetProductListRequest = {
+    category: selected.value == undefined ? undefined : selected.value?.name,
+    status: filter1.value === '--' ? undefined : filter1.value,
+    isCoupon: toIsCoupon(filter2.value),
+  }
+
+  const res = await getProductList(params)
+  const list = res.data ?? []
+  productList.value = list
+}
+
+watch(
+  [selected, filter1, filter2],
+  () => {
+    void getProducts()
+  },
+  { immediate: true }
+)
+
+let searchTimer: number | undefined
+watch(search, (v) => {
+  window.clearTimeout(searchTimer)
+  searchTimer = window.setTimeout(() => {
+    void getProducts()
+  }, 300)
 })
 </script>

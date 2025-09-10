@@ -21,9 +21,9 @@ export interface UploadProductResponse {
 }
 
 export interface GetProductListRequest {
-  category: string
-  status: string
-  isCoupon: boolean
+  category: string | undefined
+  status: string | undefined
+  isCoupon: boolean | undefined
 }
 
 export interface GetProductResponse {
