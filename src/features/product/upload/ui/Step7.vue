@@ -26,11 +26,11 @@
           >
         </div>
         <div
-          v-if="images.length > 0"
+          v-if="props.modelValue.images.length > 0"
           class="grid grid-cols-2 gap-4 my-4 h-[130px] overflow-scroll pt-3"
         >
           <div
-            v-for="(preview, index) in images"
+            v-for="(preview, index) in props.modelValue.images"
             :key="'new-' + index"
             class="relative inline-block"
           >
@@ -72,18 +72,20 @@ import type { UploadForm } from '@/shared/composables/useUploadFlow'
 import { computed, ref } from 'vue'
 
 const props = defineProps<{ modelValue: UploadForm }>()
-const images = ref<string[]>(props.modelValue.images || [])
 const emit = defineEmits<{ (e: 'update:modelValue', v: UploadForm): void }>()
+
+// 이미지/설명 프록시
+const imagesProxy = computed<string[]>({
+  get: () => props.modelValue.images ?? [],
+  set: (val) => emit('update:modelValue', { ...props.modelValue, images: val }),
+})
 
 const description = computed({
   get: () => props.modelValue.description,
-  set: (val: string) => {
-    emit('update:modelValue', { ...props.modelValue, description: val })
-  },
+  set: (val: string) => emit('update:modelValue', { ...props.modelValue, description: val }),
 })
 
 const fileInput = ref<HTMLInputElement | null>(null)
-
 function triggerFileInput() {
   fileInput.value?.click()
 }
@@ -98,13 +100,8 @@ async function onFileChange(e: Event) {
 
   try {
     const res = await uploadImage(formData)
-
-    images.value.push(res.data.url)
-
-    emit('update:modelValue', {
-      ...props.modelValue,
-      images: [...props.modelValue.images, res.data.url],
-    })
+    // 여기서 '한 번만' 추가
+    imagesProxy.value = [...imagesProxy.value, res.data.url]
   } catch (err) {
     console.error('이미지 업로드 실패:', err)
   } finally {
@@ -112,11 +109,7 @@ async function onFileChange(e: Event) {
   }
 }
 
-const removeImage = (index: number) => {
-  images.value.splice(index, 1)
-  emit('update:modelValue', {
-    ...props.modelValue,
-    images: [...images.value],
-  })
+function removeImage(index: number) {
+  imagesProxy.value = imagesProxy.value.filter((_, i) => i !== index)
 }
 </script>

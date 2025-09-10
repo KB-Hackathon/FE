@@ -4,11 +4,31 @@
     v-if="product"
     class="flex w-full flex-col gap-4 pb-[70px]"
   >
-    <div class="w-full h-full bg-ccmkt-gray rounded-md overflow-hidden">
-      <img
-        :src="product.product.images[0].url"
-        class="w-full h-full object-cover"
+    <div class="w-full h-[250px] bg-ccmkt-gray rounded-md overflow-hidden relative">
+      <div
+        class="flex transition-transform duration-700 ease-in-out"
+        :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
       >
+        <div
+          v-for="(img, idx) in product.product.images"
+          :key="idx"
+          class="w-full flex-shrink-0 h-[250px]"
+        >
+          <img
+            :src="img.url"
+            class="w-full h-full object-cover"
+          >
+        </div>
+      </div>
+
+      <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1">
+        <span
+          v-for="(img, idx) in product.product.images"
+          :key="idx"
+          class="w-2 h-2 rounded-full"
+          :class="currentIndex === idx ? 'bg-ccmkt-main' : 'bg-gray-300'"
+        />
+      </div>
     </div>
     <div
       class="flex w-full justify-between text-gray-600 items-center"
@@ -171,7 +191,7 @@ import {
 } from '@/shared/components/ui/typography'
 import { api } from '@/shared/plugin/axios'
 import { formatDateTime, formatNumber } from '@/shared/utils/format'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -184,9 +204,28 @@ const isParticipated = ref<boolean>(false) // 현재 공동구매 참여 여부
 const requestDialogOpen = ref<boolean>(false) // 진행 확인 다이어로그
 const responseDialogOpen = ref<boolean>(false) // 진행 확정 다이어로그
 
+const currentIndex = ref(0)
+let intervalId: number | undefined
+
 async function getProductFunction() {
   const result = await getProduct(productId)
   product.value = result.data
+}
+
+function startAutoSlide() {
+  stopAutoSlide()
+  intervalId = window.setInterval(() => {
+    if (product.value?.product.images?.length) {
+      currentIndex.value = (currentIndex.value + 1) % product.value.product.images.length
+    }
+  }, 5000)
+}
+
+function stopAutoSlide() {
+  if (intervalId) {
+    clearInterval(intervalId)
+    intervalId = undefined
+  }
 }
 
 const deadline = computed(() => getDeadlineInfo(product.value?.product.recruitmentEndPeriod))
@@ -209,7 +248,23 @@ const productTags = computed(() =>
   )
 )
 
+watch(
+  () => product.value?.product.images?.length,
+  (len) => {
+    if (len && len > 1) {
+      currentIndex.value = 0
+      startAutoSlide()
+    } else {
+      stopAutoSlide()
+    }
+  }
+)
+
 onMounted(() => {
   getProductFunction()
+})
+
+onUnmounted(() => {
+  stopAutoSlide()
 })
 </script>
