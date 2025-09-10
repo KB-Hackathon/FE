@@ -17,4 +17,12 @@ export const user = {
     url: `${import.meta.env.VITE_APP_API_URL}/api/sellers/register`,
     method: Method.POST,
   }),
+  getCouponList: () => ({
+    url: `${import.meta.env.VITE_APP_API_URL}/api/coupons/me`,
+    method: Method.GET,
+  }),
+  getCouponInfo: (uuid: string) => ({
+    url: `${import.meta.env.VITE_APP_API_URL}/api/coupons?uuid=${uuid}`,
+    method: Method.GET,
+  }),
 }

@@ -2,6 +2,7 @@ import {
   AdditionalInfo,
   Archive,
   BusinessLookup,
+  Camera,
   Coupon,
   Home,
   Login,
@@ -10,6 +11,7 @@ import {
   My,
   OwnerHome,
   Product,
+  QrInfo,
   SelectRole,
   Seller,
   Test,
@@ -104,6 +106,16 @@ const routes: RouteRecordRaw[] = [
     name: 'marketing',
     path: '/marketing',
     component: Marketing,
+  },
+  {
+    name: 'camera',
+    path: '/camera',
+    component: Camera,
+  },
+  {
+    name: 'qr_info',
+    path: '/qr_info',
+    component: QrInfo,
   },
 ]
 

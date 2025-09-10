@@ -15,6 +15,7 @@
     "@tanstack/vue-table": "^8.21.3",
     "@vee-validate/zod": "^4.15.1",
     "@vueuse/core": "^13.9.0",
+    "@zxing/browser": "^0.1.5",
     "apexcharts": "^5.3.4",
     "axios": "^1.11.0",
     "bootstrap-icons": "^1.13.1",

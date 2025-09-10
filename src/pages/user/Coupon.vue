@@ -6,12 +6,12 @@
 
     <div
       v-for="coupon in coupons"
-      :key="coupon.id"
+      :key="coupon.couponId"
       class="border rounded-md p-3 flex items-center justify-between gap-3"
     >
       <div class="min-w-0 flex-1">
         <TypographyHead3 class="truncate">
-          {{ coupon.name }}
+          {{ coupon.couponName !== null ? coupon.couponName : coupon.productTitle }}
         </TypographyHead3>
 
         <div class="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-gray-600">
@@ -19,7 +19,7 @@
             유효기간
           </TypographyP2>
           <TypographyP2 class="shrink-0">
-            {{ coupon.startDate }} ~ {{ coupon.endDate }}
+            {{ coupon.expiration }} 까지
           </TypographyP2>
         </div>
 
@@ -30,7 +30,8 @@
 
       <button
         type="button"
-        class="shrink-0 w-16 aspect-square rounded-md bg-ccmkt-main flex items-center justify-center"
+        :class="coupon.isUsed ? 'bg-ccmkt-gray ' : 'bg-ccmkt-main'"
+        class="shrink-0 w-16 aspect-square rounded-md flex items-center justify-center"
         aria-label="쿠폰 스캔"
         @click="openDialog(coupon)"
       >
@@ -45,16 +46,21 @@
           <AlertDialogDescription>
             <div class="w-full flex justify-center py-4">
               <QrcodeVue
-                v-if="selectedCoupon?.qrUrl"
-                :value="selectedCoupon.qrUrl"
+                v-if="selectedCoupon?.couponUUID"
+                :value="selectedCoupon.couponUUID"
                 :size="150"
                 level="M"
                 :margin="1"
               />
             </div>
             <TypographyP2>
-              {{ selectedCoupon?.name }} <br>
-              유효기간: {{ selectedCoupon?.startDate }} ~ {{ selectedCoupon?.endDate }} <br>
+              {{
+                selectedCoupon?.couponName !== null
+                  ? selectedCoupon?.couponName
+                  : selectedCoupon?.productTitle
+              }}
+              <br>
+              유효기간:{{ selectedCoupon?.expiration }}까지 <br>
               매장: {{ selectedCoupon?.storeName }}
             </TypographyP2>
           </AlertDialogDescription>
@@ -74,6 +80,8 @@
 <script setup lang="ts">
 import QrcodeVue from 'qrcode.vue'
 
+import { Coupon } from '@/entities/user/user.entity'
+import { getCouponList } from '@/features/user/services/user.service'
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -90,48 +98,23 @@ import {
   TypographySubTitle1,
   TypographySubTitle2,
 } from '@/shared/components/ui/typography'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
-const coupons = [
-  {
-    id: 1,
-    name: '꿀복숭아 10개입 할인쿠폰',
-    startDate: '2025-02-04',
-    endDate: '2025-02-28',
-    storeName: '복숭아마켓',
-    qrUrl: 'https://m.site.naver.com/1QcML',
-  },
-  {
-    id: 2,
-    name: '쫀득쿠키 세트 20% 할인쿠폰',
-    startDate: '2025-03-01',
-    endDate: '2025-03-15',
-    storeName: '쿠키하우스',
-    qrUrl: 'https://m.site.naver.com/1QcML',
-  },
-  {
-    id: 3,
-    name: '싱싱포도 5kg 박스 할인쿠폰',
-    startDate: '2025-04-05',
-    endDate: '2025-04-20',
-    storeName: '포도농장',
-    qrUrl: 'https://m.site.naver.com/1QcML',
-  },
-  {
-    id: 4,
-    name: '바삭치킨 세트 5,000원 할인쿠폰',
-    startDate: '2025-05-10',
-    endDate: '2025-05-31',
-    storeName: '치킨스토어',
-    qrUrl: 'https://m.site.naver.com/1QcML',
-  },
-]
-
+const coupons = ref<Coupon[]>([])
 const dialogOpen = ref(false)
-const selectedCoupon = ref<(typeof coupons)[0] | null>(null)
+const selectedCoupon = ref<Coupon | null>(null)
 
-function openDialog(coupon: (typeof coupons)[0]) {
+function openDialog(coupon: Coupon) {
   selectedCoupon.value = coupon
   dialogOpen.value = true
 }
+
+async function getCouponListFunction() {
+  const result = await getCouponList()
+  coupons.value = result.data.coupons
+}
+
+onMounted(() => {
+  getCouponListFunction()
+})
 </script>

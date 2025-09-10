@@ -100,7 +100,10 @@
         </div>
       </div>
 
-      <div class="p-[15px] bg-[#d9d9d9] rounded-lg">
+      <div
+        class="p-[15px] bg-[#d9d9d9] rounded-lg"
+        @click="router.push({ name: 'camera' })"
+      >
         <TypographyHead2 class="text-[20px]">
           QR 코드 조회하기
         </TypographyHead2>

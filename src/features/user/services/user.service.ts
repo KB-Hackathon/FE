@@ -1,9 +1,10 @@
 import {
   AdditionalInfoRequest,
+  CouponsResponse,
   RegisterSellerResponse,
   UploadImageResponse,
 } from '@/entities/user/user.api.type'
-import { AccessToken, UserInfo } from '@/entities/user/user.entity'
+import { AccessToken, Coupon, UserInfo } from '@/entities/user/user.entity'
 import { api, ApiData } from '@/shared/plugin/axios'
 import { API_END_POINT } from '@/shared/utils/fetcher'
 
@@ -37,5 +38,17 @@ export async function postAdditionalInfo(
 export async function registerSeller(bizNo: string): Promise<ApiData<RegisterSellerResponse>> {
   const { url, method } = API_END_POINT.user.postRegisterSeller()
   const result = await api<ApiData<RegisterSellerResponse>>({ url, method, data: { bizNo } })
+  return result.data
+}
+
+export async function getCouponList(): Promise<ApiData<CouponsResponse>> {
+  const { url, method } = API_END_POINT.user.getCouponList()
+  const result = await api<ApiData<CouponsResponse>>({ url, method })
+  return result.data
+}
+
+export async function getCouponInfo(uuid: string): Promise<ApiData<Coupon>> {
+  const { url, method } = API_END_POINT.user.getCouponInfo(uuid)
+  const result = await api<ApiData<Coupon>>({ url, method })
   return result.data
 }

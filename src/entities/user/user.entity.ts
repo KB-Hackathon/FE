@@ -12,3 +12,17 @@ export interface UserInfo {
 export interface AccessToken {
   accessToken: string
 }
+
+export interface Coupon {
+  couponId: number
+  couponUUID: string
+  couponName: string
+  expiration: string
+  isUsed: boolean
+  orderId: number
+  memberId: number
+  productId: number
+  productTitle: string
+  sellerId: number
+  storeName: string
+}

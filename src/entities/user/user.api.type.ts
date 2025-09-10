@@ -1,3 +1,5 @@
+import { Coupon } from './user.entity'
+
 export interface UploadImageResponse {
   url: string
 }
@@ -23,4 +25,8 @@ export interface RegisterSellerResponse {
   zipCode: string
   roadNameAddress: string
   companyClassificationCode: string
+}
+
+export interface CouponsResponse {
+  coupons: Coupon[]
 }
