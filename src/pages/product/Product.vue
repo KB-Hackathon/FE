@@ -4,8 +4,11 @@
     v-if="product"
     class="flex w-full flex-col gap-4 pb-[70px]"
   >
-    <div class="w-full h-[250px] bg-ccmkt-gray rounded-md overflow-hidden">
-      <!-- <img :src="product.product.images[1].url" /> -->
+    <div class="w-full h-full bg-ccmkt-gray rounded-md overflow-hidden">
+      <img
+        :src="product.product.images[0].url"
+        class="w-full h-full object-cover"
+      >
     </div>
     <div
       class="flex w-full justify-between text-gray-600 items-center"

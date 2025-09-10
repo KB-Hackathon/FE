@@ -57,7 +57,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 function onClickKakaoLoginButton() {
   const currentDomain = window.location.origin
-
+  console.log(currentDomain)
   window.location.href = `${import.meta.env.VITE_APP_API_URL}/oauth2/authorization/kakao?redirect_uri=${encodeURIComponent(currentDomain)}`
 }
 </script>
