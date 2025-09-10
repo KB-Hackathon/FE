@@ -4,7 +4,7 @@
       연령대 분포
     </TypographyP1>
 
-    <div class="-mt-2 w-full flex justify-center">
+    <div class="-mt-5 w-full flex justify-center">
       <div
         class="flex items-end justify-between"
         style="width: 180px; height: 230px"

@@ -1,5 +1,5 @@
 <template>
-  <TypographyP1 class="mt-4">
+  <TypographyP1 class="mt-4 -mb-3">
     상품별 매출액
   </TypographyP1>
   <div class="w-full max-w-[390px]">

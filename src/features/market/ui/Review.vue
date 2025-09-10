@@ -1,15 +1,15 @@
 <template>
-  <div class="gap-2 py-4">
-    <TypographyP1 class="mb-3">
-      구매자 리뷰
-    </TypographyP1>
+  <div class="gap-2 pb-4">
+    <div class="flex justify-between items-center mb-3">
+      <TypographyP1> 구매자 리뷰 </TypographyP1>
+      <TypographyCaption class="text-gray-600">
+        전체보기
+      </TypographyCaption>
+    </div>
 
     <div class="flex justify-around gap-10">
+      <!-- 왼쪽: 총평 -->
       <div class="flex flex-col items-center gap-1">
-        <TypographyP2 class="mb-3">
-          사용자 총 평점
-        </TypographyP2>
-
         <div class="flex items-center gap-1">
           <template
             v-for="i in 5"
@@ -20,8 +20,12 @@
               class="bi bi-star-fill text-ccmkt-main text-xl"
             />
             <i
-              v-else
+              v-else-if="i - rating <= 0.5"
               class="bi bi-star-half text-ccmkt-main text-xl"
+            />
+            <i
+              v-else
+              class="bi bi-star text-ccmkt-main text-xl"
             />
           </template>
         </div>
@@ -37,26 +41,27 @@
         </div>
       </div>
 
-      <!-- 평점 비율 -->
+      <!-- 오른쪽: 평점 비율 -->
       <div class="flex flex-col items-center gap-1">
-        <TypographyP2 class="mb-3">
-          평점 비율
-        </TypographyP2>
-        <div class="flex items-center w-[180px] justify-between gap-3">
+        <div class="flex items-end w-[180px] justify-between gap-3">
           <div
             v-for="(_count, idx) in ratingCounts"
             :key="idx"
             class="flex flex-col items-center"
           >
-            <!-- 퍼센트 라벨 -->
+            <!-- 퍼센트 라벨 (전체 대비 %) -->
             <span class="mb-1 text-xs text-gray-500">{{ percents[idx] }}%</span>
 
             <!-- 회색 트랙 -->
             <div class="h-[90px] w-3 bg-gray-200 rounded-full relative overflow-hidden">
-              <!-- 채움(비율) -->
+              <!-- 채움: 개수 기준(최대값을 100%) -->
               <div
-                class="absolute bottom-0 left-0 w-full bg-ccmkt-main rounded-full"
-                :style="{ height: `calc(${percents[idx]}% * 1.0)` }"
+                class="absolute bottom-0 left-0 w-full rounded-full"
+                :style="{
+                  height: fillHeightPx(idx),
+                  background: 'var(--ccmkt-main, #ff5a5a)',
+                  transform: 'translateZ(0)',
+                }"
               />
             </div>
 
@@ -72,19 +77,29 @@
 </template>
 
 <script setup lang="ts">
-import { TypographyP1, TypographyP2, TypographySubTitle2 } from '@/shared/components/ui/typography'
+import {
+  TypographyCaption,
+  TypographyP1,
+  TypographyP2,
+  TypographySubTitle2,
+} from '@/shared/components/ui/typography'
 import { computed, ref } from 'vue'
 
-const rating = ref(4.2) // 전체 평점
-const recentRating = ref(4.6) // 최근 6개월 평점
+const rating = ref(4.2)
+const recentRating = ref(4.6)
 
-// 예시 평점 개수 데이터 (5점부터 1점 순)
-const ratingCounts = ref([14, 2, 1, 10, 10])
+// 5점→1점 순
+const ratingCounts = ref([14, 10, 1, 3, 0])
+
 const total = computed(() => ratingCounts.value.reduce((a, b) => a + b, 0))
-const maxCount = computed(() => Math.max(...ratingCounts.value, 1))
-
-// 퍼센트(정수)로 라벨 표시
 const percents = computed(() =>
   ratingCounts.value.map((c) => (total.value ? Math.round((c / total.value) * 100) : 0))
 )
+
+const maxCount = computed(() => Math.max(...ratingCounts.value, 1))
+const fillHeightPx = (idx: number) => {
+  const ratio = ratingCounts.value[idx] / maxCount.value
+  const px = Math.round(ratio * 90)
+  return `${Math.max(px, ratingCounts.value[idx] > 0 ? 4 : 0)}px` // 최소 4px 보장
+}
 </script>

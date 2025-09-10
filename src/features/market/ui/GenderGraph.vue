@@ -1,6 +1,6 @@
 <template>
   <div class="w-[150px]">
-    <TypographyP1 class="text-center mb-7">
+    <TypographyP1 class="text-center mb-4">
       성별 분포
     </TypographyP1>
     <apexchart

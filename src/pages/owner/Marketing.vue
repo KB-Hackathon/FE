@@ -4,6 +4,7 @@ import { getMarketReport } from '@/features/market/services/market.service'
 import AgeGraph from '@/features/market/ui/AgeGraph.vue'
 import GenderGraph from '@/features/market/ui/GenderGraph.vue'
 import Review from '@/features/market/ui/Review.vue'
+import ReviewDetail from '@/features/market/ui/ReviewDetail.vue'
 import SalesPerProduct from '@/features/market/ui/SalesPerProduct.vue'
 import SummaryGraph from '@/features/market/ui/SummaryGraph.vue'
 import TotalSales from '@/features/market/ui/TotalSales.vue'
@@ -28,7 +29,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-full max-w-[390px] flex flex-col gap-5">
+  <div
+    v-if="report"
+    class="w-full max-w-[390px] flex flex-col gap-5"
+  >
     <TypographyP1>내 마케팅 성과 확인하기</TypographyP1>
 
     <Tabs
@@ -66,6 +70,7 @@ onMounted(() => {
         class="mt-4"
       >
         <Review />
+        <ReviewDetail />
       </TabsContent>
     </Tabs>
   </div>
