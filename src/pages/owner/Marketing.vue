@@ -3,6 +3,7 @@ import { MarketReport } from '@/entities/market/market.entity'
 import { getMarketReport } from '@/features/market/services/market.service'
 import AgeGraph from '@/features/market/ui/AgeGraph.vue'
 import GenderGraph from '@/features/market/ui/GenderGraph.vue'
+import Review from '@/features/market/ui/Review.vue'
 import SalesPerProduct from '@/features/market/ui/SalesPerProduct.vue'
 import SummaryGraph from '@/features/market/ui/SummaryGraph.vue'
 import TotalSales from '@/features/market/ui/TotalSales.vue'
@@ -37,5 +38,6 @@ onMounted(() => {
       <AgeGraph :report="report" />
     </div>
     <SalesPerProduct />
+    <Review />
   </div>
 </template>

@@ -27,6 +27,7 @@
 <script setup lang="ts">
 import { MarketReport } from '@/entities/market/market.entity'
 import { baseColors, toAlpha } from '@/entities/market/market.util'
+import { TypographyP1 } from '@/shared/components/ui/typography'
 import { computed } from 'vue'
 
 const props = defineProps<{

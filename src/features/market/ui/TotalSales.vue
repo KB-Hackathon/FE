@@ -6,6 +6,7 @@
 </template>
 <script setup lang="ts">
 import { MarketReport } from '@/entities/market/market.entity'
+import { TypographyHead2, TypographySubTitle1 } from '@/shared/components/ui/typography'
 import { formatNumber } from '@/shared/utils/format'
 import { computed } from 'vue'
 

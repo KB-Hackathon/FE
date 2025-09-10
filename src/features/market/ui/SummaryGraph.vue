@@ -32,6 +32,7 @@
 </template>
 <script setup lang="ts">
 import { MarketReport } from '@/entities/market/market.entity'
+import { TypographyP1 } from '@/shared/components/ui/typography'
 import { computed } from 'vue'
 
 const props = defineProps<{
