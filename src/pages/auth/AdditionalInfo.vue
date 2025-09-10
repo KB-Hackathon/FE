@@ -151,7 +151,6 @@ const router = useRouter()
 const route = useRoute()
 
 const signupToken = route.query.signup_token as string
-const accessToken = route.query.access_token as string
 const auth = useAuthStore()
 
 const form = reactive({
@@ -203,7 +202,7 @@ async function submit() {
 
   dialog.open = false
   try {
-    await postAdditionalInfo({
+    const result = await postAdditionalInfo({
       signupToken: signupToken,
       name: form.name,
       age: now - birthYear,
@@ -212,13 +211,12 @@ async function submit() {
       phoneNumber: form.phoneNumber,
     })
 
-    if (accessToken) {
-      auth.setAccessToken(accessToken)
-      auth.setLoggedIn(true)
-    }
+    auth.setAccessToken(result.data.accessToken)
+    auth.setLoggedIn(true)
 
-    const result = await getUserInfo()
-    if (result) auth.setUserInfo(result.data)
+    const userInfoResult = await getUserInfo()
+    auth.setUserInfo(userInfoResult.data)
+
     router.replace({ name: 'select_role' })
   } catch (e) {
     console.error(e)

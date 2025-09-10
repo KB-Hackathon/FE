@@ -1,8 +1,8 @@
 import { Method } from '@/shared/utils/fetcher'
 
 export const market = {
-  getReport: (sellerId: string) => ({
-    url: `${import.meta.env.VITE_APP_API_URL}/api/report/${sellerId}`,
+  getReport: () => ({
+    url: `${import.meta.env.VITE_APP_API_URL}/api/report/me`,
     method: Method.GET,
   }),
 }

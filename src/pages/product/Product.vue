@@ -1,9 +1,12 @@
 <template>
+  <!-- eslint-disable vue/no-v-html vue/no-v-text-v-html-on-component -->
   <div
     v-if="product"
     class="flex w-full flex-col gap-4 pb-[70px]"
   >
-    <div class="w-full h-[250px] bg-ccmkt-gray rounded-md" />
+    <div class="w-full h-[250px] bg-ccmkt-gray rounded-md overflow-hidden">
+      <!-- <img :src="product.product.images[1].url" /> -->
+    </div>
     <div
       class="flex w-full justify-between text-gray-600 items-center"
       @click="() => router.push({ name: 'seller', params: { sellerId: product?.seller.memberId } })"
@@ -18,9 +21,7 @@
     <TypographyHead3>
       {{ product.product.title }}
     </TypographyHead3>
-    <TypographyP2 class="text-gray-500">
-      {{ product.product.description }}
-    </TypographyP2>
+    <TypographyP2 v-html="product.product.description.replace(/\n/g, '<br/>')" />
     <div class="flex justify-between items-center">
       <div class="flex gap-2">
         <Badge
@@ -31,7 +32,7 @@
           {{ deadline.text }}
         </Badge>
         <Badge variant="secondary">
-          배달
+          {{ product.product.isCoupon ? '쿠폰' : '배송' }}
         </Badge>
       </div>
       <TypographyHead1 class="text-right">
@@ -65,11 +66,11 @@
     <Separator />
     <div class="flex flex-wrap gap-1">
       <Badge
-        v-for="(tag, index) in product.product.tags"
+        v-for="(tag, index) in productTags"
         :key="index"
         variant="outline"
       >
-        {{ (tag as { tagId: number; name: string }).name }}
+        {{ tag }}
       </Badge>
     </div>
   </div>
@@ -198,6 +199,12 @@ async function handleClickParticipateButton() {
     isParticipated.value = true
   }
 }
+
+const productTags = computed(() =>
+  (product.value?.product.tags ?? []).map((t: string | { tagId: number; name: string }) =>
+    typeof t === 'string' ? t : t.name
+  )
+)
 
 onMounted(() => {
   getProductFunction()

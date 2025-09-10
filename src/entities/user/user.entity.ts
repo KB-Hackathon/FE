@@ -8,3 +8,7 @@ export interface UserInfo {
   role: 'BUYER' | 'SELLER'
   image?: string
 }
+
+export interface AccessToken {
+  accessToken: string
+}

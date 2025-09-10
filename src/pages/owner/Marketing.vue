@@ -6,28 +6,45 @@ import {
   TypographySubTitle1,
 } from '@/shared/components/ui/typography'
 import { formatNumber } from '@/shared/utils/format'
-import { onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const sellerId = route.query.sellerId as string
-async function getReportFunction() {
-  await getMarketReport(sellerId)
+
+type MarketReport = {
+  totalSales: number
+  successCnt: number
+  failedCnt: number
+  successRate: number
+  ageDistribution: {
+    over10: number
+    over20: number
+    over30: number
+    over40: number
+    over50: number
+    over60: number
+  }
+  genderDistribution: { maleCnt: number; femaleCnt: number }
 }
+
+const report = ref<MarketReport | null>(null)
+
+async function getReportFunction() {
+  const result = await getMarketReport(sellerId)
+  report.value = result.data
+}
+
+const totalSales = computed(() => report.value?.totalSales ?? 0)
+const successCount = computed(() => report.value?.successCnt ?? 0)
+const failCount = computed(() => report.value?.failedCnt ?? 0)
+const successRate = computed(() => report.value?.successRate ?? 0)
 
 onMounted(() => {
   getReportFunction()
 })
-// --- 임의 데이터 ---
-const successCount = 5
-const failCount = 10
-const total = successCount + failCount
-const successRate = total ? Math.round((successCount / total) * 100) : 0
-const salesPerProduct = [
-  { name: '쫀득쿠키 30개입 쿠폰', sales: 400000 },
-  { name: '쫀득쿠키 30개입 쿠폰', sales: 400000 },
-]
-// 브랜드 기반 베이스 컬러
+
+// ---- 색상 유틸 (그대로) ----
 const baseColors = ['#ffbb00', '#b3a99e', '#ffcc00', '#8c7b70', '#ffd966', '#60584c']
 function hexToRgba(hex: string, alpha: number) {
   const r = parseInt(hex.slice(1, 3), 16)
@@ -35,8 +52,6 @@ function hexToRgba(hex: string, alpha: number) {
   const b = parseInt(hex.slice(5, 7), 16)
   return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
-
-// 동적 투명도(0.7~1.0)
 const toAlpha = (hex: string) => {
   const alpha = 0.7 + Math.random() * 0.3
   return hexToRgba(hex, parseFloat(alpha.toFixed(2)))
@@ -65,7 +80,6 @@ const radialOptions = {
   },
   labels: ['성공률'],
 }
-const radialSeries = [successRate]
 
 const radialOptions2 = {
   chart: { type: 'radialBar' },
@@ -80,14 +94,13 @@ const radialOptions2 = {
           fontSize: '14px',
           fontWeight: 'bold',
           offsetY: -1,
-          formatter: () => `5건`,
+          formatter: () => `${successCount.value}건`,
         },
       },
     },
   },
   labels: ['성공'],
 }
-const radialSeries2 = [100]
 
 const radialOptions3 = {
   chart: { type: 'radialBar' },
@@ -102,7 +115,7 @@ const radialOptions3 = {
           fontSize: '14px',
           fontWeight: 'bold',
           offsetY: -1,
-          formatter: () => `10건`,
+          formatter: () => `${failCount.value}건`,
         },
       },
     },
@@ -112,10 +125,14 @@ const radialOptions3 = {
 const radialSeries3 = [100]
 
 // =======================
-// Pie 1: 성별
+// Pie 1: 성별 (서버 건수 그대로)
 // =======================
 const genderLabels = ['여성', '남성']
-const genderSeries = [56, 44]
+const genderSeries = computed(() => {
+  const female = report.value?.genderDistribution.femaleCnt ?? 0
+  const male = report.value?.genderDistribution.maleCnt ?? 0
+  return [female, male]
+})
 const genderColors = [toAlpha(baseColors[0]), toAlpha(baseColors[1])]
 
 const genderPieOptions = {
@@ -134,31 +151,39 @@ const genderPieOptions = {
   dataLabels: {
     style: { fontSize: '14px', fontWeight: 'bold', colors: ['#000'] },
     dropShadow: { enabled: false },
-    formatter: (val: number) => {
-      return val >= 10 ? `${val.toFixed(0)}%` : ''
-    },
+    formatter: (val: number) => (val >= 10 ? `${val.toFixed(0)}%` : ''),
   },
 }
 
 // =======================
-// Pie 2: 연령대
+// Bar: 연령대 (건수 → % 변환만)
 // =======================
-const ageLabels = ['10대', '20대', '30대', '40대', '50대', '60대']
-
-const ageSeries = [5, 30, 25, 20, 12, 8]
+const ageLabels = ['10대', '20대', '30대', '40대', '50+']
 const ageColors = ageLabels.map((_, i) => toAlpha(baseColors[i % baseColors.length]))
 
-const ageBarSeries = [{ name: '비율', data: ageSeries }]
+const ageSeries = computed(() => {
+  const a = report.value?.ageDistribution
+  if (!a) return [0, 0, 0, 0, 0]
+
+  const arr = [a.over10, a.over20, a.over30, a.over40, a.over50 + a.over60]
+  const total = arr.reduce((s, v) => s + v, 0) || 1
+  return arr.map((v) => Math.round((v / total) * 100))
+})
+
+const ageBarSeries = computed(() => [{ name: '비율', data: ageSeries.value }])
 
 const ageBarOptions = {
   chart: { type: 'bar', toolbar: { show: false } },
   colors: ageColors,
+
   plotOptions: {
     bar: {
       distributed: true,
       columnWidth: '60%',
       borderRadius: 6,
       dataLabels: { position: 'top' },
+      borderRadiusApplication: 'end',
+      borderRadiusWhenStacked: 'last',
     },
   },
   dataLabels: {
@@ -188,34 +213,37 @@ const ageBarOptions = {
 
     <div class="flex justify-between">
       <TypographyHead2>총 수익금</TypographyHead2>
-      <TypographySubTitle1>1,000,000,000 원</TypographySubTitle1>
+      <TypographySubTitle1>{{ formatNumber(totalSales) }} 원</TypographySubTitle1>
     </div>
 
-    <!-- 라디얼 3개 -->
+    <!-- 라디얼 3개 (디자인 그대로) -->
     <TypographyP1 class="-mb-[20px]">
       공동구매 진행 결과
     </TypographyP1>
     <div class="flex w-full justify-around">
       <apexchart
+        :key="`succ-${successCount}`"
         type="radialBar"
         height="100"
         width="100"
         :options="radialOptions2"
-        :series="radialSeries2"
+        :series="[100]"
       />
+
       <apexchart
+        :key="`fail-${failCount}`"
         type="radialBar"
         height="100"
         width="100"
         :options="radialOptions3"
-        :series="radialSeries3"
+        :series="[100]"
       />
       <apexchart
         type="radialBar"
         height="100"
         width="100"
         :options="radialOptions"
-        :series="radialSeries"
+        :series="[successRate]"
       />
     </div>
 
@@ -231,8 +259,6 @@ const ageBarOptions = {
           :options="genderPieOptions"
           :series="genderSeries"
         />
-
-        <!-- 범례 -->
         <div class="mt-6 grid grid-cols-2 gap-y-2 pl-[20px]">
           <div
             v-for="(label, i) in genderLabels"
@@ -256,28 +282,10 @@ const ageBarOptions = {
         <apexchart
           type="bar"
           height="230"
-          width="220"
+          width="200"
           :options="ageBarOptions"
           :series="ageBarSeries"
         />
-      </div>
-    </div>
-    <TypographyP1 class="-mb-[30px]">
-      상품별 매출액
-    </TypographyP1>
-    <div class="mt-4 w-full max-w-[390px]">
-      <div
-        v-for="(item, index) in salesPerProduct"
-        :key="index"
-        class="flex w-full py-3 border-b-[1px]"
-      >
-        <TypographyP1 class="text-gray-700 flex-[2]">
-          {{ item.name }}
-        </TypographyP1>
-
-        <TypographyP1 class="text-right flex-[1]">
-          {{ formatNumber(item.sales) }}원
-        </TypographyP1>
       </div>
     </div>
   </div>

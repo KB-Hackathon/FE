@@ -15,7 +15,15 @@
           </TypographyHead3>
         </div>
         <div class="flex w-full gap-6">
-          <div class="min-w-[70px] h-[70px] bg-ccmkt-gray rounded-full m-auto" />
+          <div
+            class="w-[70px] max-h-[70px] overflow-hidden flex justify-center items-center rounded-full m-auto"
+          >
+            <img
+              :src="profile"
+              alt="프로필 이미지"
+              class="w-full h-full object-cover"
+            >
+          </div>
 
           <div class="flex flex-col w-full gap-2">
             <TypographySubTitle1>강민재</TypographySubTitle1>
@@ -25,15 +33,15 @@
                   15
                 </TypographySubTitle1>
                 <TypographyCaption class="text-[14px]">
-                  착착마켓<br>게시글 수
+                  게시물
                 </TypographyCaption>
               </div>
               <div class="flex flex-col justify-center gap-2 items-start">
                 <TypographySubTitle1 class="text-[20px]">
-                  35
+                  356
                 </TypographySubTitle1>
                 <TypographyCaption class="text-[14px]">
-                  인스타그램<br>게시글 수
+                  팔로워
                 </TypographyCaption>
               </div>
               <div class="flex flex-col justify-center gap-2 items-start">
@@ -41,7 +49,7 @@
                   253
                 </TypographySubTitle1>
                 <TypographyCaption class="text-[14px]">
-                  팔로워
+                  팔로잉
                 </TypographyCaption>
               </div>
             </div>
@@ -137,6 +145,7 @@
   </AlertDialog>
 </template>
 <script setup lang="ts">
+import profile from '@/assets/images/insta_profile.png'
 import UserTab from '@/features/user/ui/UserTab.vue'
 import {
   AlertDialog,
@@ -159,7 +168,6 @@ import {
 import TypographySubTitle1 from '@/shared/components/ui/typography/TypographySubTitle1.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-
 const router = useRouter()
 const draftDialogOpen = ref(false)
 

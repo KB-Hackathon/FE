@@ -3,7 +3,7 @@ import {
   RegisterSellerResponse,
   UploadImageResponse,
 } from '@/entities/user/user.api.type'
-import { UserInfo } from '@/entities/user/user.entity'
+import { AccessToken, UserInfo } from '@/entities/user/user.entity'
 import { api, ApiData } from '@/shared/plugin/axios'
 import { API_END_POINT } from '@/shared/utils/fetcher'
 
@@ -26,9 +26,11 @@ export async function getUserInfo(): Promise<ApiData<UserInfo>> {
   return result.data
 }
 
-export async function postAdditionalInfo(form: AdditionalInfoRequest): Promise<ApiData<boolean>> {
+export async function postAdditionalInfo(
+  form: AdditionalInfoRequest
+): Promise<ApiData<AccessToken>> {
   const { url, method } = API_END_POINT.user.postAdditional()
-  const result = await api<ApiData<boolean>>({ url, method, data: form })
+  const result = await api<ApiData<AccessToken>>({ url, method, data: form })
   return result.data
 }
 
