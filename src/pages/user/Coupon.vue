@@ -81,7 +81,7 @@
 import QrcodeVue from 'qrcode.vue'
 
 import { Coupon } from '@/entities/user/user.entity'
-import { getCouponList } from '@/features/user/services/user.service'
+import { mockCoupons } from '@/entities/user/user.mock'
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -98,9 +98,9 @@ import {
   TypographySubTitle1,
   TypographySubTitle2,
 } from '@/shared/components/ui/typography'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 
-const coupons = ref<Coupon[]>([])
+const coupons = ref<Coupon[]>(mockCoupons)
 const dialogOpen = ref(false)
 const selectedCoupon = ref<Coupon | null>(null)
 
@@ -109,12 +109,12 @@ function openDialog(coupon: Coupon) {
   dialogOpen.value = true
 }
 
-async function getCouponListFunction() {
-  const result = await getCouponList()
-  coupons.value = result.data.coupons
-}
+// async function getCouponListFunction() {
+//   const result = await getCouponList()
+//   coupons.value = result.data.coupons
+// }
 
-onMounted(() => {
-  getCouponListFunction()
-})
+// onMounted(() => {
+//   getCouponListFunction()
+// })
 </script>

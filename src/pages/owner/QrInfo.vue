@@ -186,6 +186,7 @@
 <script setup lang="ts">
 import router from '@/app/router'
 import type { Coupon } from '@/entities/user/user.entity'
+import { mockCoupons } from '@/entities/user/user.mock'
 import { getCouponInfo } from '@/features/user/services/user.service'
 import {
   AlertDialog,
@@ -210,7 +211,7 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const qrRaw = route.query.result as string
 
-const coupon = ref<Coupon | null>(null)
+const coupon = ref<Coupon | null>(mockCoupons[0])
 const using = ref(false)
 const openConfirm = ref(false)
 const openDone = ref(false)

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { MarketReport } from '@/entities/market/market.entity'
-import { getMarketReport } from '@/features/market/services/market.service'
+import { mockMarketReport } from '@/entities/user/user.mock'
 import AgeGraph from '@/features/market/ui/AgeGraph.vue'
 import GenderGraph from '@/features/market/ui/GenderGraph.vue'
 import Review from '@/features/market/ui/Review.vue'
@@ -10,22 +10,22 @@ import SummaryGraph from '@/features/market/ui/SummaryGraph.vue'
 import TotalSales from '@/features/market/ui/TotalSales.vue'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs'
 import { TypographyP1 } from '@/shared/components/ui/typography'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const sellerId = route.query.sellerId as string
 
-const report = ref<MarketReport | null>(null)
+const report = ref<MarketReport | null>(mockMarketReport)
 
-async function getReportFunction() {
-  const result = await getMarketReport(sellerId)
-  report.value = result.data
-}
+// async function getReportFunction() {
+//   const result = await getMarketReport(sellerId)
+//   report.value = result.data
+// }
 
-onMounted(() => {
-  getReportFunction()
-})
+// onMounted(() => {
+//   getReportFunction()
+// })
 </script>
 
 <template>
