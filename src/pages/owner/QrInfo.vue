@@ -77,7 +77,11 @@
           <Button
             class="h-[48px] w-full"
             :disabled="!coupon || coupon.isUsed || isExpired || using"
-            :class="coupon && (coupon.isUsed || isExpired) ? 'bg-gray-300' : 'bg-ccmkt-main'"
+            :class="
+              coupon && (coupon.isUsed || isExpired)
+                ? 'bg-gray-300 hover:bg-gray-300 active:bg-gray-300'
+                : 'bg-ccmkt-main hover:bg-ccmkt-main active:bg-ccmkt-main'
+            "
             @click="openConfirm = true"
           >
             <TypographyP1
