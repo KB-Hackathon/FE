@@ -10,12 +10,12 @@
       @click="() => router.push({ name: 'product', params: { productId: item.id } })"
     >
       <!-- 썸네일 -->
-      <div class="min-w-[140px] max-w-[140px] h-[80px] mr-2 bg-ccmkt-gray rounded-md">
+      <div class="w-[140px] h-[80px] overflow-hidden mr-2 bg-ccmkt-gray rounded-md">
         <img
           v-if="item.image"
           :src="item.image"
           alt="thumbnail"
-          class="w-full h-full object-cover rounded-md"
+          class="w-full h-full object-cover"
         >
       </div>
 
