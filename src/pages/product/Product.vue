@@ -233,10 +233,12 @@ const deadline = computed(() => getDeadlineInfo(product.value?.product.recruitme
 
 async function handleClickParticipateButton() {
   requestDialogOpen.value = false
-  await buyCoupon(Number(product.value!.product.productId), 1)
+  const result = await buyCoupon(Number(product.value!.product.productId), 1)
 
-  responseDialogOpen.value = true
-  isParticipated.value = true
+  if (result) {
+    responseDialogOpen.value = true
+    isParticipated.value = true
+  }
 }
 
 const productTags = computed(() =>
