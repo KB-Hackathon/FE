@@ -187,7 +187,6 @@
 import router from '@/app/router'
 import type { Coupon } from '@/entities/user/user.entity'
 import { mockCoupons } from '@/entities/user/user.mock'
-import { getCouponInfo } from '@/features/user/services/user.service'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -205,11 +204,10 @@ import {
   TypographyP1,
   TypographySubTitle1,
 } from '@/shared/components/ui/typography'
-import { computed, onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, ref } from 'vue'
 
-const route = useRoute()
-const qrRaw = route.query.result as string
+// const route = useRoute()
+// const qrRaw = route.query.result as string
 
 const coupon = ref<Coupon | null>(mockCoupons[0])
 const using = ref(false)
@@ -237,10 +235,10 @@ const isExpired = computed(() => {
   return exp < new Date(today.getFullYear(), today.getMonth(), today.getDate())
 })
 
-async function load() {
-  const res = await getCouponInfo(qrRaw)
-  coupon.value = res.data
-}
+// async function load() {
+//   const res = await getCouponInfo(qrRaw)
+//   coupon.value = res.data
+// }
 
 async function handleUseCoupon() {
   if (!coupon.value) return
@@ -255,7 +253,7 @@ async function handleUseCoupon() {
   }
 }
 
-onMounted(() => {
-  load()
-})
+// onMounted(() => {
+//   load()
+// })
 </script>
