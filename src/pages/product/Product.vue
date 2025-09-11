@@ -237,7 +237,6 @@ async function handleClickParticipateButton() {
 
   responseDialogOpen.value = true
   isParticipated.value = true
-  router.go(0)
 }
 
 const productTags = computed(() =>
