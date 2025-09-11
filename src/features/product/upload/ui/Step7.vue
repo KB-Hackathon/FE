@@ -10,11 +10,10 @@
             사진
           </TypographyP1>
           <TypographyCaption>
-            <i class="bi bi-exclamation-circle ml-1" /> 최소 3장의 사진을
-            추가해주세요
+            <i class="bi bi-exclamation-circle ml-1" /> 최소 3장의 사진을 추가해주세요
           </TypographyCaption>
         </div>
-        <div class="flex justify-start my-1 mb-8 mt-4">
+        <div class="flex justify-start my-1 mt-4">
           <button
             type="button"
             class="flex items-center justify-center w-[70px] h-[70px] rounded-[16px] bg-ccmkt-main text-whites transition-all"
@@ -33,7 +32,7 @@
         </div>
         <div
           v-if="props.modelValue.images.length > 0"
-          class="grid grid-cols-2 gap-4 my-4 h-[130px] overflow-scroll pt-3"
+          class="grid grid-cols-2 gap-4 h-[130px] overflow-scroll pt-3"
         >
           <div
             v-for="(preview, index) in props.modelValue.images"

@@ -4,26 +4,27 @@
     v-if="product"
     class="flex w-full flex-col gap-4 pb-[70px]"
   >
-    <div class="w-full h-[250px] bg-ccmkt-gray rounded-md overflow-hidden relative">
+    <div class="w-full bg-gray-100 rounded-md overflow-hidden relative">
       <div
         class="flex transition-transform duration-700 ease-in-out"
         :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
       >
         <div
-          v-for="(img, idx) in product.product.images"
+          v-for="(img, idx) in product!.product.images"
           :key="idx"
-          class="w-full flex-shrink-0 h-[250px]"
+          class="w-full flex-shrink-0 flex justify-center bg-gray-100"
         >
           <img
             :src="img.url"
-            class="w-full h-full object-cover"
+            :alt="`상품이미지 ${idx + 1}`"
+            class="w-full h-auto object-contain"
           >
         </div>
       </div>
 
-      <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1">
+      <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
         <span
-          v-for="(img, idx) in product.product.images"
+          v-for="(_, idx) in product!.product.images"
           :key="idx"
           class="w-2 h-2 rounded-full"
           :class="currentIndex === idx ? 'bg-ccmkt-main' : 'bg-gray-300'"
