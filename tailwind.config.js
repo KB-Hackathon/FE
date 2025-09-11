@@ -13,6 +13,8 @@ export default {
         'ccmkt-gray': '#cbd5e1',
         'ccmkt-bg-white': '#F9FAFB',
         naver: '#03c75a',
+        kakao: '#FEE500',
+        google: '#F2F2F2',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

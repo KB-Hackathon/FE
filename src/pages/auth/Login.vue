@@ -20,12 +20,21 @@
         소셜 로그인
       </TypographyCaption>
     </div>
-    <button @click="onClickKakaoLoginButton">
-      <img
-        :src="kakao_login_button"
-        class="w-full"
-      >
-    </button>
+  </div>
+
+  <div
+    class="bg-kakao w-full h-[53px] text-white relative items-center justify-center rounded-md"
+    @click="onClickKakaoLoginButton"
+  >
+    <img
+      :src="kakao_icon"
+      class="absolute left-2 top-1/2 -translate-y-1/2 w-[40px]"
+    >
+    <p
+      class="absolute left-1/2 top-1/2 ml-[13px] -translate-x-1/2 -translate-y-1/2 text-[17px] text-black"
+    >
+      카카오 로그인
+    </p>
   </div>
   <div class="bg-naver w-full h-[53px] text-white relative items-center justify-center rounded-md">
     <img
@@ -36,7 +45,7 @@
       네이버 로그인
     </p>
   </div>
-  <div class="bg-[#F2F2F2] border w-full h-[53px] relative items-center justify-center rounded-md">
+  <div class="bg-google border w-full h-[53px] relative items-center justify-center rounded-md">
     <img
       :src="google_icon"
       class="absolute left-2 top-1/2 -translate-y-1/2 w-[40px]"
@@ -48,7 +57,7 @@
 </template>
 <script setup lang="ts">
 import google_icon from '@/assets/images/google_icon.png'
-import kakao_login_button from '@/assets/images/kakao_login_large_wide.png'
+import kakao_icon from '@/assets/images/kakao_icon.png'
 import naver_icon from '@/assets/images/naver_icon.png'
 import { Separator } from '@/shared/components/ui/separator'
 import { TypographyCaption, TypographyHead1, TypographyP1 } from '@/shared/components/ui/typography'
