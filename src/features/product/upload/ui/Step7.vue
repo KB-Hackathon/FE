@@ -5,9 +5,15 @@
         사진과 설명을 입력해주세요
       </TypographyHead1>
       <div class="fixed inset-x-0 top-[170px] mx-auto max-w-[390px] px-5 box-border">
-        <TypographyP1 class="text-gray-700">
-          사진
-        </TypographyP1>
+        <div class="flex gap-1 items-center">
+          <TypographyP1 class="text-gray-700">
+            사진
+          </TypographyP1>
+          <TypographyCaption>
+            <i class="bi bi-exclamation-circle ml-1" /> 최소 3장의 사진을
+            추가해주세요
+          </TypographyCaption>
+        </div>
         <div class="flex justify-start my-1 mb-8 mt-4">
           <button
             type="button"
@@ -67,7 +73,7 @@
 <script setup lang="ts">
 import { uploadImage } from '@/features/user/services/user.service'
 import { Textarea } from '@/shared/components/ui/textarea'
-import { TypographyHead1, TypographyP1 } from '@/shared/components/ui/typography'
+import { TypographyCaption, TypographyHead1, TypographyP1 } from '@/shared/components/ui/typography'
 import type { UploadForm } from '@/shared/composables/useUploadFlow'
 import { computed, ref } from 'vue'
 

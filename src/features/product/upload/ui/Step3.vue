@@ -52,15 +52,12 @@
         </div>
         <div
           v-if="model.option === 'coupon'"
-          class="space-y-4 mt-5"
+          class="space-y-4 mt-10"
         >
-          <div class="flex gap-1">
-            <TypographyP1 class="-mb-4">
-              쿠폰명
-            </TypographyP1>
+          <div class="flex gap-1 items-center">
+            <TypographyP1> 쿠폰명 </TypographyP1>
             <TypographyCaption>
-              <i class="bi bi-exclamation-circle mr-1" /> 미기입시 상품명으로 자동
-              입력됩니다.
+              <i class="bi bi-exclamation-circle ml-1" /> 미기입시 상품명으로 자동 입력됩니다.
             </TypographyCaption>
           </div>
           <Input
@@ -86,7 +83,7 @@
         </div>
         <div
           v-else
-          class="space-y-4 mt-5"
+          class="space-y-4 mt-10"
         >
           <TypographyP2 class="text-gray-600">
             <i class="bi bi-exclamation-circle mr-1" />
