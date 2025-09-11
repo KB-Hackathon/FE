@@ -54,9 +54,15 @@
           v-if="model.option === 'coupon'"
           class="space-y-4 mt-5"
         >
-          <TypographyP1 class="-mb-4">
-            쿠폰명
-          </TypographyP1>
+          <div class="flex gap-1">
+            <TypographyP1 class="-mb-4">
+              쿠폰명
+            </TypographyP1>
+            <TypographyCaption>
+              <i class="bi bi-exclamation-circle mr-1" /> 미기입시 상품명으로 자동
+              입력됩니다.
+            </TypographyCaption>
+          </div>
           <Input
             v-model="couponName"
             class="text-[23px] font-semibold border-t-0 border-r-0 border-l-0 border-b-2 border-ccmkt-main focus-visible:ring-0 rounded-none h-[50px] shadow-none pl-0"
@@ -86,8 +92,9 @@
             <i class="bi bi-exclamation-circle mr-1" />
             배송 유의사항
             <br>
-            배송 유의사항 배송 유의사항 배송 유의사항 배송 유의사항 배송 유의사항 배송 유의사항 배송
-            유의사항 배송 유의사항
+            식품류는 안전상의 이유로 교환/반품이 제한될 수 있습니다.
+            <br>
+            상품 접수 및 발송은 점주님께서 직접 진행해주셔야 합니다.
           </TypographyP2>
         </div>
       </div>
@@ -98,6 +105,7 @@
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import {
+  TypographyCaption,
   TypographyHead1,
   TypographyHead3,
   TypographyP1,
