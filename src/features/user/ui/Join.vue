@@ -96,19 +96,21 @@ const router = useRouter()
 const ongoingProducts = [
   {
     id: '1',
-    title: '꿀복숭아 공구 모집해용',
+    title: '한우 선물세트 공구',
     participants: 1135,
     progress: 35,
     status: '배송 중',
-    image: 'https://vrthumb.imagetoday.co.kr/2016/11/28/tip250t001819.jpg',
+    image:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxCVepXiFi2RCGBkR9fB7kpGFgKTU7BLi2mA&s',
   },
   {
     id: '2',
-    title: '샤인머스켓 할인 공구',
+    title: '수제 쿠키 세트 공구',
     participants: 542,
     progress: 70,
     status: '모집 중',
-    image: 'https://image.edaily.co.kr/images/Photo/files/NP/S/2024/08/PS24083000943.jpg',
+    image:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYrSDgWUU79WpGxEhBlSLNnPtxtVBpn9JSTw&s',
   },
 ]
 
