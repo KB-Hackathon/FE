@@ -168,6 +168,7 @@
 import { Product } from '@/entities/product/product.entity'
 import { getDeadlineInfo } from '@/entities/product/product.util'
 import { getProduct } from '@/features/product/productList/services/productList.service'
+import { buyCoupon } from '@/features/product/upload/services/upload.service'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -190,7 +191,6 @@ import {
   TypographyP2,
   TypographySubTitle1,
 } from '@/shared/components/ui/typography'
-import { api } from '@/shared/plugin/axios'
 import { formatDateTime, formatNumber } from '@/shared/utils/format'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -233,14 +233,11 @@ const deadline = computed(() => getDeadlineInfo(product.value?.product.recruitme
 
 async function handleClickParticipateButton() {
   requestDialogOpen.value = false
-  const res = await api.get<{ url: string }>(`https://httpbin.org/delay/1`, {
-    showGlobalLoader: true,
-    loaderMessage: ['공동 구매 참여중이에요', '잠시만 기다려주세요'],
-  })
-  if (res) {
-    responseDialogOpen.value = true
-    isParticipated.value = true
-  }
+  await buyCoupon(Number(product.value!.product.productId), 1)
+
+  responseDialogOpen.value = true
+  isParticipated.value = true
+  router.go(0)
 }
 
 const productTags = computed(() =>

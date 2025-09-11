@@ -30,3 +30,8 @@ export interface RegisterSellerResponse {
 export interface CouponsResponse {
   coupons: Coupon[]
 }
+
+export interface BuyCouponResponse {
+  couponCode: string
+  expireDate: string
+}

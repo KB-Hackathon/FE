@@ -29,4 +29,8 @@ export const product = {
     url: `${import.meta.env.VITE_APP_API_URL}/api/products/narrative`,
     method: Method.GET,
   }),
+  postBuyCoupon: () => ({
+    url: `${import.meta.env.VITE_APP_API_URL}/auth/buyer/order/coupon`,
+    method: Method.POST,
+  }),
 }

@@ -32,7 +32,7 @@
         </div>
         <div
           v-if="props.modelValue.images.length > 0"
-          class="grid grid-cols-2 gap-4 h-[130px] overflow-scroll pt-3"
+          class="grid grid-cols-3 gap-4 h-[130px] overflow-scroll pt-3"
         >
           <div
             v-for="(preview, index) in props.modelValue.images"
@@ -41,7 +41,7 @@
           >
             <img
               :src="preview"
-              class="w-[150px] h-[100px] object-cover rounded-[12px] shadow"
+              class="w-[100px] h-[100px] object-cover rounded-[12px] shadow"
               :alt="`업로드된 이미지 ${index + 1}`"
             >
             <button
