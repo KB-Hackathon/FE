@@ -10,8 +10,17 @@ import Splash from '@/shared/components/molecules/Splash.vue'
 import { onMounted, ref } from 'vue'
 
 const showSplash = ref(true)
+
 onMounted(() => {
-  setTimeout(() => (showSplash.value = false), 2000)
+  const seen = sessionStorage.getItem('seen_splash')
+  if (seen) {
+    showSplash.value = false
+  } else {
+    setTimeout(() => {
+      showSplash.value = false
+      sessionStorage.setItem('seen_splash', '1')
+    }, 2000)
+  }
 })
 </script>
 
